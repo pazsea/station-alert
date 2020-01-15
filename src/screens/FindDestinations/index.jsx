@@ -1,7 +1,9 @@
 import React, { useContext } from "react";
-import { StyleSheet, View, Text } from "react-native";
 // import { JourneyContext } from "../store/journeyStore";
 import styled from "styled-components";
+
+import { mixinBackground } from "../../../themes/mixins";
+import { PrimaryText, PrimaryButton } from "../../components/styles";
 
 const FindDestinationScreen = props => {
   // const {
@@ -10,17 +12,19 @@ const FindDestinationScreen = props => {
 
   return (
     <FindDestinationView>
-      <Text>FindDestinationScreen</Text>
+      <PrimaryText>Find Destination</PrimaryText>
+      <PrimaryButton>
+        <PrimaryText>Find Destination</PrimaryText>
+      </PrimaryButton>
     </FindDestinationView>
   );
 };
 
 const FindDestinationView = styled.View`
+  ${mixinBackground}
   flex: 1;
   justify-content: center;
   align-items: center;
-  background-color: ${props => props.theme.colors.primaryColor};
-  color: white;
 `;
 
 export default FindDestinationScreen;

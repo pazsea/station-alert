@@ -11,7 +11,7 @@ import JourneyScreen from "./src/screens/Journey";
 import FavouritesScreen from "./src/screens/Favourites";
 import MoreModal from "./src/screens/MoreModal";
 
-import CombinedStoreProvider from "./src/store/combinedStore";
+import CombinedStoreProvider from "./store/combinedStore";
 
 const TabNavigator = createMaterialBottomTabNavigator(
   {
