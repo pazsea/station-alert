@@ -1,16 +1,17 @@
 import React from "react";
-import { SafeAreaView, StyleSheet, View, Text } from "react-native";
+import { SafeAreaView } from "react-native";
 
 import { createAppContainer } from "react-navigation";
 import { createMaterialBottomTabNavigator } from "react-navigation-material-bottom-tabs";
 
 import Icon from "react-native-vector-icons/Ionicons";
 
-import FindDestinationScreen from "./src/screens/FintDestinationScreen";
-import CurrentTripScreen from "./src/screens/CurrentTripScreen";
-import FavouritesScreen from "./src/screens/FavouritesScreen";
+import FindDestinationScreen from "./src/screens/FindDestinations";
+import JourneyScreen from "./src/screens/Journey";
+import FavouritesScreen from "./src/screens/Favourites";
 import MoreModal from "./src/screens/MoreModal";
 
+import CombinedStoreProvider from "./src/store/combinedStore";
 
 const TabNavigator = createMaterialBottomTabNavigator(
   {
@@ -20,22 +21,22 @@ const TabNavigator = createMaterialBottomTabNavigator(
         title: "Search",
         tabBarIcon: ({ tintColor }) => (
           <SafeAreaView>
-            <Icon style={[{ color: tintColor }]} size={25} name={"ios-search"} />
+            <Icon
+              style={[{ color: tintColor }]}
+              size={25}
+              name={"ios-search"}
+            />
           </SafeAreaView>
         )
       }
     },
-    CurrentTripScreen: {
-      screen: CurrentTripScreen,
+    JourneyScreen: {
+      screen: JourneyScreen,
       navigationOptions: {
-        title: "Trip",
+        title: "Journey",
         tabBarIcon: ({ tintColor }) => (
           <SafeAreaView>
-            <Icon
-              style={[{ color: tintColor }]}
-              size={25}
-              name={"ios-train"}
-            />
+            <Icon style={[{ color: tintColor }]} size={25} name={"ios-train"} />
           </SafeAreaView>
         )
       }
@@ -46,11 +47,7 @@ const TabNavigator = createMaterialBottomTabNavigator(
         title: "Favourites",
         tabBarIcon: ({ tintColor }) => (
           <SafeAreaView>
-            <Icon
-              style={[{ color: tintColor }]}
-              size={25}
-              name={"ios-star"}
-            />
+            <Icon style={[{ color: tintColor }]} size={25} name={"ios-star"} />
           </SafeAreaView>
         )
       }
@@ -68,13 +65,21 @@ const TabNavigator = createMaterialBottomTabNavigator(
     }
   },
   {
-    shifting:false,
+    shifting: false,
     labeled: true,
     initialRouteName: "FindDestinationScreen",
     activeColor: "#ffffff",
     inactiveColor: "#000",
-    barStyle: { backgroundColor: "#456990", height: 80, paddingTop:10 }
+    barStyle: { backgroundColor: "#456990", height: 80, paddingTop: 10 }
   }
 );
 
-export default createAppContainer(TabNavigator);
+const AppContainer = createAppContainer(TabNavigator);
+
+export default App = () => {
+  return (
+    <CombinedStoreProvider>
+      <AppContainer />
+    </CombinedStoreProvider>
+  );
+};

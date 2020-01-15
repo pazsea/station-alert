@@ -2,10 +2,10 @@ import React from "react";
 import { StyleSheet, View, Text } from "react-native";
 
 
-const CurrentTripScreen = () => {
+const JourneyScreen = () => {
   return (
     <View style={styles.container}>
-      <Text>CurrentTripScreen</Text>
+      <Text>JourneyScreen</Text>
     </View>
   );
 };
@@ -19,4 +19,4 @@ const styles = StyleSheet.create({
     }
   });
 
-export default CurrentTripScreen;
+export default JourneyScreen;
