@@ -7,8 +7,8 @@ export default {
     secondaryButton: "#EF9F5B",
     secondaryText: "#07020D",
 
-    buttonEnabled: "#0CCE6B",
-    buttonDisabled: "#E84855"
+    buttonActive: "#0CCE6B",
+    buttonInactive: "#E84855"
   },
   font: {
     primarySize: "16px",

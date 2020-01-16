@@ -52,7 +52,10 @@ export const StationButton = styled.TouchableOpacity`
   padding: 3%;
   border-radius: 5px;
   border: 0.1px solid black;
-  background-color: ${props => props.theme.colors.secondaryButton};
+  background-color: ${props =>
+    props.active
+      ? props.theme.colors.buttonActive
+      : props.theme.colors.secondaryButton};
   color: ${props => props.theme.colors.secondaryText};
 `;
 

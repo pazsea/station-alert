@@ -11,26 +11,28 @@ const UISearchDestination = ({ startedSearching, setStartedSearching }) => {
   const [searchResult, setSearchResult] = useState([]);
   const [value, setValue] = useState("");
 
-  // useEffect(() => {
-  //   console.log(searchResult);
-  // }, [searchResult]);
+  useEffect(() => {}, [searchResult]);
 
-  const handlePressStation = pickedStation => {
+  const handlePressedStation = pickedStation => {
     const currentDestinations = journeyState.destinations;
 
-    if (currentDestinations.find(storedDest => storedDest === pickedStation)) {
-      const removedDestination = currentDestinations.filter(
+    const existingStation = currentDestinations.find(
+      storedDest => storedDest === pickedStation
+    );
+
+    if (existingStation) {
+      const removeStation = currentDestinations.filter(
         storedDest => storedDest !== pickedStation
       );
-      setJourneyState(prevState => ({
-        ...prevState,
-        destinations: removedDestination
-      }));
+      setJourneyState({
+        ...journeyState,
+        destinations: removeStation
+      });
     } else {
-      setJourneyState(prevState => ({
-        ...prevState,
-        destinations: [...prevState.destinations, pickedStation]
-      }));
+      setJourneyState({
+        ...journeyState,
+        destinations: [...journeyState.destinations, pickedStation]
+      });
     }
   };
 
@@ -64,7 +66,8 @@ const UISearchDestination = ({ startedSearching, setStartedSearching }) => {
         ? searchResult.map((station, index) => (
             <StationButton
               key={index + station.name}
-              onPress={() => handlePressStation(station)}
+              onPress={() => handlePressedStation(station)}
+              active={journeyState.destinations.includes(station)}
             >
               <ButtonText>{station.name.toUpperCase()}</ButtonText>
             </StationButton>
