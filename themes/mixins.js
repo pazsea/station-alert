@@ -1,8 +1,8 @@
 export const mixinText = props => `
-  color: ${props.theme.colors.primaryTextColor};
-  font-size: ${props.theme.font.primaryFontSize};
+  color: ${props.theme.colors.primaryText};
+  font-size: ${props.theme.font.primarySize};
 `;
 
 export const mixinBackground = props => `
-  background-color: ${props.theme.colors.primaryColor};
+  background-color: ${props.theme.colors.primary};
 `;

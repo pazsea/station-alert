@@ -1,11 +1,14 @@
 export default {
-    colors: {
-      primaryColor: "#07020D",
-      primaryButtonColor: "#fff",
-      primaryTextColor: "#fff",
-      primaryFontSize: "18px",
-    },
-    font: {
-      primaryFontSize: "18px",
-    }
-  };
+  colors: {
+    primary: "#07020D",
+    primaryButton: "#fff",
+    primaryText: "#fff",
+    primarySize: "18px"
+  },
+  font: {
+    primarySize: "18px"
+  }
+};
+
+// Dark secondary color. Good to black blackground?
+// Maybe for nav? 0B132B

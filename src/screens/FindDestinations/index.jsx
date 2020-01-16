@@ -1,30 +1,41 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 // import { JourneyContext } from "../store/journeyStore";
-import styled from "styled-components";
 
-import { mixinBackground } from "../../../themes/mixins";
-import { PrimaryText, PrimaryButton } from "../../components/styles";
+import trainlogo from "../../../images/trainlogo.png";
+import { View } from "react-native";
+
+import {
+  PrimaryText,
+  PrimaryButton,
+  ButtonText,
+  LayoutView,
+  Image,
+  ContainerView
+} from "../../components/styles";
+
+import UISearchDestination from "../../components/UISearchDestination";
 
 const FindDestinationScreen = props => {
   // const {
   //   journeyStore: [journeyState]
   // } = useContext(JourneyContext);
 
+  const [startedSearching, setStartedSearching] = useState(false);
+
   return (
-    <FindDestinationView>
-      <PrimaryText>Find Destination</PrimaryText>
+    <LayoutView>
+      <ContainerView>
+        {startedSearching ? null : <Image source={trainlogo} />}
+        <UISearchDestination
+          setStartedSearching={setStartedSearching}
+          startedSearching={startedSearching}
+        ></UISearchDestination>
+      </ContainerView>
       <PrimaryButton>
-        <PrimaryText>Find Destination</PrimaryText>
+        <ButtonText>Confirm Destination</ButtonText>
       </PrimaryButton>
-    </FindDestinationView>
+    </LayoutView>
   );
 };
-
-const FindDestinationView = styled.View`
-  ${mixinBackground}
-  flex: 1;
-  justify-content: center;
-  align-items: center;
-`;
 
 export default FindDestinationScreen;

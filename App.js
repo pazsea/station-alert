@@ -68,9 +68,9 @@ const TabNavigator = createMaterialBottomTabNavigator(
     shifting: false,
     labeled: true,
     initialRouteName: "FindDestinationScreen",
-    activeColor: "#ffffff",
-    inactiveColor: "#000",
-    barStyle: { backgroundColor: "#456990", height: 80, paddingTop: 10 }
+    activeColor: "#E4DC93",
+    inactiveColor: "#fff",
+    barStyle: { backgroundColor: "#303852", height: 80, paddingTop: 10 }
   }
 );
 
