@@ -1,15 +1,38 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { SearchDestinationInput, StationButton, ButtonText } from "./styles";
 import { dest } from "../data/destinations";
-// import { JourneyContext } from "../store/journeyStore";
+import { JourneyContext } from "../../store/journeyStore";
 
 const UISearchDestination = ({ startedSearching, setStartedSearching }) => {
+  const {
+    journeyStore: [journeyState, setJourneyState]
+  } = useContext(JourneyContext);
+
   const [searchResult, setSearchResult] = useState([]);
   const [value, setValue] = useState("");
 
-  useEffect(() => {
-    console.log(searchResult);
-  }, [searchResult]);
+  // useEffect(() => {
+  //   console.log(searchResult);
+  // }, [searchResult]);
+
+  const handlePressStation = pickedStation => {
+    const currentDestinations = journeyState.destinations;
+
+    if (currentDestinations.find(storedDest => storedDest === pickedStation)) {
+      const removedDestination = currentDestinations.filter(
+        storedDest => storedDest !== pickedStation
+      );
+      setJourneyState(prevState => ({
+        ...prevState,
+        destinations: removedDestination
+      }));
+    } else {
+      setJourneyState(prevState => ({
+        ...prevState,
+        destinations: [...prevState.destinations, pickedStation]
+      }));
+    }
+  };
 
   const onChangeHandler = text => {
     setValue(text);
@@ -39,7 +62,10 @@ const UISearchDestination = ({ startedSearching, setStartedSearching }) => {
       />
       {startedSearching && searchResult
         ? searchResult.map((station, index) => (
-            <StationButton key={index + station.name}>
+            <StationButton
+              key={index + station.name}
+              onPress={() => handlePressStation(station)}
+            >
               <ButtonText>{station.name.toUpperCase()}</ButtonText>
             </StationButton>
           ))
