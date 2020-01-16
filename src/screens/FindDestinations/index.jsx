@@ -1,11 +1,9 @@
 import React, { useContext, useState } from "react";
-// import { JourneyContext } from "../store/journeyStore";
+import { JourneyContext } from "../../../store/journeyStore";
 
 import trainlogo from "../../../images/trainlogo.png";
-import { View } from "react-native";
 
 import {
-  PrimaryText,
   PrimaryButton,
   ButtonText,
   LayoutView,
@@ -14,26 +12,34 @@ import {
 } from "../../components/styles";
 
 import UISearchDestination from "../../components/UISearchDestination";
+import UIDestinationsView from "../../components/UIDestinationsView";
 
 const FindDestinationScreen = props => {
-  // const {
-  //   journeyStore: [journeyState]
-  // } = useContext(JourneyContext);
+  const {
+    journeyStore: [{ destinations }]
+  } = useContext(JourneyContext);
 
   const [startedSearching, setStartedSearching] = useState(false);
+
+  const hasDestinations = destinations.length;
 
   return (
     <LayoutView>
       <ContainerView>
-        {startedSearching ? null : <Image source={trainlogo} />}
+        {startedSearching || hasDestinations ? null : (
+          <Image source={trainlogo} />
+        )}
         <UISearchDestination
           setStartedSearching={setStartedSearching}
           startedSearching={startedSearching}
         ></UISearchDestination>
+        <UIDestinationsView></UIDestinationsView>
       </ContainerView>
-      <PrimaryButton>
-        <ButtonText>Confirm Destination</ButtonText>
-      </PrimaryButton>
+      {hasDestinations ? (
+        <PrimaryButton>
+          <ButtonText>Confirm Destination</ButtonText>
+        </PrimaryButton>
+      ) : null}
     </LayoutView>
   );
 };

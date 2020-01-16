@@ -55,24 +55,28 @@ const UISearchDestination = ({ startedSearching, setStartedSearching }) => {
     );
   };
 
+  //EVALUATE RETURN:
+  const content =
+    startedSearching && searchResult
+      ? searchResult.slice(0, 3).map((station, index) => (
+          <StationButton
+            key={index + station.name}
+            onPress={() => handlePressedStation(station)}
+            active={journeyState.destinations.includes(station)}
+          >
+            <ButtonText>{station.name.toUpperCase()}</ButtonText>
+          </StationButton>
+        ))
+      : null;
+
   return (
     <>
       <SearchDestinationInput
         value={value}
         onChangeText={onChangeHandler}
-        startedSearching={startedSearching}
+        placeholder={"Enter your destination.."}
       />
-      {startedSearching && searchResult
-        ? searchResult.map((station, index) => (
-            <StationButton
-              key={index + station.name}
-              onPress={() => handlePressedStation(station)}
-              active={journeyState.destinations.includes(station)}
-            >
-              <ButtonText>{station.name.toUpperCase()}</ButtonText>
-            </StationButton>
-          ))
-        : null}
+      {content}
     </>
   );
 };

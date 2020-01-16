@@ -1,12 +1,16 @@
 import styled from "styled-components";
-import { mixinText, mixinBackground } from "../../themes/mixins";
+import {
+  mixinText,
+  mixinBackground,
+  mixinSecondaryHeadline
+} from "../../themes/mixins";
 
 // IMAGES
 
 export const Image = styled.Image`
-  margin-top: 45%;
+  margin: 20% 0 5% 0;
   width: 100%;
-  height: 45%;
+  height: 130px;
 `;
 
 // LAYOUT
@@ -23,10 +27,39 @@ export const LayoutView = styled.SafeAreaView`
   padding: 0 10% 2% 10%;
 `;
 
+export const DestinationsView = styled.ScrollView`
+  width: 100%;
+  max-height: 40%;
+  height: auto;
+  margin-top: 5%;
+  border-radius: 5px;
+  padding: ${({ showPadding }) => (showPadding ? "5% 0" : "0")};
+  background-color: ${props => props.theme.colors.secondary};
+`;
+
+export const StationView = styled.View`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 5%;
+`;
+
+export const StationMore = styled.View`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+`;
+
 // FONTS
 
 export const PrimaryText = styled.Text`
   ${mixinText}
+`;
+
+export const SecondaryHeadlineText = styled.Text`
+  ${mixinSecondaryHeadline}
 `;
 
 export const ButtonText = styled.Text`
@@ -68,7 +101,7 @@ export const SearchDestinationInput = styled.TextInput`
   border-color: lightgrey;
   border-style: solid;
   padding: 3%;
-  margin-top: ${({ startedSearching }) => (startedSearching ? "15%" : "0%")};
+  margin-top: 15%;
   font-size: 20px;
   text-align: center;
 `;

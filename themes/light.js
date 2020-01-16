@@ -4,6 +4,7 @@ export default {
     primaryButton: "#468189",
     primaryText: "#fff",
 
+    secondary: "#FFD289",
     secondaryButton: "#EF9F5B",
     secondaryText: "#07020D",
 
@@ -11,7 +12,8 @@ export default {
     buttonInactive: "#E84855"
   },
   font: {
-    primarySize: "16px",
+    primarySize: "18px",
+    primaryHeadline: "20px",
     buttonSize: "20px"
   }
 };

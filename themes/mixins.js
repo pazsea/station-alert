@@ -6,3 +6,8 @@ export const mixinText = props => `
 export const mixinBackground = props => `
   background-color: ${props.theme.colors.primary};
 `;
+
+export const mixinSecondaryHeadline = props => `
+  color: ${props.theme.colors.secondaryText};
+  font-size: ${props.theme.font.primaryHeadline};
+`;

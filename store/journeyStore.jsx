@@ -15,9 +15,9 @@ const INITIAL_JOURNEY_STATE = {
 export const JourneyContextProvider = props => {
   const [journeyState, setJourneyState] = useState(INITIAL_JOURNEY_STATE);
 
-  useEffect(() => {
-    console.log(journeyState);
-  }, [journeyState.destinations]);
+  // useEffect(() => {
+  //   console.log(journeyState);
+  // }, [journeyState.destinations]);
 
   const stores = {
     journeyStore: [journeyState, setJourneyState]
