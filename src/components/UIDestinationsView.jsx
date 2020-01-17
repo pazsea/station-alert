@@ -15,14 +15,6 @@ const UIDestinationsView = () => {
     journeyStore: [{ destinations }, setJourneyState]
   } = useContext(JourneyContext);
 
-  //   useEffect(() => {
-  //     if (destinations.length) {
-  //       console.log(destinations);
-  //     } else {
-  //         console.log("Empty")
-  //     }
-  //   }, [destinations]);
-
   const removeStation = pickedStation => {
     const removeStation = destinations.filter(
       storedDest => storedDest !== pickedStation
@@ -32,12 +24,14 @@ const UIDestinationsView = () => {
       destinations: removeStation
     }));
   };
+
   const content = destinations.length
     ? destinations.map((station, index) => {
         if (
           (index === 0 && destinations.length === 1) ||
           index === destinations.length - 1
         ) {
+          console.log("MITT INDEX " + station.name + " " + index);
           return (
             <StationView key={index + station.name}>
               <Icon
@@ -46,16 +40,27 @@ const UIDestinationsView = () => {
                 color={"green"}
                 key={index + station.name + "flag"}
               />
-              <SecondaryHeadlineText key={index + station.name}>
+              <SecondaryHeadlineText
+                key={index + station.name + "headlineText"}
+              >
                 {station.name}
               </SecondaryHeadlineText>
-              <Icon
-                name="ios-remove-circle"
-                size={24}
-                color={"red"}
-                onPress={() => removeStation(station)}
-                key={index + station.name + "circle"}
-              />
+              {station.arrived ? (
+                <Icon
+                  name="ios-checkmark-circle"
+                  size={24}
+                  color={"green"}
+                  key={index + station.name + "flagDone"}
+                />
+              ) : (
+                <Icon
+                  name="ios-remove-circle"
+                  size={24}
+                  color={"red"}
+                  onPress={() => removeStation(station)}
+                  key={index + station.name + "circle"}
+                />
+              )}
             </StationView>
           );
         } else {
@@ -68,16 +73,25 @@ const UIDestinationsView = () => {
                   color={"grey"}
                   key={index + station.name + "flag"}
                 />
-                <SecondaryHeadlineText key={index + station.name}>
+                <SecondaryHeadlineText key={index + station.name + "headliner"}>
                   {station.name}
                 </SecondaryHeadlineText>
-                <Icon
-                  name="ios-remove-circle"
-                  size={24}
-                  color={"red"}
-                  onPress={() => removeStation(station)}
-                  key={index + station.name + "circle"}
-                />
+                {station.arrived ? (
+                  <Icon
+                    name="ios-checkmark-circle"
+                    size={24}
+                    color={"green"}
+                    key={index + station.name + "checkDone"}
+                  />
+                ) : (
+                  <Icon
+                    name="ios-remove-circle"
+                    size={24}
+                    color={"red"}
+                    onPress={() => removeStation(station)}
+                    key={index + station.name + "circle"}
+                  />
+                )}
               </StationView>
               <StationMore key={index + "more"}>
                 <Icon

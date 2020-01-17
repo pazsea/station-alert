@@ -18,18 +18,16 @@ const UISearchDestination = ({ startedSearching, setStartedSearching }) => {
   const [searchResult, setSearchResult] = useState([]);
   const [value, setValue] = useState("");
 
-  useEffect(() => {}, [searchResult]);
-
   const handlePressedStation = pickedStation => {
     const currentDestinations = journeyState.destinations;
 
     const existingStation = currentDestinations.find(
-      storedDest => storedDest === pickedStation
+      storedDest => storedDest.name === pickedStation.name
     );
 
     if (existingStation) {
       const removeStation = currentDestinations.filter(
-        storedDest => storedDest !== pickedStation
+        storedDest => storedDest.name !== pickedStation.name
       );
       setJourneyState({
         ...journeyState,

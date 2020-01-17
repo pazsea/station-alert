@@ -10,6 +10,7 @@
   "dependencies": {
     "@react-native-community/masked-view": "^0.1.6",
     "expo": "~36.0.0",
+    "geolib": "^3.2.1",
     "react": "~16.9.0",
     "react-dom": "~16.9.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-36.0.0.tar.gz",
@@ -23,7 +24,8 @@
     "react-navigation": "^4.0.10",
     "react-navigation-material-bottom-tabs": "^2.1.5",
     "react-navigation-stack": "^2.0.15",
-    "styled-components": "^5.0.0"
+    "styled-components": "^5.0.0",
+    "expo-permissions": "~8.0.0"
   },
   "devDependencies": {
     "babel-preset-expo": "~8.0.0",
