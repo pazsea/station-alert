@@ -1,7 +1,14 @@
 import React, { useState, useEffect, useContext } from "react";
-import { SearchDestinationInput, StationButton, ButtonText } from "./styles";
+import {
+  SearchDestinationInput,
+  StationButton,
+  StationButtonContainer,
+  ButtonText,
+  SearchDestinationContainer
+} from "./styles";
 import { dest } from "../data/destinations";
 import { JourneyContext } from "../../store/journeyStore";
+import Icon from "react-native-vector-icons/Ionicons";
 
 const UISearchDestination = ({ startedSearching, setStartedSearching }) => {
   const {
@@ -46,6 +53,12 @@ const UISearchDestination = ({ startedSearching, setStartedSearching }) => {
     }
   };
 
+  const eraseSearch = () => {
+    setValue("");
+    setSearchResult([]);
+    setStartedSearching(false);
+  };
+
   const calculateSearchResult = text => {
     const destinations = dest;
     setSearchResult(
@@ -56,7 +69,7 @@ const UISearchDestination = ({ startedSearching, setStartedSearching }) => {
   };
 
   //EVALUATE RETURN:
-  const content =
+  const buttons =
     startedSearching && searchResult
       ? searchResult.slice(0, 3).map((station, index) => (
           <StationButton
@@ -71,14 +84,40 @@ const UISearchDestination = ({ startedSearching, setStartedSearching }) => {
 
   return (
     <>
-      <SearchDestinationInput
-        value={value}
-        onChangeText={onChangeHandler}
-        placeholder={"Enter your destination.."}
-      />
-      {content}
+      <SearchDestinationContainer>
+        <SearchDestinationInput
+          value={value}
+          type={"search"}
+          onChangeText={onChangeHandler}
+          placeholder={"Enter your destination.."}
+        />
+        <Icon
+          name="ios-close"
+          color={value ? "#000" : "lightgrey"}
+          onPress={() => eraseSearch()}
+          size={30}
+        />
+      </SearchDestinationContainer>
+      <StationButtonContainer>{buttons}</StationButtonContainer>
     </>
   );
 };
 
 export default UISearchDestination;
+
+{
+  /* <>
+<SearchDestinationContainer>
+  <SearchDestinationInput
+    value={value}
+    type={"search"}
+    onChangeText={onChangeHandler}
+    placeholder={"Enter your destination.."}
+    // autoCorrect={false}
+    // secureTextEntry
+  />
+  <Icon name="ios-circle" color="#000" size={14} />
+</SearchDestinationContainer>
+{buttons}
+</> */
+}

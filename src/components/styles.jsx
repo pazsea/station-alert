@@ -19,6 +19,10 @@ export const ContainerView = styled.View`
   width: 90%;
 `;
 
+export const StationButtonContainer = styled.View`
+  margin-top: 16%;
+`;
+
 export const LayoutView = styled.SafeAreaView`
   ${mixinBackground}
   flex: 1;
@@ -95,13 +99,18 @@ export const StationButton = styled.TouchableOpacity`
 // INPUTS
 
 export const SearchDestinationInput = styled.TextInput`
-  width: 100%;
+  flex: 1;
+  font-size: 20px;
+  text-align: left;
+`;
+
+export const SearchDestinationContainer = styled.View`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
   background-color: white;
   border-radius: 5px;
-  border-color: lightgrey;
-  border-style: solid;
-  padding: 3%;
-  margin-top: 15%;
-  font-size: 20px;
-  text-align: center;
+  padding: 0% 5%;
+  height: 50px;
+  top: 15%;
 `;

@@ -16,8 +16,9 @@ import UIDestinationsView from "../../components/UIDestinationsView";
 
 const FindDestinationScreen = props => {
   const {
-    journeyStore: [{ destinations }]
+    journeyStore: [{ destinations }, setJourneyState]
   } = useContext(JourneyContext);
+  const { navigate } = props.navigation;
 
   const [startedSearching, setStartedSearching] = useState(false);
 
@@ -36,7 +37,7 @@ const FindDestinationScreen = props => {
         <UIDestinationsView></UIDestinationsView>
       </ContainerView>
       {hasDestinations ? (
-        <PrimaryButton>
+        <PrimaryButton onPress={() => navigate("JourneyScreen")}>
           <ButtonText>Confirm Destination</ButtonText>
         </PrimaryButton>
       ) : null}
