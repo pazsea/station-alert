@@ -25,19 +25,20 @@ export const StationButtonContainer = styled.View`
 
 export const LayoutView = styled.SafeAreaView`
   ${mixinBackground}
+  display:flex;
   flex: 1;
   justify-content: space-between;
   align-items: center;
   padding: 0 10% 2% 10%;
 `;
 
-export const DestinationsView = styled.ScrollView`
+export const DestinationsView = styled.View`
   width: 100%;
-  max-height: 40%;
-  height: auto;
+  overflow: hidden;
+  justify-content: space-between;
   margin-top: 5%;
   border-radius: 5px;
-  padding: ${({ showPadding }) => (showPadding ? "5% 0" : "0")};
+  padding: ${({ hasDestinations }) => (hasDestinations ? "5% 0" : "0")};
   background-color: ${props => props.theme.colors.secondary};
 `;
 
@@ -83,6 +84,15 @@ export const PrimaryButton = styled.TouchableOpacity`
   background-color: ${props => props.theme.colors.primaryButton};
 `;
 
+export const SecondaryButton = styled.TouchableOpacity`
+  width: 90%;
+  margin: 2%;
+  padding: 4%;
+  border-radius: 5px;
+  border: 0.1px solid black;
+  background-color: ${props => props.theme.colors.inactive};
+`;
+
 export const StationButton = styled.TouchableOpacity`
   width: 100%;
   margin: 1% 0;
@@ -91,7 +101,7 @@ export const StationButton = styled.TouchableOpacity`
   border: 0.1px solid black;
   background-color: ${props =>
     props.active
-      ? props.theme.colors.buttonActive
+      ? props.theme.colors.active
       : props.theme.colors.secondaryButton};
   color: ${props => props.theme.colors.secondaryText};
 `;

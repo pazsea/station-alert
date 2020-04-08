@@ -4,11 +4,13 @@ import { JourneyContext } from "../../../store/journeyStore";
 import trainlogo from "../../../images/trainlogo.png";
 
 import {
+  PrimaryText,
   PrimaryButton,
   ButtonText,
   LayoutView,
   Image,
-  ContainerView
+  ContainerView,
+  SecondaryButton
 } from "../../components/styles";
 
 import UISearchDestination from "../../components/UISearchDestination";
@@ -16,7 +18,8 @@ import UIDestinationsView from "../../components/UIDestinationsView";
 
 const FindDestinationScreen = props => {
   const {
-    journeyStore: [journeyState, setJourneyState]
+    journeyStore: [journeyState, setJourneyState],
+    setInitialStore
   } = useContext(JourneyContext);
   const { navigate } = props.navigation;
 
@@ -29,24 +32,65 @@ const FindDestinationScreen = props => {
     setJourneyState(prevState => ({ ...prevState, startedTrip: true }));
   };
 
-  return (
+  const cancelTrip = () => {
+    setInitialStore();
+    setStartedSearching(false);
+  };
+
+  const startedTripView = (
+    <LayoutView>
+      <ContainerView>
+        <Image source={trainlogo} />
+        <PrimaryText>
+          You have an ongoing journey. You need to cancel it before starting a
+          new one.
+        </PrimaryText>
+      </ContainerView>
+      <SecondaryButton onPress={cancelTrip}>
+        <ButtonText>Cancel journey</ButtonText>
+      </SecondaryButton>
+    </LayoutView>
+  );
+
+  const noAccessView = (
+    <LayoutView>
+      <ContainerView>
+        <Image source={trainlogo} />
+        <PrimaryText>
+          You have to allow this app to access your location.
+        </PrimaryText>
+      </ContainerView>
+    </LayoutView>
+  );
+
+  const searchDestinationView = (
     <LayoutView>
       <ContainerView>
         {startedSearching || hasDestinations ? null : (
           <Image source={trainlogo} />
         )}
-        <UISearchDestination
-          setStartedSearching={setStartedSearching}
-          startedSearching={startedSearching}
-        ></UISearchDestination>
-        <UIDestinationsView></UIDestinationsView>
+        <>
+          <UISearchDestination
+            setStartedSearching={setStartedSearching}
+            startedSearching={startedSearching}
+          ></UISearchDestination>
+          <UIDestinationsView />
+        </>
       </ContainerView>
-      {hasDestinations ? (
-        <PrimaryButton onPress={confirmDestinations}>
-          <ButtonText>Confirm Destination</ButtonText>
-        </PrimaryButton>
-      ) : null}
+      <PrimaryButton onPress={confirmDestinations}>
+        <ButtonText>Confirm Destination</ButtonText>
+      </PrimaryButton>
     </LayoutView>
+  );
+
+  return (
+    <>
+      {journeyState.startedTrip
+        ? startedTripView
+        : journeyState.accessToLocation
+        ? searchDestinationView
+        : noAccessView}
+    </>
   );
 };
 

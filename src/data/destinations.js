@@ -1,4 +1,4 @@
-export const dest = [
+export default [
   {
     name: "Abrahamsberg",
     lat: 59.336516,

@@ -1,22 +1,23 @@
 import React from "react";
 import { StyleSheet, View, Text } from "react-native";
-
+import { LayoutView } from "../../components/styles";
+import UIDestinationsView from "../../components/UIDestinationsView";
 
 const JourneyScreen = () => {
   return (
-    <View style={styles.container}>
-      <Text>JourneyScreen</Text>
-    </View>
+    <LayoutView>
+      <UIDestinationsView showPadding={false}></UIDestinationsView>
+    </LayoutView>
   );
 };
 
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      justifyContent: "center",
-      alignItems: "center",
-      backgroundColor: "#456990"
-    }
-  });
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#456990"
+  }
+});
 
 export default JourneyScreen;

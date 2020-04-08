@@ -6,7 +6,7 @@ import {
   ButtonText,
   SearchDestinationContainer
 } from "./styles";
-import { dest } from "../data/destinations";
+import dest from "../data/destinations";
 import { JourneyContext } from "../../store/journeyStore";
 import Icon from "react-native-vector-icons/Ionicons";
 
@@ -20,7 +20,6 @@ const UISearchDestination = ({ startedSearching, setStartedSearching }) => {
 
   const handlePressedStation = pickedStation => {
     const currentDestinations = journeyState.destinations;
-
     const existingStation = currentDestinations.find(
       storedDest => storedDest.name === pickedStation.name
     );
@@ -92,7 +91,7 @@ const UISearchDestination = ({ startedSearching, setStartedSearching }) => {
         <Icon
           name="ios-close"
           color={value ? "#000" : "lightgrey"}
-          onPress={() => eraseSearch()}
+          onPress={eraseSearch}
           size={30}
         />
       </SearchDestinationContainer>
@@ -102,20 +101,3 @@ const UISearchDestination = ({ startedSearching, setStartedSearching }) => {
 };
 
 export default UISearchDestination;
-
-{
-  /* <>
-<SearchDestinationContainer>
-  <SearchDestinationInput
-    value={value}
-    type={"search"}
-    onChangeText={onChangeHandler}
-    placeholder={"Enter your destination.."}
-    // autoCorrect={false}
-    // secureTextEntry
-  />
-  <Icon name="ios-circle" color="#000" size={14} />
-</SearchDestinationContainer>
-{buttons}
-</> */
-}

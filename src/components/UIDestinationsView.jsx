@@ -31,7 +31,7 @@ const UIDestinationsView = () => {
           (index === 0 && destinations.length === 1) ||
           index === destinations.length - 1
         ) {
-          console.log("MITT INDEX " + station.name + " " + index);
+          // console.log("MITT INDEX " + station.name + " " + index);
           return (
             <StationView key={index + station.name}>
               <Icon
@@ -50,7 +50,7 @@ const UIDestinationsView = () => {
                   name="ios-checkmark-circle"
                   size={24}
                   color={"green"}
-                  key={index + station.name + "flagDone"}
+                  key={index + station.name + "checkDone"}
                 />
               ) : (
                 <Icon
@@ -93,12 +93,12 @@ const UIDestinationsView = () => {
                   />
                 )}
               </StationView>
-              <StationMore key={index + "more"}>
+              <StationMore key={index + station.name + "more"}>
                 <Icon
                   name="ios-more"
                   size={30}
                   color={"white"}
-                  key={index + station.name + "more"}
+                  key={index + station.name + "icon" + "more"}
                 />
               </StationMore>
             </>
@@ -108,7 +108,7 @@ const UIDestinationsView = () => {
     : null;
 
   return (
-    <DestinationsView showPadding={destinations.length}>
+    <DestinationsView hasDestinations={destinations.length}>
       {content}
     </DestinationsView>
   );

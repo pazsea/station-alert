@@ -6,36 +6,27 @@ import { isPointWithinRadius } from "geolib";
 
 export const JourneyContext = createContext();
 
-// destination: name, coords, arrived, transport,
-
-// Starta en listener för coord för varje station oavsett ordning i useEffect
-// Man ska kunna avbryta en station coords när som helst eller t.o.m avsluta hela resan.
-
-// När startedTrip är true
-// Kolla om någon destination har arrived: true
-// Annars skicka till StartWatch och index
-// När isPointinRadius sätt destinations[index].arrived till true
-
 const INITIAL_JOURNEY_STATE = {
   destinations: [],
-  startedTrip: false
+  startedTrip: false,
+  accessToLocation: true
 };
 
 export const JourneyContextProvider = props => {
   const [journeyState, setJourneyState] = useState(INITIAL_JOURNEY_STATE);
 
-  useEffect(() => {
-    journeyState.destinations.map((station, index) => {
-      console.log(
-        "STATET STATION " +
-          station.name +
-          " " +
-          index +
-          " Arrival " +
-          station.arrived
-      );
-    });
-  }, [journeyState.destinations]);
+  // useEffect(() => {
+  //   journeyState.destinations.map((station, index) => {
+  //     console.log(
+  //       "STATET STATION " +
+  //         station.name +
+  //         " " +
+  //         index +
+  //         " Arrival " +
+  //         station.arrived
+  //     );
+  //   });
+  // }, [journeyState.destinations]);
 
   useEffect(() => {
     if (journeyState.startedTrip && journeyState.destinations.length) {
@@ -44,7 +35,7 @@ export const JourneyContextProvider = props => {
         if (station.arrived) {
           return;
         } else {
-          console.log("GEOLOCATION STARTAD FÖR " + station.name);
+          // console.log("GEOLOCATION STARTAD FÖR " + station.name);
           startWatchListener(lat, long, index);
         }
       });
@@ -82,7 +73,7 @@ export const JourneyContextProvider = props => {
               }
             );
 
-            console.log("NYA STATET " + JSON.stringify(stateWithArrival));
+            // console.log("NYA STATET " + JSON.stringify(stateWithArrival));
 
             setJourneyState(prevState => ({
               ...prevState,
@@ -93,13 +84,10 @@ export const JourneyContextProvider = props => {
               journeyState.destinations[stateIndex].name + " HAR KOMMIT FRAM"
             );
           } else {
-            console.log(
-              journeyState.destinations[stateIndex].name + " är på väg"
-            );
+            // Passenger hasn't reach his/hers destination.
           }
         },
         error => {
-          // See error code charts below.
           console.log(error.code, error.message);
         },
         {
@@ -110,12 +98,20 @@ export const JourneyContextProvider = props => {
         }
       );
     } else {
-      console.log("FEEEEl Här border cancel grejen vara");
+      setJourneyState(prevState => ({
+        ...prevState,
+        accessToLocation: true
+      }));
     }
   };
 
+  const setInitialStore = () => {
+    setJourneyState(INITIAL_JOURNEY_STATE);
+  };
+
   const stores = {
-    journeyStore: [journeyState, setJourneyState]
+    journeyStore: [journeyState, setJourneyState],
+    setInitialStore
   };
 
   return (

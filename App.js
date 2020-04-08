@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { SafeAreaView } from "react-native";
 
 import { createAppContainer } from "react-navigation";
@@ -12,6 +12,7 @@ import FavouritesScreen from "./src/screens/Favourites";
 import MoreModal from "./src/screens/MoreModal";
 
 import CombinedStoreProvider from "./store/combinedStore";
+import styled from "styled-components";
 
 const TabNavigator = createMaterialBottomTabNavigator(
   {
@@ -27,8 +28,8 @@ const TabNavigator = createMaterialBottomTabNavigator(
               name={"ios-search"}
             />
           </SafeAreaView>
-        )
-      }
+        ),
+      },
     },
     JourneyScreen: {
       screen: JourneyScreen,
@@ -38,8 +39,8 @@ const TabNavigator = createMaterialBottomTabNavigator(
           <SafeAreaView>
             <Icon style={[{ color: tintColor }]} size={25} name={"ios-train"} />
           </SafeAreaView>
-        )
-      }
+        ),
+      },
     },
     FavouritesScreen: {
       screen: FavouritesScreen,
@@ -49,8 +50,8 @@ const TabNavigator = createMaterialBottomTabNavigator(
           <SafeAreaView>
             <Icon style={[{ color: tintColor }]} size={25} name={"ios-star"} />
           </SafeAreaView>
-        )
-      }
+        ),
+      },
     },
     MoreModal: {
       screen: MoreModal,
@@ -60,26 +61,33 @@ const TabNavigator = createMaterialBottomTabNavigator(
           <SafeAreaView>
             <Icon style={[{ color: tintColor }]} size={25} name={"ios-more"} />
           </SafeAreaView>
-        )
-      }
-    }
+        ),
+      },
+    },
   },
   {
-    shifting: false,
+    shifting: true,
     labeled: true,
     initialRouteName: "FindDestinationScreen",
     activeColor: "#E4DC93",
     inactiveColor: "#fff",
-    barStyle: { backgroundColor: "#303852", height: 80, paddingTop: 10 }
+    barStyle: { backgroundColor: "transparent", height: 80, paddingTop: 10 },
   }
 );
 
 const AppContainer = createAppContainer(TabNavigator);
 
+const ThemedView = styled.View`
+  flex: 1;
+  background-color: ${(props) => props.theme.colors.primary};
+`;
+
 export default App = () => {
   return (
     <CombinedStoreProvider>
-      <AppContainer />
+      <ThemedView>
+        <AppContainer />
+      </ThemedView>
     </CombinedStoreProvider>
   );
 };

@@ -8,8 +8,8 @@ export default {
     secondaryButton: "#EF9F5B",
     secondaryText: "#07020D",
 
-    buttonActive: "#0CCE6B",
-    buttonInactive: "#E84855"
+    active: "#0CCE6B",
+    inactive: "#E84855"
   },
   font: {
     primarySize: "18px",
