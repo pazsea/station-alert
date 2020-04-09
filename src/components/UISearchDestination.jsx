@@ -9,12 +9,9 @@ import {
 import dest from "../data/destinations";
 import { JourneyContext } from "../../store/journeyStore";
 import Icon from "react-native-vector-icons/Ionicons";
-import { Button } from "react-native-elements";
+import { Button, SearchBar } from "react-native-elements";
 
-const UISearchDestination = ({
-  startedSearching,
-  setStartedSearching,
-}) => {
+const UISearchDestination = ({ startedSearching, setStartedSearching }) => {
   const {
     journeyStore: [journeyState, setJourneyState],
   } = useContext(JourneyContext);
@@ -102,17 +99,13 @@ const UISearchDestination = ({
   return (
     <>
       <SearchDestinationContainer>
-        <SearchDestinationInput
+        <SearchBar
           value={value}
-          type={"search"}
           onChangeText={onChangeHandler}
           placeholder={"Enter your destination.."}
-        />
-        <Icon
-          name="ios-close"
-          color={value ? "#000" : "lightgrey"}
-          onPress={eraseSearch}
-          size={30}
+          containerStyle={{ borderRadius: 5 }}
+          inputContainerStyle={{ backgroundColor: "transparent" }}
+          lightTheme
         />
       </SearchDestinationContainer>
       <StationButtonContainer>{buttons}</StationButtonContainer>

@@ -28,8 +28,8 @@ const FindDestinationScreen = (props) => {
   const hasDestinations = journeyState.destinations.length;
 
   const confirmDestinations = () => {
-    navigate("JourneyScreen");
     setJourneyState((prevState) => ({ ...prevState, startedTrip: true }));
+    navigate("JourneyScreen");
   };
 
   const cancelTrip = () => {

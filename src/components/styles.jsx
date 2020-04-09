@@ -23,7 +23,7 @@ export const StationButtonContainer = styled.View`
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
-  margin-top: 16%;
+  margin-top: 5%;
 `;
 
 export const LayoutView = styled.SafeAreaView`
@@ -114,19 +114,7 @@ export const StationButton = styled.TouchableOpacity`
 
 // INPUTS
 
-export const SearchDestinationInput = styled.TextInput`
-  flex: 1;
-  font-size: 20px;
-  text-align: left;
-`;
-
 export const SearchDestinationContainer = styled.View`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  background-color: white;
-  border-radius: 5px;
-  padding: 0% 5%;
   height: 50px;
-  top: 15%;
+  margin: 10% 0 0 0;
 `;

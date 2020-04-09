@@ -4,6 +4,9 @@ import { LayoutView } from "../../components/styles";
 import UIDestinationsView from "../../components/UIDestinationsView";
 
 const JourneyScreen = () => {
+  // const {
+  //   journeyStore: [{ destinations }, setJourneyState],
+  // } = useContext(JourneyContext);
   return (
     <LayoutView centered>
       <UIDestinationsView showPadding={false}></UIDestinationsView>
