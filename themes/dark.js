@@ -1,11 +1,11 @@
 export default {
   colors: {
-    primary: "#07020D",
-    primaryButton: "#fff",
-    primaryText: "#000",
+    primary: "#1b262c",
+    primaryButton: "#0f4c75",
+    primaryText: "#fff",
 
-    secondary: "#FFD289",
-    secondaryButton: "#EF9F5B",
+    secondary: "#EEF0F2",
+    secondaryButton: "#EEF0F2",
     secondaryText: "#07020D",
 
     active: "#0CCE6B",

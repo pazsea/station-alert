@@ -3,25 +3,26 @@ import {
   DestinationsView,
   SecondaryHeadlineText,
   StationView,
-  StationMore
+  StationMore,
 } from "./styles";
 
 import Icon from "react-native-vector-icons/Ionicons";
 // import { dest } from "../data/destinations";
 import { JourneyContext } from "../../store/journeyStore";
+import { Card } from "react-native-elements";
 
 const UIDestinationsView = () => {
   const {
-    journeyStore: [{ destinations }, setJourneyState]
+    journeyStore: [{ destinations }, setJourneyState],
   } = useContext(JourneyContext);
 
-  const removeStation = pickedStation => {
+  const removeStation = (pickedStation) => {
     const removeStation = destinations.filter(
-      storedDest => storedDest !== pickedStation
+      (storedDest) => storedDest !== pickedStation
     );
-    setJourneyState(prevState => ({
+    setJourneyState((prevState) => ({
       ...prevState,
-      destinations: removeStation
+      destinations: removeStation,
     }));
   };
 
@@ -33,47 +34,17 @@ const UIDestinationsView = () => {
         ) {
           // console.log("MITT INDEX " + station.name + " " + index);
           return (
-            <StationView key={index + station.name}>
-              <Icon
-                name="ios-flag"
-                size={24}
-                color={"green"}
-                key={index + station.name + "flag"}
-              />
-              <SecondaryHeadlineText
-                key={index + station.name + "headlineText"}
-              >
-                {station.name}
-              </SecondaryHeadlineText>
-              {station.arrived ? (
-                <Icon
-                  name="ios-checkmark-circle"
-                  size={24}
-                  color={"green"}
-                  key={index + station.name + "checkDone"}
-                />
-              ) : (
-                <Icon
-                  name="ios-remove-circle"
-                  size={24}
-                  color={"red"}
-                  onPress={() => removeStation(station)}
-                  key={index + station.name + "circle"}
-                />
-              )}
-            </StationView>
-          );
-        } else {
-          return (
-            <>
+            <Card>
               <StationView key={index + station.name}>
                 <Icon
                   name="ios-flag"
                   size={24}
-                  color={"grey"}
+                  color={"green"}
                   key={index + station.name + "flag"}
                 />
-                <SecondaryHeadlineText key={index + station.name + "headliner"}>
+                <SecondaryHeadlineText
+                  key={index + station.name + "headlineText"}
+                >
                   {station.name}
                 </SecondaryHeadlineText>
                 {station.arrived ? (
@@ -93,11 +64,47 @@ const UIDestinationsView = () => {
                   />
                 )}
               </StationView>
+            </Card>
+          );
+        } else {
+          return (
+            <>
+              <Card>
+                <StationView key={index + station.name}>
+                  <Icon
+                    name="ios-flag"
+                    size={24}
+                    color={"grey"}
+                    key={index + station.name + "flag"}
+                  />
+                  <SecondaryHeadlineText
+                    key={index + station.name + "headliner"}
+                  >
+                    {station.name}
+                  </SecondaryHeadlineText>
+                  {station.arrived ? (
+                    <Icon
+                      name="ios-checkmark-circle"
+                      size={24}
+                      color={"green"}
+                      key={index + station.name + "checkDone"}
+                    />
+                  ) : (
+                    <Icon
+                      name="ios-remove-circle"
+                      size={24}
+                      color={"red"}
+                      onPress={() => removeStation(station)}
+                      key={index + station.name + "circle"}
+                    />
+                  )}
+                </StationView>
+              </Card>
               <StationMore key={index + station.name + "more"}>
                 <Icon
                   name="ios-more"
                   size={30}
-                  color={"white"}
+                  color={"black"}
                   key={index + station.name + "icon" + "more"}
                 />
               </StationMore>
@@ -108,9 +115,9 @@ const UIDestinationsView = () => {
     : null;
 
   return (
-    <DestinationsView hasDestinations={destinations.length}>
-      {content}
-    </DestinationsView>
+      <DestinationsView hasDestinations={destinations.length}>
+        {content}
+      </DestinationsView>
   );
 };
 

@@ -4,43 +4,47 @@ import {
   StationButton,
   StationButtonContainer,
   ButtonText,
-  SearchDestinationContainer
+  SearchDestinationContainer,
 } from "./styles";
 import dest from "../data/destinations";
 import { JourneyContext } from "../../store/journeyStore";
 import Icon from "react-native-vector-icons/Ionicons";
+import { Button } from "react-native-elements";
 
-const UISearchDestination = ({ startedSearching, setStartedSearching }) => {
+const UISearchDestination = ({
+  startedSearching,
+  setStartedSearching,
+}) => {
   const {
-    journeyStore: [journeyState, setJourneyState]
+    journeyStore: [journeyState, setJourneyState],
   } = useContext(JourneyContext);
 
   const [searchResult, setSearchResult] = useState([]);
   const [value, setValue] = useState("");
 
-  const handlePressedStation = pickedStation => {
+  const handlePressedStation = (pickedStation) => {
     const currentDestinations = journeyState.destinations;
     const existingStation = currentDestinations.find(
-      storedDest => storedDest.name === pickedStation.name
+      (storedDest) => storedDest.name === pickedStation.name
     );
 
     if (existingStation) {
       const removeStation = currentDestinations.filter(
-        storedDest => storedDest.name !== pickedStation.name
+        (storedDest) => storedDest.name !== pickedStation.name
       );
       setJourneyState({
         ...journeyState,
-        destinations: removeStation
+        destinations: removeStation,
       });
     } else {
       setJourneyState({
         ...journeyState,
-        destinations: [...journeyState.destinations, pickedStation]
+        destinations: [...journeyState.destinations, pickedStation],
       });
     }
   };
 
-  const onChangeHandler = text => {
+  const onChangeHandler = (text) => {
     setValue(text);
     if (text) {
       setStartedSearching(true);
@@ -56,10 +60,10 @@ const UISearchDestination = ({ startedSearching, setStartedSearching }) => {
     setStartedSearching(false);
   };
 
-  const calculateSearchResult = text => {
+  const calculateSearchResult = (text) => {
     const destinations = dest;
     setSearchResult(
-      destinations.filter(object =>
+      destinations.filter((object) =>
         object.name.toUpperCase().includes(text.toUpperCase())
       )
     );
@@ -68,15 +72,31 @@ const UISearchDestination = ({ startedSearching, setStartedSearching }) => {
   //EVALUATE RETURN:
   const buttons =
     startedSearching && searchResult
-      ? searchResult.slice(0, 3).map((station, index) => (
-          <StationButton
-            key={index + station.name}
-            onPress={() => handlePressedStation(station)}
-            active={journeyState.destinations.includes(station)}
-          >
-            <ButtonText>{station.name.toUpperCase()}</ButtonText>
-          </StationButton>
-        ))
+      ? searchResult.slice(0, 3).map((station, index) => {
+          const stationAlreadyPicked = journeyState.destinations.includes(
+            station
+          );
+          return (
+            <Button
+              title={station.name}
+              onPress={() => handlePressedStation(station)}
+              icon={{
+                name: stationAlreadyPicked ? "check" : "train",
+                color: stationAlreadyPicked ? "#fff" : "#000",
+                size: 20,
+              }}
+              buttonStyle={{
+                backgroundColor: stationAlreadyPicked ? "#0CCE6B" : "#EEF0F2",
+                marginRight: "5%",
+                marginTop: "2%",
+                marginBottom: "2%",
+                alignItems: "baseline",
+              }}
+              iconRight
+              titleStyle={{ color: stationAlreadyPicked ? "#fff" : "#000" }}
+            />
+          );
+        })
       : null;
 
   return (

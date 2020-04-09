@@ -4,8 +4,8 @@ export default {
     primaryButton: "#468189",
     primaryText: "#fff",
 
-    secondary: "#FFD289",
-    secondaryButton: "#EF9F5B",
+    secondary: "#EEF0F2",
+    secondaryButton: "#EEF0F2",
     secondaryText: "#07020D",
 
     active: "#0CCE6B",

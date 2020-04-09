@@ -10,16 +10,16 @@ import {
   LayoutView,
   Image,
   ContainerView,
-  SecondaryButton
+  SecondaryButton,
 } from "../../components/styles";
 
 import UISearchDestination from "../../components/UISearchDestination";
 import UIDestinationsView from "../../components/UIDestinationsView";
 
-const FindDestinationScreen = props => {
+const FindDestinationScreen = (props) => {
   const {
     journeyStore: [journeyState, setJourneyState],
-    setInitialStore
+    setInitialStore,
   } = useContext(JourneyContext);
   const { navigate } = props.navigation;
 
@@ -29,7 +29,7 @@ const FindDestinationScreen = props => {
 
   const confirmDestinations = () => {
     navigate("JourneyScreen");
-    setJourneyState(prevState => ({ ...prevState, startedTrip: true }));
+    setJourneyState((prevState) => ({ ...prevState, startedTrip: true }));
   };
 
   const cancelTrip = () => {
@@ -77,9 +77,11 @@ const FindDestinationScreen = props => {
           <UIDestinationsView />
         </>
       </ContainerView>
-      <PrimaryButton onPress={confirmDestinations}>
-        <ButtonText>Confirm Destination</ButtonText>
-      </PrimaryButton>
+      {startedSearching || hasDestinations ? (
+        <PrimaryButton onPress={confirmDestinations}>
+          <ButtonText>Confirm destination</ButtonText>
+        </PrimaryButton>
+      ) : null}
     </LayoutView>
   );
 

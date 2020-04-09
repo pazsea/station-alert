@@ -5,7 +5,7 @@ import UIDestinationsView from "../../components/UIDestinationsView";
 
 const JourneyScreen = () => {
   return (
-    <LayoutView>
+    <LayoutView centered>
       <UIDestinationsView showPadding={false}></UIDestinationsView>
     </LayoutView>
   );
@@ -15,9 +15,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#456990"
-  }
+    marginTop: "30%",
+    alignSelf: "center",
+    backgroundColor: "#456990",
+  },
 });
 
 export default JourneyScreen;

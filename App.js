@@ -66,7 +66,7 @@ const TabNavigator = createMaterialBottomTabNavigator(
     },
   },
   {
-    shifting: true,
+    shifting: false,
     labeled: true,
     initialRouteName: "FindDestinationScreen",
     activeColor: "#E4DC93",
