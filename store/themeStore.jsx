@@ -8,7 +8,7 @@ import darkTheme from "../themes/dark";
 export const ThemeContext = createContext();
 
 export const ThemeContextProvider = props => {
-  const [lightThemeState, setLightThemeState] = useState(true);
+  const [lightThemeState, setLightThemeState] = useState(false);
 
   const saveThemeState = async () => {
     if (lightThemeState) {
@@ -38,7 +38,7 @@ export const ThemeContextProvider = props => {
   }, []);
 
   return (
-    <ThemeContext.Provider value={[lightTheme, setLightThemeState]}>
+    <ThemeContext.Provider value={[lightThemeState, setLightThemeState]}>
       <ThemeProvider theme={lightThemeState ? lightTheme : darkTheme}>
         {props.children}
       </ThemeProvider>

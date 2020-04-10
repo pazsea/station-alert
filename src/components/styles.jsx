@@ -32,7 +32,7 @@ export const LayoutView = styled.SafeAreaView`
   flex: 1;
   justify-content: ${({ centered }) => (centered ? "center" : "space-between")};
   align-items: center;
-  padding: 0 10% 2% 10%;
+  padding: 10% 5% 2% 5%;
 `;
 
 export const DestinationsView = styled.ScrollView`
@@ -116,5 +116,4 @@ export const StationButton = styled.TouchableOpacity`
 
 export const SearchDestinationContainer = styled.View`
   height: 50px;
-  margin: 10% 0 0 0;
 `;

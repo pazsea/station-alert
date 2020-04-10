@@ -12,9 +12,9 @@ export default {
     inactive: "#E84855"
   },
   font: {
-    primarySize: "18px",
-    primaryHeadline: "20px",
-    buttonSize: "20px"
+    primarySize: "16px",
+    primaryHeadline: "18px",
+    buttonSize: "16px"
   }
 };
 

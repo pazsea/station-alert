@@ -1,22 +1,13 @@
 import React from "react";
 import { StyleSheet, View, Text } from "react-native";
-
+import { LayoutView } from "../../components/styles";
 
 const FavouritesScreen = () => {
   return (
-    <View style={styles.container}>
-      <Text>FavouritesScreen</Text>
-    </View>
+    <LayoutView centered>
+      <Text style={{ color: "white" }}>Fav</Text>
+    </LayoutView>
   );
 };
-
-const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      justifyContent: "center",
-      alignItems: "center",
-      backgroundColor: "#456990"
-    }
-  });
 
 export default FavouritesScreen;
