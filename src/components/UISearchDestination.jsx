@@ -76,6 +76,7 @@ const UISearchDestination = ({ startedSearching, setStartedSearching }) => {
           return (
             <Button
               title={station.name}
+              key={station.name + index}
               onPress={() => handlePressedStation(station)}
               icon={{
                 name: stationAlreadyPicked ? "check" : "train",

@@ -58,7 +58,6 @@ export const StationMore = styled.View`
   display: flex;
   flex-direction: row;
   justify-content: center;
-  align-items: center;
 `;
 
 // FONTS
@@ -91,7 +90,7 @@ export const PrimaryButton = styled.TouchableOpacity`
   background-color: ${(props) => props.theme.colors.primaryButton};
 `;
 
-export const SecondaryButton = styled.TouchableOpacity`
+export const InactiveButton = styled.TouchableOpacity`
   width: 90%;
   margin: 2%;
   padding: 4%;

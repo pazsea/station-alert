@@ -10,11 +10,12 @@ import {
   LayoutView,
   Image,
   ContainerView,
-  SecondaryButton,
+  InactiveButton,
 } from "../../components/styles";
 
 import UISearchDestination from "../../components/UISearchDestination";
 import UIDestinationsView from "../../components/UIDestinationsView";
+import { View } from "react-native";
 
 const FindDestinationScreen = (props) => {
   const {
@@ -25,7 +26,7 @@ const FindDestinationScreen = (props) => {
 
   const [startedSearching, setStartedSearching] = useState(false);
 
-  const hasDestinations = journeyState.destinations.length;
+  const hasDestinations = journeyState.destinations.length > 0;
 
   const confirmDestinations = () => {
     setJourneyState((prevState) => ({ ...prevState, startedTrip: true }));
@@ -46,9 +47,9 @@ const FindDestinationScreen = (props) => {
           new one.
         </PrimaryText>
       </ContainerView>
-      <SecondaryButton onPress={cancelTrip}>
+      <InactiveButton onPress={cancelTrip}>
         <ButtonText>Cancel journey</ButtonText>
-      </SecondaryButton>
+      </InactiveButton>
     </LayoutView>
   );
 
@@ -67,7 +68,9 @@ const FindDestinationScreen = (props) => {
     <LayoutView>
       <ContainerView>
         {startedSearching || hasDestinations ? null : (
-          <Image source={trainlogo} />
+          <View style={{ marginBottom: "5%" }}>
+            <Image source={trainlogo} />
+          </View>
         )}
         <>
           <UISearchDestination
@@ -77,7 +80,7 @@ const FindDestinationScreen = (props) => {
           <UIDestinationsView />
         </>
       </ContainerView>
-      {startedSearching || hasDestinations ? (
+      {startedSearching && hasDestinations ? (
         <PrimaryButton onPress={confirmDestinations}>
           <ButtonText>Confirm destination</ButtonText>
         </PrimaryButton>

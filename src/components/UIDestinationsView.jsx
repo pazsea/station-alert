@@ -10,6 +10,7 @@ import Icon from "react-native-vector-icons/Ionicons";
 // import { dest } from "../data/destinations";
 import { JourneyContext } from "../../store/journeyStore";
 import { Card } from "react-native-elements";
+import { View } from "react-native";
 
 const UIDestinationsView = () => {
   const {
@@ -34,8 +35,8 @@ const UIDestinationsView = () => {
         ) {
           // console.log("MITT INDEX " + station.name + " " + index);
           return (
-            <Card>
-              <StationView key={index + station.name}>
+            <Card key={"card" + index + station.name}>
+              <StationView key={"stationView" + index + station.name}>
                 <Icon
                   name="ios-flag"
                   size={24}
@@ -68,9 +69,9 @@ const UIDestinationsView = () => {
           );
         } else {
           return (
-            <>
-              <Card>
-                <StationView key={index + station.name}>
+            <View key={"stationContainer" + index + station.name}>
+              <Card key={"kort" + index + station.name}>
+                <StationView key={"stationVy" + index + station.name}>
                   <Icon
                     name="ios-flag"
                     size={24}
@@ -105,19 +106,19 @@ const UIDestinationsView = () => {
                   name="ios-more"
                   size={30}
                   color={"black"}
-                  key={index + station.name + "icon" + "more"}
+                  key={index + station.name + "icon " + "more"}
                 />
               </StationMore>
-            </>
+            </View>
           );
         }
       })
     : null;
 
   return (
-      <DestinationsView hasDestinations={destinations.length}>
-        {content}
-      </DestinationsView>
+    <DestinationsView hasDestinations={destinations.length}>
+      {content}
+    </DestinationsView>
   );
 };
 
