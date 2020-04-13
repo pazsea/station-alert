@@ -8,7 +8,7 @@ import {
   PrimaryButton,
   ButtonText,
   LayoutView,
-  Image,
+  TrainImage,
   ContainerView,
   InactiveButton,
 } from "../../components/styles";
@@ -16,19 +16,22 @@ import {
 import UISearchDestination from "../../components/UISearchDestination";
 import UIDestinationsView from "../../components/UIDestinationsView";
 import { View } from "react-native";
+import { Card, Text } from "react-native-elements";
 
 const FindDestinationScreen = (props) => {
   const {
     journeyStore: [journeyState, setJourneyState],
     setInitialStore,
   } = useContext(JourneyContext);
+
   const { navigate } = props.navigation;
 
   const [startedSearching, setStartedSearching] = useState(false);
 
-  const hasDestinations = journeyState.destinations.length > 0;
+  const hasDestinations = journeyState.destinations.length;
 
   const confirmDestinations = () => {
+    setStartedSearching(false);
     setJourneyState((prevState) => ({ ...prevState, startedTrip: true }));
     navigate("JourneyScreen");
   };
@@ -41,11 +44,16 @@ const FindDestinationScreen = (props) => {
   const startedTripView = (
     <LayoutView>
       <ContainerView>
-        <Image source={trainlogo} />
-        <PrimaryText>
-          You have an ongoing journey. You need to cancel it before starting a
-          new one.
-        </PrimaryText>
+        <TrainImage source={trainlogo} />
+        <Card
+          title="Cancel journey first"
+          containerStyle={{ borderRadius: 5, margin: 0 }}
+        >
+          <PrimaryText>
+            You have an ongoing journey. You need to cancel it before starting a
+            new one.
+          </PrimaryText>
+        </Card>
       </ContainerView>
       <InactiveButton onPress={cancelTrip}>
         <ButtonText>Cancel journey</ButtonText>
@@ -55,12 +63,10 @@ const FindDestinationScreen = (props) => {
 
   const noAccessView = (
     <LayoutView>
-      <ContainerView>
-        <Image source={trainlogo} />
-        <PrimaryText>
-          You have to allow this app to access your location.
-        </PrimaryText>
-      </ContainerView>
+      <TrainImage source={trainlogo} />
+      <PrimaryText>
+        You have to allow this app to access your location.
+      </PrimaryText>
     </LayoutView>
   );
 
@@ -69,16 +75,14 @@ const FindDestinationScreen = (props) => {
       <ContainerView>
         {startedSearching || hasDestinations ? null : (
           <View style={{ marginBottom: "5%" }}>
-            <Image source={trainlogo} />
+            <TrainImage source={trainlogo} />
           </View>
         )}
-        <>
-          <UISearchDestination
-            setStartedSearching={setStartedSearching}
-            startedSearching={startedSearching}
-          ></UISearchDestination>
-          <UIDestinationsView />
-        </>
+        <UISearchDestination
+          setStartedSearching={setStartedSearching}
+          startedSearching={startedSearching}
+        ></UISearchDestination>
+        <UIDestinationsView />
       </ContainerView>
       {startedSearching && hasDestinations ? (
         <PrimaryButton onPress={confirmDestinations}>

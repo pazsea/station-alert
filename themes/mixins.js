@@ -1,6 +1,6 @@
 export const mixinText = (props) => `
-  color: ${props.theme.colors.primaryText};
   font-size: ${props.theme.font.primarySize};
+  text-align: center;
 `;
 
 export const mixinBackground = (props) => `

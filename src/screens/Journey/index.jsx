@@ -1,15 +1,55 @@
-import React from "react";
+import React, { useContext } from "react";
 import { StyleSheet, View, Text } from "react-native";
-import { LayoutView } from "../../components/styles";
+import { Card, Button } from "react-native-elements";
+import {
+  LayoutView,
+  InactiveButton,
+  ButtonText,
+  ContainerView,
+  PrimaryButton,
+} from "../../components/styles";
+import { JourneyContext } from "../../../store/journeyStore";
+
 import UIDestinationsView from "../../components/UIDestinationsView";
 
-const JourneyScreen = () => {
-  // const {
-  //   journeyStore: [{ destinations }, setJourneyState],
-  // } = useContext(JourneyContext);
+const JourneyScreen = (props) => {
+  const {
+    journeyStore: [{ destinations, startedTrip }, setJourneyState],
+    setInitialStore,
+  } = useContext(JourneyContext);
+
+  const { navigate } = props.navigation;
+
+  const cancelTrip = () => {
+    setInitialStore();
+  };
+
+  const hasDestinations = destinations.length;
+
   return (
-    <LayoutView centered>
-      <UIDestinationsView showPadding={false}></UIDestinationsView>
+    <LayoutView>
+      {hasDestinations && startedTrip ? (
+        <>
+          <UIDestinationsView />
+          <InactiveButton onPress={cancelTrip}>
+            <ButtonText>Cancel journey</ButtonText>
+          </InactiveButton>
+        </>
+      ) : (
+        <>
+          <Card
+            title="You have no ongoing yourney."
+            containerStyle={{ borderRadius: 5, width: "100%" }}
+          >
+            <Text style={{ marginBottom: 10 }}>
+              Please press the button to enter your destination or route.
+            </Text>
+          </Card>
+          <PrimaryButton>
+            <ButtonText>Search for you destination</ButtonText>
+          </PrimaryButton>
+        </>
+      )}
     </LayoutView>
   );
 };

@@ -7,16 +7,16 @@ import {
 
 // IMAGES
 
-export const Image = styled.Image`
-  margin: 20% 0 5% 0;
+export const TrainImage = styled.Image`
   width: 100%;
   height: 130px;
+  transform: translate(-10px);
 `;
 
 // LAYOUT
 
 export const ContainerView = styled.View`
-  width: 90%;
+  width: 100%;
 `;
 
 export const StationButtonContainer = styled.View`
@@ -28,11 +28,13 @@ export const StationButtonContainer = styled.View`
 
 export const LayoutView = styled.SafeAreaView`
   ${mixinBackground}
-  display:flex;
+  height: 100%;
+  display: flex;
   flex: 1;
-  justify-content: ${({ centered }) => (centered ? "center" : "space-between")};
+  justify-content: ${({ centered, evenly }) =>
+    centered ? "center" : evenly ? "space-evenly" : "space-between"};
   align-items: center;
-  padding: 10% 5% 2% 5%;
+  padding: 10% 10% 2% 10%;
 `;
 
 export const DestinationsView = styled.ScrollView`
@@ -82,8 +84,7 @@ export const ButtonText = styled.Text`
 //BUTTONS
 
 export const PrimaryButton = styled.TouchableOpacity`
-  width: 90%;
-  margin: 2%;
+  width: 100%;
   padding: 4%;
   border-radius: 5px;
   border: 0.1px solid black;
@@ -91,8 +92,7 @@ export const PrimaryButton = styled.TouchableOpacity`
 `;
 
 export const InactiveButton = styled.TouchableOpacity`
-  width: 90%;
-  margin: 2%;
+  width: 100%;
   padding: 4%;
   border-radius: 5px;
   border: 0.1px solid black;
