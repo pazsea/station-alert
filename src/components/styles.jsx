@@ -10,20 +10,22 @@ import {
 export const TrainImage = styled.Image`
   width: 100%;
   height: 130px;
+  margin: 0 0 10% 0;
   transform: translate(-10px);
 `;
 
 // LAYOUT
 
-export const ContainerView = styled.View`
+export const ContainerView = styled.ScrollView`
   width: 100%;
+  max-height: 100%;
 `;
 
 export const StationButtonContainer = styled.View`
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
-  margin-top: 5%;
+  margin: 5% 0;
 `;
 
 export const LayoutView = styled.SafeAreaView`
@@ -54,6 +56,7 @@ export const StationView = styled.View`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  padding: 3% 0;
 `;
 
 export const StationMore = styled.View`

@@ -81,10 +81,10 @@ const FindDestinationScreen = (props) => {
         <UISearchDestination
           setStartedSearching={setStartedSearching}
           startedSearching={startedSearching}
-        ></UISearchDestination>
-        <UIDestinationsView />
+        />
+        {hasDestinations ? <UIDestinationsView /> : null}
       </ContainerView>
-      {startedSearching && hasDestinations ? (
+      {hasDestinations ? (
         <PrimaryButton onPress={confirmDestinations}>
           <ButtonText>Confirm destination</ButtonText>
         </PrimaryButton>
