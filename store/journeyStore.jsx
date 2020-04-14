@@ -29,7 +29,7 @@ export const JourneyContextProvider = props => {
   // }, [journeyState.destinations]);
 
   useEffect(() => {
-    if (journeyState.startedTrip && journeyState.destinations.length) {
+    if (journeyState.startedTrip && journeyState.destinations.length > 0) {
       journeyState.destinations.map((station, index) => {
         const { lat, long } = station;
         if (station.arrived) {
@@ -39,8 +39,9 @@ export const JourneyContextProvider = props => {
           startWatchListener(lat, long, index);
         }
       });
-    } else {
+    } else if (!journeyState.destinations.length && journeyState) {
       // console.log("GEOLOCATION INTE STARTAD");
+      setJourneyState(INITIAL_JOURNEY_STATE)
     }
   }, [journeyState.destinations, journeyState.startedTrip]);
 
@@ -100,7 +101,7 @@ export const JourneyContextProvider = props => {
     } else {
       setJourneyState(prevState => ({
         ...prevState,
-        accessToLocation: true
+        accessToLocation: false
       }));
     }
   };
