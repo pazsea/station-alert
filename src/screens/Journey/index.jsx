@@ -26,13 +26,17 @@ const JourneyScreen = (props) => {
 
   const { navigate } = props.navigation;
 
+  const goToSearchScreen = () => {
+    navigate("FindDestinationScreen");
+  };
+
   const cancelTrip = () => {
     setInitialStore();
   };
 
   return (
     <LayoutView>
-      {destinations.length > 0 && startedTrip ? (
+      {destinations && startedTrip ? (
         <>
           <ContainerView>
             <ListItem
@@ -89,7 +93,7 @@ const JourneyScreen = (props) => {
                               textAlign: "center",
                             }}
                           >
-                            {station.name}
+                            {index + 1 + ". " + station.name}
                           </Text>
                           <FontAwesome5
                             style={{ alignSelf: "center" }}
@@ -134,7 +138,9 @@ const JourneyScreen = (props) => {
             </PrimaryText>
           </Card>
           <PrimaryButton>
-            <ButtonText>Search for you destination</ButtonText>
+            <ButtonText onPress={goToSearchScreen}>
+              Find your destination
+            </ButtonText>
           </PrimaryButton>
         </>
       )}
