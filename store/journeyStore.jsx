@@ -1,7 +1,5 @@
 import React, { useState, createContext, useEffect } from "react";
 
-import * as Permissions from "expo-permissions";
-
 import { isPointWithinRadius } from "geolib";
 
 export const JourneyContext = createContext();
@@ -9,102 +7,114 @@ export const JourneyContext = createContext();
 const INITIAL_JOURNEY_STATE = {
   destinations: [],
   startedTrip: false,
-  accessToLocation: true
+  arrivedAllStations: false,
 };
 
-export const JourneyContextProvider = props => {
+const INITIAL_USERPOSITION_STATE = {
+  lat: null,
+  long: null,
+};
+
+// Permission location ska finnas när appen startas och vara granted
+// När started trip är true så ska gps aktiveras och logga position till statet
+// Varje gång det state uppdateras ska man kolla om någon av destinationerna är iom diametern.
+// Om så är fallet ås är den destinationen framme.
+
+export const JourneyContextProvider = (props) => {
   const [journeyState, setJourneyState] = useState(INITIAL_JOURNEY_STATE);
+  const [userPosition, setUserPosition] = useState(INITIAL_USERPOSITION_STATE);
+
+  const [locationAllowed, setLocationAllowed] = useState(false);
+
+  //___ HELPERS
 
   // useEffect(() => {
-  //   journeyState.destinations.map((station, index) => {
-  //     console.log(
-  //       "STATET STATION " +
-  //         station.name +
-  //         " " +
-  //         index +
-  //         " Arrival " +
-  //         station.arrived
-  //     );
+  //   journeyState.destinations.map((station) => {
+  //     console.log(station);
   //   });
   // }, [journeyState.destinations]);
 
+  // useEffect(() => {
+  //   if (userPosition) {
+  //     console.log(userPosition.lat);
+  //   }
+  // }, [userPosition]);
+
+  //___
+
+  // useEffect(() => {
+  //   if (journeyState.destinations.length > 0) {
+  //     const arrivedAtStations = () => journeyState.destinations.every((station) => {
+  //       console.log("JourneyContextProvider -> station MAP", station);
+  //       station.arrived === true;
+  //     });
+
+  //     console.log("ARRIVED IS ", arrivedAtStations());
+  //     if (!arrivedAtStations) {
+  //       console.log("NO MORE DESTINATIONS");
+  //       setJourneyState({
+  //         destinations: [],
+  //         startedTrip: false,
+  //         arrivedAllStations: true,
+  //       });
+  //     }
+  //   }
+  // }, [journeyState]);
+
   useEffect(() => {
-    if (journeyState.startedTrip && journeyState.destinations.length > 0) {
-      journeyState.destinations.map((station, index) => {
-        const { lat, long } = station;
-        if (station.arrived) {
-          return;
-        } else {
-          // console.log("GEOLOCATION STARTAD FÖR " + station.name);
-          startWatchListener(lat, long, index);
+    if (userPosition.lat) {
+      // Kolla om någon station är inom min radie
+      console.log("Du kollar coords");
+
+      journeyState.destinations?.map((station, stationIndex) => {
+        const stationArrived = isPointWithinRadius(
+          {
+            latitude: userPosition.lat,
+            longitude: userPosition.long,
+          },
+          { latitude: station.lat, longitude: station.long },
+          500
+        );
+
+        if (stationArrived) {
+          let newDestinationStatus = [...journeyState.destinations];
+          newDestinationStatus[stationIndex].arrived = true;
+
+          setJourneyState((prevState) => ({
+            ...prevState,
+            destinations: newDestinationStatus,
+          }));
         }
       });
-    } else if (!journeyState.destinations.length && journeyState) {
-      // console.log("GEOLOCATION INTE STARTAD");
-      setJourneyState(INITIAL_JOURNEY_STATE)
     }
-  }, [journeyState.destinations, journeyState.startedTrip]);
+  }, [userPosition.lat, userPosition.long]);
 
-  startWatchListener = async (destinationLat, destinationLong, stateIndex) => {
-    const { status } = await Permissions.askAsync(Permissions.LOCATION);
-
-    if (status === "granted") {
+  useEffect(() => {
+    if (locationAllowed && journeyState.startedTrip) {
+      //Kör gps och sätt nytt state med ens position
       const watchID = navigator.geolocation.watchPosition(
-        position => {
-          // checks if 51.525/7.4575 is within a radius of 5 km from 51.5175/7.4678
-          const hasArrived = isPointWithinRadius(
-            {
-              latitude: position.coords.latitude,
-              longitude: position.coords.longitude
-            },
-            { latitude: destinationLat, longitude: destinationLong },
-            500
-          );
-
-          // console.log("POSITION" + position.coords.latitude);
-
-          if (hasArrived) {
-            const stateWithArrival = journeyState.destinations.map(
-              (station, index) => {
-                if (index === stateIndex) {
-                  return { ...station, arrived: true };
-                } else {
-                  return station;
-                }
-              }
-            );
-
-            // console.log("NYA STATET " + JSON.stringify(stateWithArrival));
-
-            setJourneyState(prevState => ({
-              ...prevState,
-              destinations: stateWithArrival
-            })),
-              navigator.geolocation.clearWatch(watchID);
-            console.log(
-              journeyState.destinations[stateIndex].name + " HAR KOMMIT FRAM"
-            );
-          } else {
-            // Passenger hasn't reach his/hers destination.
-          }
+        (position) => {
+          setUserPosition({
+            lat: position.coords.latitude,
+            long: position.coords.longitude,
+          });
         },
-        error => {
+        (error) => {
           console.log(error.code, error.message);
         },
         {
           enableHighAccuracy: true,
           // distanceFilter: 0.1,
           timeout: 15000,
-          maximumAge: 10000
+          maximumAge: 10000,
         }
       );
-    } else {
-      setJourneyState(prevState => ({
-        ...prevState,
-        accessToLocation: false
-      }));
+      return () => {
+        navigator.geolocation.clearWatch(watchID);
+        console.log("JourneyContextProvider -> navigator", "CLEARED");
+      };
     }
-  };
+  }, [locationAllowed, journeyState.startedTrip]);
 
   const setInitialStore = () => {
     setJourneyState(INITIAL_JOURNEY_STATE);
@@ -112,7 +122,8 @@ export const JourneyContextProvider = props => {
 
   const stores = {
     journeyStore: [journeyState, setJourneyState],
-    setInitialStore
+    permission: [locationAllowed, setLocationAllowed],
+    setInitialStore,
   };
 
   return (
@@ -123,26 +134,3 @@ export const JourneyContextProvider = props => {
 };
 
 export default JourneyContextProvider;
-
-//   useEffect(() => {
-//     const userData = localStorage.getItem("user");
-//     const globalClassData = localStorage.getItem("globalClassDetails");
-
-//     if (userData) {
-//       setUserDetails(JSON.parse(userData));
-//     }
-//     if (globalClassData) {
-//       setGlobalClassDetails(JSON.parse(globalClassData));
-//     }
-//   }, []);
-
-//   useEffect(() => {
-//     localStorage.setItem(
-//       "globalClassDetails",
-//       JSON.stringify(globalClassDetails)
-//     );
-//   });
-
-//   useEffect(() => {
-//     localStorage.setItem("user", JSON.stringify(userDetails));
-//   });

@@ -1,11 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import {
-  SearchDestinationInput,
-  StationButton,
-  StationButtonContainer,
-  ButtonText,
-  SearchDestinationContainer,
-} from "./styles";
+import { StationButtonContainer, SearchDestinationContainer } from "./styles";
 import dest from "../data/destinations";
 import { JourneyContext } from "../../store/journeyStore";
 import Icon from "react-native-vector-icons/Ionicons";

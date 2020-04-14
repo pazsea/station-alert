@@ -1,5 +1,6 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { JourneyContext } from "../../../store/journeyStore";
+import * as Permissions from "expo-permissions";
 
 import trainlogo from "../../../images/trainlogo.png";
 
@@ -21,6 +22,7 @@ import { Card, Text } from "react-native-elements";
 const FindDestinationScreen = (props) => {
   const {
     journeyStore: [journeyState, setJourneyState],
+    permission: [locationAllowed, setLocationAllowed],
     setInitialStore,
   } = useContext(JourneyContext);
 
@@ -29,6 +31,21 @@ const FindDestinationScreen = (props) => {
   const [startedSearching, setStartedSearching] = useState(false);
 
   const hasDestinations = journeyState.destinations.length;
+
+  const askPermission = async () => {
+    const { status } = await Permissions.askAsync(Permissions.LOCATION);
+    if (status === "granted") {
+      setLocationAllowed(true);
+    } else {
+      console.log(status);
+    }
+  };
+
+  useEffect(() => {
+    if (!locationAllowed) {
+      askPermission();
+    }
+  }, [locationAllowed]);
 
   const confirmDestinations = () => {
     setStartedSearching(false);
@@ -63,10 +80,20 @@ const FindDestinationScreen = (props) => {
 
   const noAccessView = (
     <LayoutView>
-      <TrainImage source={trainlogo} />
-      <PrimaryText>
-        You have to allow this app to access your location.
-      </PrimaryText>
+      <ContainerView>
+        <TrainImage source={trainlogo} />
+        <Card
+          title="Allow access to location"
+          containerStyle={{ borderRadius: 5, margin: 0 }}
+        >
+          <PrimaryText>
+            You have to allow this app to access your location.
+          </PrimaryText>
+        </Card>
+      </ContainerView>
+      <InactiveButton onPress={cancelTrip}>
+        <ButtonText>Allow location access</ButtonText>
+      </InactiveButton>
     </LayoutView>
   );
 
@@ -94,10 +121,10 @@ const FindDestinationScreen = (props) => {
 
   return (
     <>
-      {journeyState.startedTrip
-        ? startedTripView
-        : journeyState.accessToLocation
+      {locationAllowed && !journeyState.startedTrip
         ? searchDestinationView
+        : journeyState.startedTrip
+        ? startedTripView
         : noAccessView}
     </>
   );

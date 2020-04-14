@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { SafeAreaView } from "react-native";
 
 import { createAppContainer } from "react-navigation";
@@ -37,12 +37,7 @@ const TabNavigator = createMaterialBottomTabNavigator(
         title: "Journey",
         tabBarIcon: ({ tintColor }) => (
           <SafeAreaView>
-            <Icon
-              style={[{ color: tintColor }]}
-              size={25}
-              name={"ios-train"}
-              
-            />
+            <Icon style={[{ color: tintColor }]} size={25} name={"ios-train"} />
           </SafeAreaView>
         ),
       },
