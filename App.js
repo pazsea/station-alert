@@ -1,7 +1,7 @@
 import React from "react";
 import { SafeAreaView } from "react-native";
 
-import { createAppContainer } from "react-navigation";
+import { createAppContainer, createSwitchNavigator } from "react-navigation";
 import { createMaterialBottomTabNavigator } from "react-navigation-material-bottom-tabs";
 
 import Icon from "react-native-vector-icons/Ionicons";
@@ -10,6 +10,8 @@ import FindDestinationScreen from "./src/screens/FindDestinations";
 import JourneyScreen from "./src/screens/Journey";
 import FavouritesScreen from "./src/screens/Favourites";
 import MoreModal from "./src/screens/MoreModal";
+import PersonalSettings from "./src/screens/PersonalSettings";
+import RecommendStation from "./src/screens/RecommendStation";
 
 import CombinedStoreProvider from "./store/combinedStore";
 import styled from "styled-components";
@@ -53,7 +55,7 @@ const TabNavigator = createMaterialBottomTabNavigator(
         ),
       },
     },
-    MoreModal: {
+    MoreScreen: {
       screen: MoreModal,
       navigationOptions: {
         title: "More",
@@ -75,7 +77,36 @@ const TabNavigator = createMaterialBottomTabNavigator(
   }
 );
 
-const AppContainer = createAppContainer(TabNavigator);
+const AllRoutes = createSwitchNavigator(
+  {
+    PersonalSettings: {
+      title: "Personal Settings",
+      screen: PersonalSettings,
+      header: ({ goBack }) => ({
+        left: (
+          <Icon
+            name={"chevron-left"}
+            onPress={() => {
+              goBack();
+            }}
+          />
+        ),
+      }),
+    },
+    RecommendStation: {
+      title: "Recommend station",
+      screen: RecommendStation,
+    },
+    Tabs: {
+      screen: TabNavigator,
+    },
+  },
+  {
+    initialRouteName: "Tabs",
+  }
+);
+
+const AppContainer = createAppContainer(AllRoutes);
 
 const ThemedView = styled.View`
   flex: 1;

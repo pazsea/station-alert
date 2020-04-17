@@ -62,7 +62,7 @@ export const JourneyContextProvider = (props) => {
   // }, [journeyState]);
 
   useEffect(() => {
-    if (userPosition.lat) {
+    if (userPosition.lat && userPosition.long) {
       // Kolla om någon station är inom min radie
       console.log("Du kollar coords");
 
