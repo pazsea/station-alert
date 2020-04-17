@@ -1,4 +1,9 @@
 export default {
+  Button: {
+    titleStyle: {
+      color: "red",
+    },
+  },
   colors: {
     primary: "#1b262c",
     primaryButton: "#0f4c75",
@@ -9,13 +14,13 @@ export default {
     secondaryText: "#07020D",
 
     active: "#0CCE6B",
-    inactive: "#E84855"
+    inactive: "#E84855",
   },
   font: {
     primarySize: "16px",
     primaryHeadline: "18px",
-    buttonSize: "16px"
-  }
+    buttonSize: "16px",
+  },
 };
 
 // Dark secondary color. Good to black blackground?

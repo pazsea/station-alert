@@ -33,7 +33,7 @@ const JourneyScreen = (props) => {
   const cancelTrip = () => {
     setInitialStore();
   };
-
+  
   return (
     <LayoutView>
       {destinations && startedTrip ? (
@@ -137,11 +137,14 @@ const JourneyScreen = (props) => {
               Please press the button to enter your destination or route.
             </PrimaryText>
           </Card>
-          <PrimaryButton>
+
+          <Button title={"Find your destination"}></Button>
+
+          {/* <PrimaryButton>
             <ButtonText onPress={goToSearchScreen}>
               Find your destination
             </ButtonText>
-          </PrimaryButton>
+          </PrimaryButton> */}
         </>
       )}
     </LayoutView>
