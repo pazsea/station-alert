@@ -8,20 +8,12 @@ import {
 } from "../../components/styles";
 import { ThemeContext } from "../../../store/themeStore";
 import { Button, Card, ListItem, Avatar, Icon } from "react-native-elements";
+import { useGoBack } from "../../constant";
 
 const PersonalSettings = (props) => {
   const { navigate } = props.navigation;
 
-  useEffect(() => {
-    BackHandler.addEventListener("hardwareBackPress", () =>
-      navigate("MoreScreen")
-    );
-    return () => {
-      BackHandler.removeEventListener("hardwareBackPress", () =>
-        navigate("MoreScreen")
-      );
-    };
-  }, []);
+  useGoBack(() => navigate("MoreScreen"));
 
   return (
     <LayoutView>

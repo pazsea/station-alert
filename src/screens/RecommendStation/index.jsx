@@ -8,18 +8,12 @@ import {
 } from "../../components/styles";
 import { ThemeContext } from "../../../store/themeStore";
 import { Button, Card, ListItem, Avatar, Icon } from "react-native-elements";
+import { useGoBack } from "../../constant";
 
-const RecommendStation = () => {
-  useEffect(() => {
-    BackHandler.addEventListener("hardwareBackPress", () =>
-      navigate("MoreScreen")
-    );
-    return () => {
-      BackHandler.removeEventListener("hardwareBackPress", () =>
-        navigate("MoreScreen")
-      );
-    };
-  }, []);
+const RecommendStation = (props) => {
+  const { navigate } = props.navigation;
+
+  useGoBack(() => navigate("MoreScreen"));
 
   return (
     <LayoutView>
