@@ -7,7 +7,7 @@ const FavouritesScreen = () => {
   const { theme } = useContext(ThemeContext);
 
   return (
-    <LayoutView primaryColor={theme.colors.primary} centered>
+    <LayoutView primaryColor={theme.colors.background} centered>
       <Text style={{ color: "white" }}>Fav</Text>
     </LayoutView>
   );

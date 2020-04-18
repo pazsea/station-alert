@@ -13,13 +13,15 @@ import { Card, Text } from "react-native-elements";
 import CustomButton from "../../components/CustomButton";
 import { ThemeContext } from "react-native-elements";
 
+//TO DO Fixa så att allow acces to location funkar smidigare. Kanske tillsammans med ett loading status?
+
 const FindDestinationScreen = (props) => {
   const {
     journeyStore: [journeyState, setJourneyState],
     permission: [locationAllowed, setLocationAllowed],
     setInitialStore,
   } = useContext(JourneyContext);
-  
+
   const { theme } = useContext(ThemeContext);
   const { navigate } = props.navigation;
 
@@ -114,7 +116,7 @@ const FindDestinationScreen = (props) => {
   );
 
   return (
-    <LayoutView  primaryColor={theme.colors.primary} >
+    <LayoutView primaryColor={theme.colors.background}>
       {locationAllowed && !journeyState.startedTrip
         ? searchDestinationView
         : journeyState.startedTrip

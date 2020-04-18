@@ -30,13 +30,15 @@ export default {
     },
   },
   SearchBar: {
-    containerStyle: { borderRadius: 5 },
+    containerStyle: { borderRadius: 5, padding: 2 },
     inputContainerStyle: { backgroundColor: "transparent" },
   },
   //MY CUSTOM CHOICES
   colors: {
+    background: "#1b262c",
     primary: "#1b262c",
     secondary: "#EEF0F2",
+    
     active: "#0CCE6B",
     inactive: "#E84855",
     pending: "#1883D5",

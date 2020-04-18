@@ -25,8 +25,10 @@ const JourneyScreen = (props) => {
     setInitialStore();
   };
 
+  console.log(theme?.colors.background);
+
   return (
-    <LayoutView primaryColor={theme.colors.primary} >
+    <LayoutView primaryColor={theme.colors.background}>
       {destinations && startedTrip ? (
         <>
           <ContainerView>

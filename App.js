@@ -70,7 +70,7 @@ const TabNavigator = createMaterialBottomTabNavigator(
   {
     shifting: false,
     labeled: true,
-    initialRouteName: "JourneyScreen",
+    initialRouteName: "FindDestinationScreen",
     activeColor: "#E4DC93",
     inactiveColor: "#fff",
     barStyle: { backgroundColor: "transparent", height: 80, paddingTop: 10 },

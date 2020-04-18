@@ -32,7 +32,7 @@ const MoreModal = (props) => {
   };
 
   return (
-    <LayoutView primaryColor={theme.colors.primary}>
+    <LayoutView primaryColor={theme.colors.background}>
       <ContainerView>
         <View style={{ alignItems: "center", paddingBottom: 30 }}>
           <Avatar

@@ -13,7 +13,7 @@ const RecommendStation = (props) => {
   useGoBack(() => navigate("MoreScreen"));
 
   return (
-    <LayoutView primaryColor={theme.colors.primary}>
+    <LayoutView primaryColor={theme.colors.background}>
       <ContainerView></ContainerView>
       <CustomButton title={"login"}></CustomButton>
       <Button></Button>
