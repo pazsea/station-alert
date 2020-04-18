@@ -1,7 +1,6 @@
 import React, { useEffect, useContext, useState } from "react";
 import { StyleSheet, View, Text, BackHandler } from "react-native";
 import { LayoutView, ContainerView } from "../../components/styles";
-import { ThemeContext } from "../../../store/themeStore";
 import { Card, Icon, Input } from "react-native-elements";
 import { useGoBack } from "../../constant";
 import CustomButton from "../../components/CustomButton";

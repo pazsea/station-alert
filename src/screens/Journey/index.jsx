@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { StyleSheet, View, Text } from "react-native";
-import { Card, Button, ListItem } from "react-native-elements";
+import { Card, Button, ListItem, ThemeContext } from "react-native-elements";
 import { LayoutView, ContainerView } from "../../components/styles";
 import { JourneyContext } from "../../../store/journeyStore";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
@@ -14,6 +14,7 @@ const JourneyScreen = (props) => {
     journeyStore: [{ destinations, startedTrip }, setJourneyState],
     setInitialStore,
   } = useContext(JourneyContext);
+  const { theme } = useContext(ThemeContext);
 
   const [showMap, setShowMap] = useState(false);
   const [showDestinations, setShowDestinations] = useState(true);
@@ -33,6 +34,10 @@ const JourneyScreen = (props) => {
               onPress={() => setShowMap(!showMap)}
               badge={{
                 value: destinations.length,
+                badgeStyle: {
+                  backgroundColor: theme.colors.pending,
+                  color: theme.colors.primary,
+                },
               }}
               title={"Map"}
               leftIcon={
@@ -139,15 +144,5 @@ const JourneyScreen = (props) => {
     </LayoutView>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    marginTop: "30%",
-    alignSelf: "center",
-    backgroundColor: "#456990",
-  },
-});
 
 export default JourneyScreen;

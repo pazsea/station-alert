@@ -39,6 +39,7 @@ export default {
     secondary: "#EEF0F2",
     active: "#0CCE6B",
     inactive: "#E84855",
+    pending: "#1883D5",
   },
 };
 
