@@ -26,7 +26,7 @@ const JourneyScreen = (props) => {
   };
 
   return (
-    <LayoutView {...props}>
+    <LayoutView primaryColor={theme.colors.primary} >
       {destinations && startedTrip ? (
         <>
           <ContainerView>

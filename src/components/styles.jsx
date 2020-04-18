@@ -1,9 +1,4 @@
 import styled from "styled-components";
-import {
-  mixinText,
-  mixinBackground,
-  mixinSecondaryHeadline,
-} from "../../themes/mixins";
 
 // IMAGES
 
@@ -16,6 +11,17 @@ export const TrainImage = styled.Image`
 
 // LAYOUT
 
+export const LayoutView = styled.SafeAreaView`
+  background-color: ${({ primaryColor }) => primaryColor};
+  height: 100%;
+  display: flex;
+  flex: 1;
+  justify-content: ${({ centered, evenly }) =>
+    centered ? "center" : evenly ? "space-evenly" : "space-between"};
+  align-items: center;
+  padding: 10% 10% 2% 10%;
+`;
+
 export const ContainerView = styled.ScrollView`
   width: 100%;
   max-height: 100%;
@@ -26,17 +32,6 @@ export const StationButtonContainer = styled.View`
   flex-wrap: wrap;
   flex-direction: row;
   margin: 5% 0;
-`;
-
-export const LayoutView = styled.SafeAreaView`
-  background-color: #1b262c;
-  height: 100%;
-  display: flex;
-  flex: 1;
-  justify-content: ${({ centered, evenly }) =>
-    centered ? "center" : evenly ? "space-evenly" : "space-between"};
-  align-items: center;
-  padding: 10% 10% 2% 10%;
 `;
 
 export const DestinationsView = styled.ScrollView`
@@ -57,61 +52,6 @@ export const StationView = styled.View`
   justify-content: space-between;
   align-items: center;
   padding: 3% 0;
-`;
-
-export const StationMore = styled.View`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-`;
-
-// FONTS
-
-export const PrimaryText = styled.Text`
-  ${mixinText}
-`;
-
-export const SecondaryHeadlineText = styled.Text`
-  ${mixinSecondaryHeadline}
-`;
-
-export const ButtonText = styled.Text`
-  color: ${(props) =>
-    props.secondary
-      ? props.theme.colors.secondaryText
-      : props.theme.colors.primaryText};
-  font-size: ${(props) => props.theme.font.buttonSize};
-  text-align: center;
-`;
-
-//BUTTONS
-
-export const PrimaryButton = styled.TouchableOpacity`
-  width: 100%;
-  padding: 4%;
-  border-radius: 5px;
-  border: 0.1px solid black;
-  background-color: ${(props) => props.theme.colors.primaryButton};
-`;
-
-export const InactiveButton = styled.TouchableOpacity`
-  width: 100%;
-  padding: 4%;
-  border-radius: 5px;
-  border: 0.1px solid black;
-  background-color: ${(props) => props.theme.colors.inactive};
-`;
-
-export const StationButton = styled.TouchableOpacity`
-  margin: 1% 0;
-  height: 100%;
-  border-radius: 5px;
-  border: 0.1px solid black;
-  background-color: ${(props) =>
-    props.active
-      ? props.theme.colors.active
-      : props.theme.colors.secondaryButton};
-  /* color: ${(props) => props.theme.colors.active}; */
 `;
 
 // INPUTS

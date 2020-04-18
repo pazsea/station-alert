@@ -11,6 +11,7 @@ import UIDestinationsView from "../../components/UIDestinationsView";
 import { View } from "react-native";
 import { Card, Text } from "react-native-elements";
 import CustomButton from "../../components/CustomButton";
+import { ThemeContext } from "react-native-elements";
 
 const FindDestinationScreen = (props) => {
   const {
@@ -18,7 +19,8 @@ const FindDestinationScreen = (props) => {
     permission: [locationAllowed, setLocationAllowed],
     setInitialStore,
   } = useContext(JourneyContext);
-
+  
+  const { theme } = useContext(ThemeContext);
   const { navigate } = props.navigation;
 
   const [startedSearching, setStartedSearching] = useState(false);
@@ -112,7 +114,7 @@ const FindDestinationScreen = (props) => {
   );
 
   return (
-    <LayoutView {...props}>
+    <LayoutView  primaryColor={theme.colors.primary} >
       {locationAllowed && !journeyState.startedTrip
         ? searchDestinationView
         : journeyState.startedTrip

@@ -5,7 +5,7 @@ import { ThemeProvider } from "react-native-elements";
 import lightTheme from "../themes/light";
 import darkTheme from "../themes/dark";
 
-export const ThemeContext = createContext();
+export const ThemeModeContext = createContext();
 
 export const ThemeContextProvider = (props) => {
   const [lightThemeState, setLightThemeState] = useState(false);
@@ -38,11 +38,11 @@ export const ThemeContextProvider = (props) => {
   }, []);
 
   return (
-    <ThemeContext.Provider value={[lightThemeState, setLightThemeState]}>
+    <ThemeModeContext.Provider value={[lightThemeState, setLightThemeState]}>
       <ThemeProvider theme={lightThemeState ? darkTheme : darkTheme}>
         {props.children}
       </ThemeProvider>
-    </ThemeContext.Provider>
+    </ThemeModeContext.Provider>
   );
 };
 

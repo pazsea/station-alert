@@ -1,0 +1,21 @@
+# Query: <LayoutView
+
+6 results - 6 files
+
+src\screens\Favourites\index.jsx:
+  7:     <LayoutView  primaryColor={theme.colors.primary} centered>
+
+src\screens\FindDestinations\index.jsx:
+  115:     <LayoutView primaryColor={theme.colors.primary} >
+
+src\screens\Journey\index.jsx:
+  29:     <LayoutView  primaryColor={theme.colors.primary}>
+
+src\screens\MoreModal\index.jsx:
+  34:     <LayoutView primaryColor={theme.colors.primary} >
+
+src\screens\PersonalSettings\index.jsx:
+  14:     <LayoutView primaryColor={theme.colors.primary} >
+
+src\screens\RecommendStation\index.jsx:
+  14:     <LayoutView  primaryColor={theme.colors.primary}>

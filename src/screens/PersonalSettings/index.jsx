@@ -4,14 +4,16 @@ import { LayoutView, ContainerView } from "../../components/styles";
 import { Card, Icon, Input } from "react-native-elements";
 import { useGoBack } from "../../constant";
 import CustomButton from "../../components/CustomButton";
+import { ThemeContext } from "react-native-elements";
 
 const PersonalSettings = (props) => {
   const { navigate } = props.navigation;
-
+  const { theme } = useContext(ThemeContext);
+  
   useGoBack(() => navigate("MoreScreen"));
 
   return (
-    <LayoutView {...props}>
+    <LayoutView primaryColor={theme.colors.primary}>
       <ContainerView>
         <Card
           title={"Personal settings"}

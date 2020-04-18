@@ -1,8 +1,8 @@
 import React, { useContext, useState } from "react";
 import { StyleSheet, View, Text } from "react-native";
 import { LayoutView, ContainerView } from "../../components/styles";
-import { ThemeContext } from "../../../store/themeStore";
-import { Button, Card, ListItem, Avatar, Icon } from "react-native-elements";
+import { ThemeModeContext } from "../../../store/themeStore";
+import { Card, ListItem, Avatar, ThemeContext } from "react-native-elements";
 import PersonalSettings from "../PersonalSettings";
 import CustomButton from "../../components/CustomButton";
 
@@ -17,7 +17,8 @@ const INITIAL_PERSONAL_INFO_STATE = {
 const MoreModal = (props) => {
   const [personalInfo, setPersonalInfo] = useState(INITIAL_PERSONAL_INFO_STATE);
 
-  const [lightThemeState, setLightThemeState] = useContext(ThemeContext);
+  const [lightThemeState, setLightThemeState] = useContext(ThemeModeContext);
+  const { theme } = useContext(ThemeContext);
 
   const { navigate } = props.navigation;
 
@@ -31,7 +32,7 @@ const MoreModal = (props) => {
   };
 
   return (
-    <LayoutView {...props}>
+    <LayoutView primaryColor={theme.colors.primary}>
       <ContainerView>
         <View style={{ alignItems: "center", paddingBottom: 30 }}>
           <Avatar
