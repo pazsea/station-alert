@@ -1,14 +1,9 @@
 import React, { useEffect, useContext, useState } from "react";
 import { StyleSheet, View, Text } from "react-native";
-import {
-  LayoutView,
-  ButtonText,
-  ContainerView,
-  PrimaryButton,
-} from "../../components/styles";
-import { ThemeContext } from "../../../store/themeStore";
+import { LayoutView, ContainerView } from "../../components/styles";
 import { Button, Card, ListItem, Avatar, Icon } from "react-native-elements";
 import { useGoBack } from "../../constant";
+import CustomButton from "../../components/CustomButton";
 
 const RecommendStation = (props) => {
   const { navigate } = props.navigation;
@@ -16,11 +11,10 @@ const RecommendStation = (props) => {
   useGoBack(() => navigate("MoreScreen"));
 
   return (
-    <LayoutView>
+    <LayoutView {...props}>
       <ContainerView></ContainerView>
-      <PrimaryButton>
-        <ButtonText>Save</ButtonText>
-      </PrimaryButton>
+      <CustomButton title={"login"}></CustomButton>
+      <Button></Button>
     </LayoutView>
   );
 };

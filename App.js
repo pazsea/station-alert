@@ -70,7 +70,7 @@ const TabNavigator = createMaterialBottomTabNavigator(
   {
     shifting: false,
     labeled: true,
-    initialRouteName: "FindDestinationScreen",
+    initialRouteName: "JourneyScreen",
     activeColor: "#E4DC93",
     inactiveColor: "#fff",
     barStyle: { backgroundColor: "transparent", height: 80, paddingTop: 10 },
@@ -110,7 +110,7 @@ const AppContainer = createAppContainer(AllRoutes);
 
 const ThemedView = styled.View`
   flex: 1;
-  background-color: ${(props) => props.theme.colors.primary};
+  background-color: #1b262c;
 `;
 
 export default App = () => {

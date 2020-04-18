@@ -1,14 +1,10 @@
 import React, { useContext, useState } from "react";
 import { StyleSheet, View, Text } from "react-native";
-import {
-  LayoutView,
-  ButtonText,
-  ContainerView,
-  PrimaryButton,
-} from "../../components/styles";
+import { LayoutView, ContainerView } from "../../components/styles";
 import { ThemeContext } from "../../../store/themeStore";
 import { Button, Card, ListItem, Avatar, Icon } from "react-native-elements";
 import PersonalSettings from "../PersonalSettings";
+import CustomButton from "../../components/CustomButton";
 
 // TO DO: Detta borde vara en store som har användarens inloggningsuppgifter. Gör en sån senare.
 const INITIAL_PERSONAL_INFO_STATE = {
@@ -35,7 +31,7 @@ const MoreModal = (props) => {
   };
 
   return (
-    <LayoutView>
+    <LayoutView {...props}>
       <ContainerView>
         <View style={{ alignItems: "center", paddingBottom: 30 }}>
           <Avatar
@@ -77,9 +73,7 @@ const MoreModal = (props) => {
           />
         </Card>
       </ContainerView>
-      <PrimaryButton>
-        <ButtonText>Login</ButtonText>
-      </PrimaryButton>
+      <CustomButton title={"login"}></CustomButton>
     </LayoutView>
   );
 };

@@ -2,8 +2,8 @@ import React, { useState, useEffect, useContext } from "react";
 import { StationButtonContainer, SearchDestinationContainer } from "./styles";
 import dest from "../data/destinations";
 import { JourneyContext } from "../../store/journeyStore";
-import Icon from "react-native-vector-icons/Ionicons";
-import { Button, SearchBar } from "react-native-elements";
+import { SearchBar } from "react-native-elements";
+import CustomButton from "./CustomButton";
 
 const UISearchDestination = ({ startedSearching, setStartedSearching }) => {
   const {
@@ -68,7 +68,7 @@ const UISearchDestination = ({ startedSearching, setStartedSearching }) => {
             station
           );
           return (
-            <Button
+            <CustomButton
               title={station.name}
               key={station.name + index}
               onPress={() => handlePressedStation(station)}
@@ -77,15 +77,9 @@ const UISearchDestination = ({ startedSearching, setStartedSearching }) => {
                 color: stationAlreadyPicked ? "#fff" : "#000",
                 size: 20,
               }}
-              buttonStyle={{
-                backgroundColor: stationAlreadyPicked ? "#0CCE6B" : "#EEF0F2",
-                marginRight: "5%",
-                marginTop: "2%",
-                marginBottom: "2%",
-                alignItems: "baseline",
-              }}
+              isChoice={true}
+              isActive={stationAlreadyPicked}
               iconRight
-              titleStyle={{ color: stationAlreadyPicked ? "#fff" : "#000" }}
             />
           );
         })
@@ -98,8 +92,6 @@ const UISearchDestination = ({ startedSearching, setStartedSearching }) => {
           value={value}
           onChangeText={onChangeHandler}
           placeholder={"Enter your destination.."}
-          containerStyle={{ borderRadius: 5 }}
-          inputContainerStyle={{ backgroundColor: "transparent" }}
           lightTheme
         />
       </SearchDestinationContainer>

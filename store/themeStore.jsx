@@ -1,13 +1,13 @@
 import React, { createContext, useState, useEffect } from "react";
 import { AsyncStorage } from "react-native";
 
-import { ThemeProvider } from "styled-components";
+import { ThemeProvider } from "react-native-elements";
 import lightTheme from "../themes/light";
 import darkTheme from "../themes/dark";
 
 export const ThemeContext = createContext();
 
-export const ThemeContextProvider = props => {
+export const ThemeContextProvider = (props) => {
   const [lightThemeState, setLightThemeState] = useState(false);
 
   const saveThemeState = async () => {
@@ -19,7 +19,7 @@ export const ThemeContextProvider = props => {
         JSON.stringify(lightThemeState)
       );
     }
-  }
+  };
 
   const getThemeState = async () => {
     currentMode = await AsyncStorage.getItem("lightThemeState");
@@ -27,7 +27,7 @@ export const ThemeContextProvider = props => {
     if (currentMode) {
       setLightThemeState(JSON.parse(currentMode));
     }
-  }
+  };
 
   useEffect(() => {
     saveThemeState();
@@ -39,7 +39,7 @@ export const ThemeContextProvider = props => {
 
   return (
     <ThemeContext.Provider value={[lightThemeState, setLightThemeState]}>
-      <ThemeProvider theme={lightThemeState ? lightTheme : darkTheme}>
+      <ThemeProvider theme={lightThemeState ? darkTheme : darkTheme}>
         {props.children}
       </ThemeProvider>
     </ThemeContext.Provider>

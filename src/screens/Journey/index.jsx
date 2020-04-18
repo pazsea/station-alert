@@ -1,19 +1,13 @@
 import React, { useContext, useState } from "react";
 import { StyleSheet, View, Text } from "react-native";
 import { Card, Button, ListItem } from "react-native-elements";
-import {
-  LayoutView,
-  InactiveButton,
-  ButtonText,
-  PrimaryButton,
-  PrimaryText,
-  ContainerView,
-} from "../../components/styles";
+import { LayoutView, ContainerView } from "../../components/styles";
 import { JourneyContext } from "../../../store/journeyStore";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 
 import UIDestinationsView from "../../components/UIDestinationsView";
 import MapView, { Marker } from "react-native-maps";
+import CustomButton from "../../components/CustomButton";
 
 const JourneyScreen = (props) => {
   const {
@@ -26,16 +20,12 @@ const JourneyScreen = (props) => {
 
   const { navigate } = props.navigation;
 
-  const goToSearchScreen = () => {
-    navigate("FindDestinationScreen");
-  };
-
   const cancelTrip = () => {
     setInitialStore();
   };
-  
+
   return (
-    <LayoutView>
+    <LayoutView {...props}>
       {destinations && startedTrip ? (
         <>
           <ContainerView>
@@ -123,9 +113,11 @@ const JourneyScreen = (props) => {
               <UIDestinationsView hideTitle roundedBottomCorners />
             ) : null}
           </ContainerView>
-          <InactiveButton onPress={cancelTrip}>
-            <ButtonText>Cancel journey</ButtonText>
-          </InactiveButton>
+          <CustomButton
+            isInactive={true}
+            title={"Cancel journey"}
+            onPress={cancelTrip}
+          />
         </>
       ) : (
         <>
@@ -133,18 +125,15 @@ const JourneyScreen = (props) => {
             title="You have no ongoing yourney."
             containerStyle={{ borderRadius: 5, width: "100%" }}
           >
-            <PrimaryText style={{ marginBottom: 10 }}>
+            <Text style={{ marginBottom: 10 }}>
               Please press the button to enter your destination or route.
-            </PrimaryText>
+            </Text>
           </Card>
 
-          <Button title={"Find your destination"}></Button>
-
-          {/* <PrimaryButton>
-            <ButtonText onPress={goToSearchScreen}>
-              Find your destination
-            </ButtonText>
-          </PrimaryButton> */}
+          <CustomButton
+            onPress={() => navigate("FindDestinationScreen")}
+            title={"Find your destination"}
+          ></CustomButton>
         </>
       )}
     </LayoutView>

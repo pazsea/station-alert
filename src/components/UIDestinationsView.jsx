@@ -9,7 +9,7 @@ import {
 import Icon from "react-native-vector-icons/Ionicons";
 // import { dest } from "../data/destinations";
 import { JourneyContext } from "../../store/journeyStore";
-import { Card } from "react-native-elements";
+import { Card, Text } from "react-native-elements";
 import { ScrollView } from "react-native";
 
 const UIDestinationsView = (props) => {
@@ -37,9 +37,9 @@ const UIDestinationsView = (props) => {
           color={lastStation ? "green" : "grey"}
           key={index + station.name + "flag"}
         />
-        <SecondaryHeadlineText key={index + station.name + "headliner"}>
+        <Text h3 key={index + station.name + "headliner"}>
           {station.name}
-        </SecondaryHeadlineText>
+        </Text>
         {station.arrived ? (
           <Icon
             name="ios-checkmark-circle"
@@ -64,8 +64,6 @@ const UIDestinationsView = (props) => {
     <Card
       title={props.hideTitle ? null : "Destinations"}
       containerStyle={{
-        width: "100%",
-        margin: 0,
         borderRadius: props.roundedBottomCorners ? 0 : 5,
         borderBottomEndRadius: 5,
         borderBottomStartRadius: 5,

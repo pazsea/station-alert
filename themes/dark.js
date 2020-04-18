@@ -1,25 +1,44 @@
 export default {
+  //GENERAL
   Button: {
     titleStyle: {
-      color: "red",
+      color: "#EEF0F2",
+      fontSize: 16,
+    },
+    buttonStyle: {
+      backgroundColor: "#0f4c75",
+      borderRadius: 5,
+      borderColor: "#fff",
+      borderWidth: 1,
     },
   },
+  Text: {
+    style: {
+      fontSize: 16,
+      color: "#1b262c",
+    },
+    h3Style: {
+      color: "#1b262c",
+      fontSize: 18,
+    },
+  },
+  Card: {
+    containerStyle: {
+      width: "100%",
+      borderRadius: 5,
+      margin: 0,
+    },
+  },
+  SearchBar: {
+    containerStyle: { borderRadius: 5 },
+    inputContainerStyle: { backgroundColor: "transparent" },
+  },
+  //MY CUSTOM CHOICES
   colors: {
     primary: "#1b262c",
-    primaryButton: "#0f4c75",
-    primaryText: "#fff",
-
     secondary: "#EEF0F2",
-    secondaryButton: "#EEF0F2",
-    secondaryText: "#07020D",
-
     active: "#0CCE6B",
     inactive: "#E84855",
-  },
-  font: {
-    primarySize: "16px",
-    primaryHeadline: "18px",
-    buttonSize: "16px",
   },
 };
 

@@ -1,21 +1,10 @@
 import React, { useEffect, useContext, useState } from "react";
 import { StyleSheet, View, Text, BackHandler } from "react-native";
-import {
-  LayoutView,
-  ButtonText,
-  ContainerView,
-  PrimaryButton,
-} from "../../components/styles";
+import { LayoutView, ContainerView } from "../../components/styles";
 import { ThemeContext } from "../../../store/themeStore";
-import {
-  Button,
-  Card,
-  ListItem,
-  Avatar,
-  Icon,
-  Input,
-} from "react-native-elements";
+import { Card, Icon, Input } from "react-native-elements";
 import { useGoBack } from "../../constant";
+import CustomButton from "../../components/CustomButton";
 
 const PersonalSettings = (props) => {
   const { navigate } = props.navigation;
@@ -23,7 +12,7 @@ const PersonalSettings = (props) => {
   useGoBack(() => navigate("MoreScreen"));
 
   return (
-    <LayoutView>
+    <LayoutView {...props}>
       <ContainerView>
         <Card
           title={"Personal settings"}
@@ -49,9 +38,7 @@ const PersonalSettings = (props) => {
           />
         </Card>
       </ContainerView>
-      <PrimaryButton>
-        <ButtonText>Save</ButtonText>
-      </PrimaryButton>
+      <CustomButton title={"login"}></CustomButton>
     </LayoutView>
   );
 };

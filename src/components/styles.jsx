@@ -29,7 +29,7 @@ export const StationButtonContainer = styled.View`
 `;
 
 export const LayoutView = styled.SafeAreaView`
-  ${mixinBackground}
+  background-color: #1b262c;
   height: 100%;
   display: flex;
   flex: 1;
