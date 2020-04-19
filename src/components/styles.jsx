@@ -11,11 +11,6 @@ export const TrainImage = styled.Image`
 
 // LAYOUT
 
-export const ThemedView = styled.View`
-  flex: 1;
-  background-color: ${({ primaryColor }) => primaryColor};
-`;
-
 export const LayoutView = styled.SafeAreaView`
   background-color: ${({ primaryColor }) => primaryColor};
   height: 100%;

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { StationButtonContainer, SearchDestinationContainer } from "./styles";
 import dest from "../data/destinations";
 import { JourneyContext } from "../../store/journeyStore";
-import { SearchBar } from "react-native-elements";
+import { SearchBar, Icon } from "react-native-elements";
 import CustomButton from "./CustomButton";
 
 const UISearchDestination = ({ startedSearching, setStartedSearching }) => {
@@ -72,11 +72,28 @@ const UISearchDestination = ({ startedSearching, setStartedSearching }) => {
               title={station.name}
               key={station.name + index}
               onPress={() => handlePressedStation(station)}
-              icon={{
-                name: stationAlreadyPicked ? "check" : "train",
-                color: stationAlreadyPicked ? "#fff" : "#000",
-                size: 20,
-              }}
+              icon={
+                stationAlreadyPicked ? (
+                  <Icon
+                    name="check"
+                    size={18}
+                    containerStyle={{
+                      marginLeft: 10,
+                    }}
+                    type="font-awesome"
+                  />
+                ) : (
+                  <Icon
+                    name="train"
+                    containerStyle={{
+                      marginLeft: 10,
+                    }}
+                    size={18}
+                    type="font-awesome"
+                    iconStyle={{ color: "#000" }}
+                  />
+                )
+              }
               isChoice={true}
               isActive={stationAlreadyPicked}
               iconRight
@@ -91,8 +108,7 @@ const UISearchDestination = ({ startedSearching, setStartedSearching }) => {
         <SearchBar
           value={value}
           onChangeText={onChangeHandler}
-          placeholder={"Enter your destination.."}
-          lightTheme
+          placeholder={"Find your destination.."}
         />
       </SearchDestinationContainer>
       <StationButtonContainer>{buttons}</StationButtonContainer>

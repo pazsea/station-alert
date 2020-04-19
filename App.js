@@ -1,9 +1,12 @@
-import React from "react";
-import { SafeAreaView } from "react-native";
+import React, { useState, useEffect } from "react";
+import { SafeAreaView, AsyncStorage } from "react-native";
 
 import { createAppContainer, createSwitchNavigator } from "react-navigation";
 import { createMaterialBottomTabNavigator } from "react-navigation-material-bottom-tabs";
 
+import { ThemeProvider } from "react-native-elements";
+import lightTheme from "./themes/light";
+import darkTheme from "./themes/dark";
 import Icon from "react-native-vector-icons/Ionicons";
 
 import FindDestinationScreen from "./src/screens/FindDestinations";
@@ -68,6 +71,17 @@ const TabNavigator = createMaterialBottomTabNavigator(
     },
   },
   {
+    barStyleDark: {
+      backgroundColor: "#212121",
+      shadowColor: "#000",
+      shadowOffset: { width: 3, height: 2 },
+      shadowOpacity: 0.8,
+      shadowRadius: 2,
+      elevation: 1,
+    },
+    barStyleLight: {
+      backgroundColor: lightTheme.colors.background,
+    },
     shifting: false,
     labeled: true,
     initialRouteName: "FindDestinationScreen",
@@ -108,17 +122,44 @@ const AllRoutes = createSwitchNavigator(
 
 const AppContainer = createAppContainer(AllRoutes);
 
-const ThemedView = styled.View`
-  flex: 1;
-  background-color: #1b262c;
-`;
-
 export default App = () => {
+  const [lightThemeNav, setLightThemeNav] = useState(false);
+
+  const saveThemeState = async () => {
+    if (lightThemeNav) {
+      await AsyncStorage.removeItem("lightThemeNavState");
+    } else {
+      await AsyncStorage.setItem(
+        "lightThemeNavState",
+        JSON.stringify(lightThemeNav)
+      );
+    }
+  };
+
+  const getThemeState = async () => {
+    currentMode = await AsyncStorage.getItem("lightThemeNavState");
+
+    if (currentMode) {
+      setLightThemeNav(JSON.parse(currentMode));
+    }
+  };
+
+  useEffect(() => {
+    saveThemeState();
+  }, [lightThemeNav]);
+
+  useEffect(() => {
+    getThemeState();
+  }, []);
+
   return (
     <CombinedStoreProvider>
-      <ThemedView>
-        <AppContainer />
-      </ThemedView>
+      <AppContainer
+        theme={lightThemeNav ? "light" : "dark"}
+        screenProps={{
+          setLightThemeNav: setLightThemeNav,
+        }}
+      />
     </CombinedStoreProvider>
   );
 };

@@ -1,8 +1,14 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { StyleSheet, View, Text } from "react-native";
 import { LayoutView, ContainerView } from "../../components/styles";
 import { ThemeModeContext } from "../../../store/themeStore";
-import { Card, ListItem, Avatar, ThemeContext } from "react-native-elements";
+import {
+  Card,
+  ListItem,
+  Avatar,
+  ThemeContext,
+  Icon,
+} from "react-native-elements";
 import PersonalSettings from "../PersonalSettings";
 import CustomButton from "../../components/CustomButton";
 
@@ -17,7 +23,11 @@ const INITIAL_PERSONAL_INFO_STATE = {
 const MoreModal = (props) => {
   const [personalInfo, setPersonalInfo] = useState(INITIAL_PERSONAL_INFO_STATE);
 
-  const [lightThemeState, setLightThemeState] = useContext(ThemeModeContext);
+  const {
+    themeState: [lightThemeState, setLightThemeState],
+    currentTheme,
+  } = useContext(ThemeModeContext);
+
   const { theme } = useContext(ThemeContext);
 
   const { navigate } = props.navigation;
@@ -31,12 +41,17 @@ const MoreModal = (props) => {
     }));
   };
 
+  const toggleTheme = (value) => {
+    setLightThemeState(value);
+    props.screenProps.setLightThemeNav(value);
+  };
+
   return (
     <LayoutView primaryColor={theme.colors.background}>
       <ContainerView>
-        <View style={{ alignItems: "center", paddingBottom: 30 }}>
+        <View style={{ alignItems: "center", paddingBottom: 20 }}>
           <Avatar
-            size={"xlarge"}
+            size={"large"}
             source={
               personalInfo.profileImage
                 ? {
@@ -50,15 +65,14 @@ const MoreModal = (props) => {
             onEditPress={updateProfileImage}
           />
         </View>
-        <Card
-          title={"Settings"}
-          containerStyle={{ margin: 0, borderRadius: 5 }}
-        >
+        <Card title={"Settings"} containerStyle={{ borderRadius: 5 }}>
           <ListItem
             title="Light mode"
             switch={{
               value: lightThemeState,
-              onValueChange: (value) => setLightThemeState(value),
+              onValueChange: (value) => toggleTheme(value),
+              trackColor: { true: theme.colors.accent },
+              thumbColor: lightThemeState ? theme.colors.accent : "#212",
             }}
             bottomDivider
           />
@@ -74,7 +88,14 @@ const MoreModal = (props) => {
           />
         </Card>
       </ContainerView>
-      <CustomButton title={"login"}></CustomButton>
+      <CustomButton
+        addIcon={{
+          name: "sign-in",
+          type: "octicon",
+          size: 20,
+        }}
+        title={"Sign in"}
+      ></CustomButton>
     </LayoutView>
   );
 };

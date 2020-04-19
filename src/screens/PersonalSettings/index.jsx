@@ -39,7 +39,7 @@ const PersonalSettings = (props) => {
           />
         </Card>
       </ContainerView>
-      <CustomButton title={"login"}></CustomButton>
+      <CustomButton title={"login"}/> 
     </LayoutView>
   );
 };

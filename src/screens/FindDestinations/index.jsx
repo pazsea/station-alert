@@ -70,6 +70,11 @@ const FindDestinationScreen = (props) => {
         isInactive={true}
         title={"Cancel journey"}
         onPress={cancelTrip}
+        addIcon={{
+          name: "close",
+          type: "font-awesome",
+          size: 20,
+        }}
       />
     </>
   );
@@ -108,6 +113,11 @@ const FindDestinationScreen = (props) => {
       </ContainerView>
       {hasDestinations ? (
         <CustomButton
+          addIcon={{
+            name: "checklist",
+            type: "octicon",
+            size: 20,
+          }}
           title={"Confirm destination"}
           onPress={confirmDestinations}
         />

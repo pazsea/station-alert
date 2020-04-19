@@ -16,7 +16,6 @@ const RecommendStation = (props) => {
     <LayoutView primaryColor={theme.colors.background}>
       <ContainerView></ContainerView>
       <CustomButton title={"login"}></CustomButton>
-      <Button></Button>
     </LayoutView>
   );
 };

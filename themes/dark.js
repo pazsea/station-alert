@@ -6,20 +6,23 @@ export default {
       fontSize: 16,
     },
     buttonStyle: {
-      backgroundColor: "#0f4c75",
+      backgroundColor: "#3e50b4",
       borderRadius: 5,
-      borderColor: "#fff",
-      borderWidth: 1,
     },
   },
   Text: {
     style: {
       fontSize: 16,
-      color: "#1b262c",
+      color: "#fff",
     },
     h3Style: {
-      color: "#1b262c",
+      color: "#fff",
       fontSize: 18,
+    },
+  },
+  Icon: {
+    iconStyle: {
+      color: "#fff",
     },
   },
   Card: {
@@ -27,20 +30,51 @@ export default {
       width: "100%",
       borderRadius: 5,
       margin: 0,
+      borderColor: "transparent",
+      backgroundColor: "#424242",
+      shadowColor: "#000",
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.8,
+      shadowRadius: 2,
+      elevation: 1,
+    },
+    titleStyle: {
+      color: "#fff",
+      fontSize: 16,
+    },
+  },
+  ListItem: {
+    containerStyle: {
+      backgroundColor: "#424242",
+    },
+    titleStyle: {
+      color: "#fff",
     },
   },
   SearchBar: {
-    containerStyle: { borderRadius: 5, padding: 2 },
+    containerStyle: {
+      borderRadius: 5,
+      padding: 2,
+      borderColor: 0,
+      borderWidth: 0,
+    },
     inputContainerStyle: { backgroundColor: "transparent" },
   },
   //MY CUSTOM CHOICES
   colors: {
-    background: "#1b262c",
+    background: "#303030",
+    surface: "#424242",
+
     primary: "#1b262c",
     secondary: "#EEF0F2",
-    
+
+    onBackground: "",
+    onSurface: "#fff",
+    onPrimary: "",
+    onSecondary: "",
+
     active: "#0CCE6B",
-    inactive: "#E84855",
+    accent: "#ff3f80",
     pending: "#1883D5",
   },
 };

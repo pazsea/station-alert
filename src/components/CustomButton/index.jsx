@@ -1,11 +1,12 @@
 import React, { useContext } from "react";
-import { Button, ThemeContext } from "react-native-elements";
+import { Button, ThemeContext, Icon } from "react-native-elements";
 
 const CustomButton = ({
   isInactive,
   isActive,
   isSecondary,
   isChoice,
+  addIcon,
   ...props
 }) => {
   const { theme } = useContext(ThemeContext);
@@ -13,7 +14,7 @@ const CustomButton = ({
   const colors = theme.colors;
 
   const checkButtonBackground = isInactive
-    ? colors.inactive
+    ? colors.accent
     : isActive
     ? colors.active
     : isSecondary
@@ -44,17 +45,30 @@ const CustomButton = ({
     },
   };
 
+  const hasIcon = addIcon ? (
+    <Icon
+      name={addIcon.name}
+      type={addIcon.type || "ionicon"}
+      color={addIcon.color || colors.secondary}
+      containerStyle={{
+        marginLeft: 15,
+      }}
+      {...addIcon}
+    ></Icon>
+  ) : null;
+
   return isChoice ? (
     <Button
       buttonStyle={choiceButtonStyles.buttonStyle}
       titleStyle={choiceButtonStyles.titleStyle}
-      // containerStyle={choiceButtonStyles.containerStyle}
       {...props}
     />
   ) : (
     <Button
       containerStyle={normalButtonStyles.containerStyle}
       buttonStyle={normalButtonStyles.buttonStyle}
+      icon={hasIcon}
+      iconRight
       {...props}
     />
   );

@@ -37,9 +37,7 @@ const UIDestinationsView = (props) => {
           color={lastStation ? "green" : "grey"}
           key={index + station.name + "flag"}
         />
-        <Text h3 key={index + station.name + "headliner"}>
-          {station.name}
-        </Text>
+        <Text key={index + station.name + "headliner"}>{station.name}</Text>
         {station.arrived ? (
           <Icon
             name="ios-checkmark-circle"
@@ -49,7 +47,7 @@ const UIDestinationsView = (props) => {
           />
         ) : (
           <Icon
-            name="ios-remove-circle"
+            name="ios-trash"
             size={24}
             color={"red"}
             onPress={() => removeStation(station)}

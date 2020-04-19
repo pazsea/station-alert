@@ -33,7 +33,6 @@ export default {
     containerStyle: { borderRadius: 5, padding: 2 },
     inputContainerStyle: { backgroundColor: "transparent" },
   },
-
   colors: {
     background: "#456990",
     primary: "#1b262c",

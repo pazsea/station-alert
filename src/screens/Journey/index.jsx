@@ -1,9 +1,15 @@
 import React, { useContext, useState } from "react";
-import { StyleSheet, View, Text } from "react-native";
-import { Card, Button, ListItem, ThemeContext } from "react-native-elements";
+import { StyleSheet, View } from "react-native";
+import {
+  Card,
+  Button,
+  ListItem,
+  ThemeContext,
+  Text,
+  Icon,
+} from "react-native-elements";
 import { LayoutView, ContainerView } from "../../components/styles";
 import { JourneyContext } from "../../../store/journeyStore";
-import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 
 import UIDestinationsView from "../../components/UIDestinationsView";
 import MapView, { Marker } from "react-native-maps";
@@ -25,8 +31,6 @@ const JourneyScreen = (props) => {
     setInitialStore();
   };
 
-  console.log(theme?.colors.background);
-
   return (
     <LayoutView primaryColor={theme.colors.background}>
       {destinations && startedTrip ? (
@@ -36,19 +40,16 @@ const JourneyScreen = (props) => {
               onPress={() => setShowMap(!showMap)}
               badge={{
                 value: destinations.length,
-                badgeStyle: {
-                  backgroundColor: theme.colors.pending,
+                textStyle: {
                   color: theme.colors.primary,
+                },
+                badgeStyle: {
+                  backgroundColor: theme.colors.accent,
+                  borderColor: "transparent",
                 },
               }}
               title={"Map"}
-              leftIcon={
-                <FontAwesome5
-                  style={{ alignSelf: "center" }}
-                  size={20}
-                  name={"map"}
-                />
-              }
+              leftIcon={<Icon name={"ios-map"} type="ionicon" />}
               bottomDivider
               chevron
             />
@@ -92,11 +93,7 @@ const JourneyScreen = (props) => {
                           >
                             {index + 1 + ". " + station.name}
                           </Text>
-                          <FontAwesome5
-                            style={{ alignSelf: "center" }}
-                            size={20}
-                            name={"train"}
-                          />
+                          <Icon name={"train"} type="font-awesome" />
                         </View>
                       </Marker>
                     ))
@@ -108,7 +105,7 @@ const JourneyScreen = (props) => {
               onPress={() => setShowDestinations(!showDestinations)}
               title={"Destinations"}
               leftIcon={
-                <FontAwesome5
+                <Icon
                   style={{ alignSelf: "center" }}
                   size={20}
                   name={"train"}
@@ -124,6 +121,11 @@ const JourneyScreen = (props) => {
             isInactive={true}
             title={"Cancel journey"}
             onPress={cancelTrip}
+            addIcon={{
+              name: "close",
+              type: "font-awesome",
+              size: 20,
+            }}
           />
         </>
       ) : (
@@ -139,6 +141,9 @@ const JourneyScreen = (props) => {
 
           <CustomButton
             onPress={() => navigate("FindDestinationScreen")}
+            addIcon={{
+              name: "ios-train",
+            }}
             title={"Find your destination"}
           ></CustomButton>
         </>
