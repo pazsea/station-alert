@@ -34,17 +34,6 @@ export const StationButtonContainer = styled.View`
   margin: 5% 0;
 `;
 
-export const DestinationsView = styled.ScrollView`
-  width: 100%;
-  overflow: hidden;
-  margin-top: 5%;
-  border-radius: 5px;
-  max-height: 280px;
-  min-height: ${({ hasDestinations }) => (hasDestinations ? "280px" : "0")};
-  overflow: hidden;
-  padding: ${({ hasDestinations }) => (hasDestinations ? "0" : "0")};
-  background-color: ${(props) => props.theme.colors.secondary};
-`;
 
 export const StationView = styled.View`
   display: flex;

@@ -67,7 +67,7 @@ const FindDestinationScreen = (props) => {
         </Card>
       </ContainerView>
       <CustomButton
-        isInactive={true}
+        hasError={true}
         title={"Cancel journey"}
         onPress={cancelTrip}
         addIcon={{
@@ -89,7 +89,7 @@ const FindDestinationScreen = (props) => {
       </ContainerView>
 
       <CustomButton
-        isActive={true}
+        hasError={true}
         title={"Allow location access"}
         //TO DO: Här ska vi sätta på användarens user position
         onPress={cancelTrip}

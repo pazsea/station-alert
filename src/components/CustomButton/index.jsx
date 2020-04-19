@@ -2,8 +2,8 @@ import React, { useContext } from "react";
 import { Button, ThemeContext, Icon } from "react-native-elements";
 
 const CustomButton = ({
-  isInactive,
-  isActive,
+  hasError,
+  isSelected,
   isSecondary,
   isChoice,
   addIcon,
@@ -13,17 +13,36 @@ const CustomButton = ({
 
   const colors = theme.colors;
 
-  const checkButtonBackground = isInactive
-    ? colors.accent
-    : isActive
-    ? colors.active
+  const checkButtonBackground = hasError
+    ? colors.error
+    : isSelected
+    ? colors.selected
     : isSecondary
     ? colors.secondary
     : false;
 
+  const checkButtonTextColor = isSecondary
+    ? colors.onSecondary
+    : isChoice
+    ? colors.onPrimaryVariant
+    : hasError
+    ? colors.onError
+    : colors.onPrimary;
+
+  const checkButtonIconColor = isSecondary
+    ? colors.onSecondary
+    : isChoice
+    ? colors.onPrimaryVariant
+    : hasError
+    ? colors.onError
+    : colors.onPrimary;
+
   const normalButtonStyles = {
     containerStyle: {
       width: "100%",
+    },
+    titleStyle: {
+      color: checkButtonTextColor,
     },
     buttonStyle: {
       backgroundColor:
@@ -33,10 +52,10 @@ const CustomButton = ({
 
   const choiceButtonStyles = {
     titleStyle: {
-      color: isActive ? colors.secondary : colors.primary,
+      color: isSelected ? colors.onSelected : colors.onPrimaryVariant,
     },
     buttonStyle: {
-      backgroundColor: isActive ? colors.active : colors.secondary,
+      backgroundColor: isSelected ? colors.selected : colors.primaryVariant,
       borderWidth: 0,
       marginRight: 5,
       marginTop: 2,
@@ -50,6 +69,7 @@ const CustomButton = ({
       name={addIcon.name}
       type={addIcon.type || "ionicon"}
       color={addIcon.color || colors.secondary}
+      iconStyle={{ color: checkButtonIconColor }}
       containerStyle={{
         marginLeft: 15,
       }}
@@ -67,6 +87,7 @@ const CustomButton = ({
     <Button
       containerStyle={normalButtonStyles.containerStyle}
       buttonStyle={normalButtonStyles.buttonStyle}
+      titleStyle={normalButtonStyles.titleStyle}
       icon={hasIcon}
       iconRight
       {...props}

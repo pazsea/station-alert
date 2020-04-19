@@ -1,28 +1,59 @@
+const myDarkThemeColors = {
+  background: "#303030",
+  onBackground: "#fff",
+
+  surface: "#424242",
+  onSurface: "#fff",
+
+  primary: "#3e50b4",
+  onPrimary: "#fff",
+
+  secondary: "#bb86fc",
+  onSecondary: "#000",
+
+  error: "#cf6679",
+  onError: "#fff",
+
+  selected: "#006400",
+  onSelected: "#fff",
+
+  //VARIANTS
+
+  primaryVariant: "#fff",
+  onPrimaryVariant: "#000",
+
+  accent: "#ff3f80",
+  onAccent: "#000",
+
+  pending: "#1883D5",
+  onPending: "#000",
+};
+
 export default {
   //GENERAL
   Button: {
     titleStyle: {
-      color: "#EEF0F2",
+      color: myDarkThemeColors.onPrimary,
       fontSize: 16,
     },
     buttonStyle: {
-      backgroundColor: "#3e50b4",
+      backgroundColor: myDarkThemeColors.primary,
       borderRadius: 5,
     },
   },
   Text: {
     style: {
+      color: myDarkThemeColors.onSurface,
       fontSize: 16,
-      color: "#fff",
     },
     h3Style: {
-      color: "#fff",
+      color: myDarkThemeColors.onSurface,
       fontSize: 18,
     },
   },
   Icon: {
     iconStyle: {
-      color: "#fff",
+      color: myDarkThemeColors.onSurface,
     },
   },
   Card: {
@@ -31,7 +62,7 @@ export default {
       borderRadius: 5,
       margin: 0,
       borderColor: "transparent",
-      backgroundColor: "#424242",
+      backgroundColor: myDarkThemeColors.surface,
       shadowColor: "#000",
       shadowOffset: { width: 0, height: 2 },
       shadowOpacity: 0.8,
@@ -39,16 +70,16 @@ export default {
       elevation: 1,
     },
     titleStyle: {
-      color: "#fff",
+      color: myDarkThemeColors.onSurface,
       fontSize: 16,
     },
   },
   ListItem: {
     containerStyle: {
-      backgroundColor: "#424242",
+      backgroundColor: myDarkThemeColors.surface,
     },
     titleStyle: {
-      color: "#fff",
+      color: myDarkThemeColors.onSurface,
     },
   },
   SearchBar: {
@@ -60,22 +91,42 @@ export default {
     },
     inputContainerStyle: { backgroundColor: "transparent" },
   },
-  //MY CUSTOM CHOICES
+  //THE ACTUAL THEME THAT IS CUSTOM AND DARK THEME
   colors: {
-    background: "#303030",
-    surface: "#424242",
+    background: myDarkThemeColors.background,
+    onBackground: myDarkThemeColors.onBackground,
 
-    primary: "#1b262c",
-    secondary: "#EEF0F2",
+    surface: myDarkThemeColors.surface,
+    onSurface: myDarkThemeColors.onSurface,
 
-    onBackground: "",
-    onSurface: "#fff",
-    onPrimary: "",
-    onSecondary: "",
+    primary: myDarkThemeColors.primary,
+    onPrimary: myDarkThemeColors.onPrimary,
 
-    active: "#0CCE6B",
-    accent: "#ff3f80",
-    pending: "#1883D5",
+    secondary: myDarkThemeColors.secondary,
+    onSecondary: myDarkThemeColors.onSecondary,
+
+    error: myDarkThemeColors.error,
+    onError: myDarkThemeColors.onError,
+
+    selected: myDarkThemeColors.selected,
+    onSelected: myDarkThemeColors.onSelected,
+
+    //VARIANTS
+
+    primaryVariant: myDarkThemeColors.primaryVariant,
+    onPrimaryVariant: myDarkThemeColors.onPrimaryVariant,
+
+    accent: myDarkThemeColors.accent,
+    onAccent: myDarkThemeColors.onAccent,
+
+    pending: myDarkThemeColors.pending,
+    onPending: myDarkThemeColors.onPending,
+
+    // //VARIANTS
+
+    // active: "#0CCE6B",
+    // accent: "#ff3f80",
+    // pending: "#1883D5",
   },
 };
 

@@ -1,8 +1,7 @@
 import React, { useContext, useState } from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, Text as NormalText } from "react-native";
 import {
   Card,
-  Button,
   ListItem,
   ThemeContext,
   Text,
@@ -21,6 +20,7 @@ const JourneyScreen = (props) => {
     setInitialStore,
   } = useContext(JourneyContext);
   const { theme } = useContext(ThemeContext);
+  const colors = theme.colors;
 
   const [showMap, setShowMap] = useState(false);
   const [showDestinations, setShowDestinations] = useState(true);
@@ -41,7 +41,7 @@ const JourneyScreen = (props) => {
               badge={{
                 value: destinations.length,
                 textStyle: {
-                  color: theme.colors.primary,
+                  color: theme.colors.onAccent,
                 },
                 badgeStyle: {
                   backgroundColor: theme.colors.accent,
@@ -84,7 +84,8 @@ const JourneyScreen = (props) => {
                         >
                           <Text
                             style={{
-                              backgroundColor: "#fff",
+                              backgroundColor: colors.primaryVariant,
+                              color: colors.onPrimaryVariant,
                               padding: 1,
                               marginBottom: 2,
                               fontWeight: "bold",
@@ -93,7 +94,15 @@ const JourneyScreen = (props) => {
                           >
                             {index + 1 + ". " + station.name}
                           </Text>
-                          <Icon name={"train"} type="font-awesome" />
+                          <Icon
+                            name={"train"}
+                            iconStyle={{
+                              color: station.arrived
+                                ? colors.selected
+                                : colors.onPending,
+                            }}
+                            type="font-awesome"
+                          />
                         </View>
                       </Marker>
                     ))
@@ -118,7 +127,7 @@ const JourneyScreen = (props) => {
             ) : null}
           </ContainerView>
           <CustomButton
-            isInactive={true}
+            hasError={true}
             title={"Cancel journey"}
             onPress={cancelTrip}
             addIcon={{

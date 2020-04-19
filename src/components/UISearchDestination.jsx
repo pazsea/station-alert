@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { StationButtonContainer, SearchDestinationContainer } from "./styles";
 import dest from "../data/destinations";
 import { JourneyContext } from "../../store/journeyStore";
-import { SearchBar, Icon } from "react-native-elements";
+import { SearchBar, Icon, ThemeContext } from "react-native-elements";
 import CustomButton from "./CustomButton";
 
 const UISearchDestination = ({ startedSearching, setStartedSearching }) => {
@@ -12,6 +12,10 @@ const UISearchDestination = ({ startedSearching, setStartedSearching }) => {
 
   const [searchResult, setSearchResult] = useState([]);
   const [value, setValue] = useState("");
+
+  const { theme } = useContext(ThemeContext);
+
+  const colors = theme.colors;
 
   const handlePressedStation = (pickedStation) => {
     const currentDestinations = journeyState.destinations;
@@ -45,12 +49,6 @@ const UISearchDestination = ({ startedSearching, setStartedSearching }) => {
     }
   };
 
-  const eraseSearch = () => {
-    setValue("");
-    setSearchResult([]);
-    setStartedSearching(false);
-  };
-
   const calculateSearchResult = (text) => {
     const destinations = dest;
     setSearchResult(
@@ -80,6 +78,7 @@ const UISearchDestination = ({ startedSearching, setStartedSearching }) => {
                     containerStyle={{
                       marginLeft: 10,
                     }}
+                    iconStyle={{ color: colors.primaryVariant }}
                     type="font-awesome"
                   />
                 ) : (
@@ -90,12 +89,12 @@ const UISearchDestination = ({ startedSearching, setStartedSearching }) => {
                     }}
                     size={18}
                     type="font-awesome"
-                    iconStyle={{ color: "#000" }}
+                    iconStyle={{ color: colors.onPrimaryVariant }}
                   />
                 )
               }
               isChoice={true}
-              isActive={stationAlreadyPicked}
+              isSelected={stationAlreadyPicked}
               iconRight
             />
           );

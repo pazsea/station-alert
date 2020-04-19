@@ -9,13 +9,17 @@ import {
 import Icon from "react-native-vector-icons/Ionicons";
 // import { dest } from "../data/destinations";
 import { JourneyContext } from "../../store/journeyStore";
-import { Card, Text } from "react-native-elements";
+import { Card, Text, ThemeContext } from "react-native-elements";
 import { ScrollView } from "react-native";
 
 const UIDestinationsView = (props) => {
   const {
     journeyStore: [{ destinations }, setJourneyState],
   } = useContext(JourneyContext);
+
+  const { theme } = useContext(ThemeContext);
+
+  const colors = theme.colors;
 
   const removeStation = (pickedStation) => {
     const removeStation = destinations.filter(
@@ -34,7 +38,7 @@ const UIDestinationsView = (props) => {
         <Icon
           name="ios-flag"
           size={24}
-          color={lastStation ? "green" : "grey"}
+          color={lastStation ? colors.selected : theme.colors.greyOutline}
           key={index + station.name + "flag"}
         />
         <Text key={index + station.name + "headliner"}>{station.name}</Text>
@@ -42,14 +46,14 @@ const UIDestinationsView = (props) => {
           <Icon
             name="ios-checkmark-circle"
             size={24}
-            color={"green"}
+            color={colors.selected}
             key={index + station.name + "checkDone"}
           />
         ) : (
           <Icon
             name="ios-trash"
             size={24}
-            color={"red"}
+            color={theme.colors.accent}
             onPress={() => removeStation(station)}
             key={index + station.name + "circle"}
           />
