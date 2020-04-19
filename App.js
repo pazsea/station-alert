@@ -80,7 +80,7 @@ const TabNavigator = createMaterialBottomTabNavigator(
       elevation: 1,
     },
     barStyleLight: {
-      backgroundColor: lightTheme.colors.background,
+      backgroundColor: "#3c5e82",
     },
     shifting: false,
     labeled: true,
@@ -123,7 +123,7 @@ const AllRoutes = createSwitchNavigator(
 const AppContainer = createAppContainer(AllRoutes);
 
 export default App = () => {
-  const [lightThemeNav, setLightThemeNav] = useState(false);
+  const [lightThemeNav, setLightThemeNav] = useState(true);
 
   const saveThemeState = async () => {
     if (lightThemeNav) {

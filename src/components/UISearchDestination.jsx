@@ -4,11 +4,16 @@ import dest from "../data/destinations";
 import { JourneyContext } from "../../store/journeyStore";
 import { SearchBar, Icon, ThemeContext } from "react-native-elements";
 import CustomButton from "./CustomButton";
+import { ThemeModeContext } from "../../store/themeStore";
 
 const UISearchDestination = ({ startedSearching, setStartedSearching }) => {
   const {
     journeyStore: [journeyState, setJourneyState],
   } = useContext(JourneyContext);
+
+  const {
+    themeState: [lightThemeState, setLightThemeState],
+  } = useContext(ThemeModeContext);
 
   const [searchResult, setSearchResult] = useState([]);
   const [value, setValue] = useState("");
@@ -108,6 +113,7 @@ const UISearchDestination = ({ startedSearching, setStartedSearching }) => {
           value={value}
           onChangeText={onChangeHandler}
           placeholder={"Find your destination.."}
+          lightTheme={lightThemeState}
         />
       </SearchDestinationContainer>
       <StationButtonContainer>{buttons}</StationButtonContainer>

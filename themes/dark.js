@@ -121,14 +121,5 @@ export default {
 
     pending: myDarkThemeColors.pending,
     onPending: myDarkThemeColors.onPending,
-
-    // //VARIANTS
-
-    // active: "#0CCE6B",
-    // accent: "#ff3f80",
-    // pending: "#1883D5",
   },
 };
-
-// Dark secondary color. Good to black blackground?
-// Maybe for nav? 0B132B
