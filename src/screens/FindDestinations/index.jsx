@@ -64,18 +64,21 @@ const FindDestinationScreen = (props) => {
             You have an ongoing journey. You need to cancel it before starting a
             new one.
           </Text>
+          <CustomButton
+            hasError={true}
+            title={"Cancel journey"}
+            onPress={cancelTrip}
+            containerStyle={{
+              marginTop: 25,
+            }}
+            addIcon={{
+              name: "close",
+              type: "font-awesome",
+              size: 20,
+            }}
+          />
         </Card>
       </ContainerView>
-      <CustomButton
-        hasError={true}
-        title={"Cancel journey"}
-        onPress={cancelTrip}
-        addIcon={{
-          name: "close",
-          type: "font-awesome",
-          size: 20,
-        }}
-      />
     </>
   );
 
@@ -109,19 +112,13 @@ const FindDestinationScreen = (props) => {
           setStartedSearching={setStartedSearching}
           startedSearching={startedSearching}
         />
-        {hasDestinations ? <UIDestinationsView /> : null}
+        {hasDestinations ? (
+          <UIDestinationsView
+            buttonTitle={"Confirm destination"}
+            buttonOnPress={confirmDestinations}
+          />
+        ) : null}
       </ContainerView>
-      {hasDestinations ? (
-        <CustomButton
-          addIcon={{
-            name: "checklist",
-            type: "octicon",
-            size: 20,
-          }}
-          title={"Confirm destination"}
-          onPress={confirmDestinations}
-        />
-      ) : null}
     </>
   );
 

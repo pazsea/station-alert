@@ -19,7 +19,7 @@ export const LayoutView = styled.SafeAreaView`
   justify-content: ${({ centered, evenly }) =>
     centered ? "center" : evenly ? "space-evenly" : "space-between"};
   align-items: center;
-  padding: 10% 10% 2% 10%;
+  padding: 10% 10% 0 10%;
 `;
 
 export const ContainerView = styled.ScrollView`
@@ -33,7 +33,6 @@ export const StationButtonContainer = styled.View`
   flex-direction: row;
   margin: 5% 0;
 `;
-
 
 export const StationView = styled.View`
   display: flex;

@@ -11,6 +11,7 @@ import Icon from "react-native-vector-icons/Ionicons";
 import { JourneyContext } from "../../store/journeyStore";
 import { Card, Text, ThemeContext } from "react-native-elements";
 import { ScrollView } from "react-native";
+import CustomButton from "./CustomButton";
 
 const UIDestinationsView = (props) => {
   const {
@@ -71,8 +72,21 @@ const UIDestinationsView = (props) => {
         borderBottomStartRadius: 5,
       }}
     >
-      <ScrollView style={{ overflow: "scroll", maxHeight: 130 }}>
+      <ScrollView style={{ overflow: "scroll" }}>
         {content}
+        <CustomButton
+          hasError={props.hasErrorButton}
+          addIcon={{
+            name: props.hasErrorButton ? "close" : "checklist",
+            type: props.hasErrorButton ? "font-awesome" : "octicon",
+            size: 20,
+          }}
+          containerStyle={{
+            marginTop: 25,
+          }}
+          title={props.buttonTitle}
+          onPress={props.buttonOnPress}
+        />
       </ScrollView>
     </Card>
   );

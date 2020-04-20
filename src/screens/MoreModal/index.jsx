@@ -47,58 +47,67 @@ const MoreModal = (props) => {
   };
 
   return (
-    <LayoutView primaryColor={theme.colors.background}>
-      <ContainerView>
-        <View style={{ alignItems: "center", paddingBottom: 20 }}>
-          <Avatar
-            size={"large"}
-            source={
-              personalInfo.profileImage
-                ? {
-                    uri: personalInfo.profileImage,
-                  }
-                : null
-            }
-            rounded
-            title={"HD"}
-            showEditButton
-            onEditPress={updateProfileImage}
-          />
-        </View>
-        <Card title={"Settings"} containerStyle={{ borderRadius: 5 }}>
-          <ListItem
-            title="Light mode"
-            switch={{
-              value: lightThemeState,
-              onValueChange: (value) => toggleTheme(value),
-              trackColor: { true: theme.colors.accent },
-              thumbColor: lightThemeState ? theme.colors.accent : "#212",
-            }}
-            bottomDivider
-          />
-          <ListItem
-            title="Personal settings"
-            onPress={() => navigate("PersonalSettings")}
-            chevron
-          />
-          <ListItem
-            title="Recommend station"
-            onPress={() => navigate("RecommendStation")}
-            chevron
-          />
-        </Card>
-      </ContainerView>
-      
-      <CustomButton
-        isSecondary
-        addIcon={{
-          name: "sign-in",
-          type: "octicon",
-          size: 20,
-        }}
-        onPress={() => navigate("Register")}
-        title={"Create an account"}
-      />
+    <LayoutView centered primaryColor={theme.colors.background}>
+      <View style={{ alignItems: "center", paddingBottom: 20 }}>
+        <Avatar
+          size={"large"}
+          source={
+            personalInfo.profileImage
+              ? {
+                  uri: personalInfo.profileImage,
+                }
+              : null
+          }
+          rounded
+          title={"HD"}
+          showEditButton
+          onEditPress={updateProfileImage}
+        />
+      </View>
+      <Card title={"Settings"} containerStyle={{ borderRadius: 5 }}>
+        <ListItem
+          title="Light mode"
+          switch={{
+            value: lightThemeState,
+            onValueChange: (value) => toggleTheme(value),
+            trackColor: { true: theme.colors.accent },
+            thumbColor: lightThemeState ? theme.colors.accent : "#212",
+          }}
+          bottomDivider
+        />
+        <ListItem
+          title="Personal settings"
+          onPress={() => navigate("PersonalSettings")}
+          chevron
+        />
+        <ListItem
+          title="Recommend station"
+          onPress={() => navigate("RecommendStation")}
+          chevron
+        />
+        <CustomButton
+          isSecondary
+          containerStyle={{
+            paddingBottom: 10,
+            paddingTop: 10,
+          }}
+          addIcon={{
+            name: "ios-person-add",
+            size: 20,
+          }}
+          onPress={() => navigate("Register")}
+          title={"Create an account"}
+        />
+        <CustomButton
+          addIcon={{
+            name: "sign-in",
+            type: "octicon",
+            size: 20,
+          }}
+          onPress={() => navigate("Register")}
+          title={"Sign in"}
+        />
+      </Card>
     </LayoutView>
   );
 };

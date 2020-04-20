@@ -123,22 +123,23 @@ const JourneyScreen = (props) => {
               chevron
             />
             {showDestinations ? (
-              <UIDestinationsView hideTitle roundedBottomCorners />
+              <UIDestinationsView
+                hasErrorButton={true}
+                buttonTitle={"Cencel journey"}
+                buttonOnPress={cancelTrip}
+                hideTitle
+                roundedBottomCorners
+              />
             ) : null}
           </ContainerView>
-          <CustomButton
-            hasError={true}
-            title={"Cancel journey"}
-            onPress={cancelTrip}
-            addIcon={{
-              name: "close",
-              type: "font-awesome",
-              size: 20,
-            }}
-          />
         </>
       ) : (
-        <>
+        <View
+          style={{
+            justifyContent: "center",
+            height: "100%",
+          }}
+        >
           <Card
             title="You have no ongoing yourney."
             containerStyle={{ borderRadius: 5, width: "100%" }}
@@ -146,16 +147,15 @@ const JourneyScreen = (props) => {
             <Text style={{ marginBottom: 10 }}>
               Please press the button to enter your destination or route.
             </Text>
+            <CustomButton
+              onPress={() => navigate("FindDestinationScreen")}
+              addIcon={{
+                name: "ios-train",
+              }}
+              title={"Find your destination"}
+            ></CustomButton>
           </Card>
-
-          <CustomButton
-            onPress={() => navigate("FindDestinationScreen")}
-            addIcon={{
-              name: "ios-train",
-            }}
-            title={"Find your destination"}
-          ></CustomButton>
-        </>
+        </View>
       )}
     </LayoutView>
   );
