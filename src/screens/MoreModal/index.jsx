@@ -88,14 +88,17 @@ const MoreModal = (props) => {
           />
         </Card>
       </ContainerView>
+      
       <CustomButton
+        isSecondary
         addIcon={{
           name: "sign-in",
           type: "octicon",
           size: 20,
         }}
-        title={"Sign in"}
-      ></CustomButton>
+        onPress={() => navigate("Register")}
+        title={"Create an account"}
+      />
     </LayoutView>
   );
 };

@@ -15,9 +15,11 @@ import FavouritesScreen from "./src/screens/Favourites";
 import MoreModal from "./src/screens/MoreModal";
 import PersonalSettings from "./src/screens/PersonalSettings";
 import RecommendStation from "./src/screens/RecommendStation";
+import Register from "./src/screens/Register";
 
-import CombinedStoreProvider from "./store/combinedStore";
 import styled from "styled-components";
+import CombinedStoreProvider from "./store/combinedStore";
+import Firebase from "./store/Firebase";
 
 const TabNavigator = createMaterialBottomTabNavigator(
   {
@@ -96,20 +98,14 @@ const AllRoutes = createSwitchNavigator(
     PersonalSettings: {
       title: "Personal Settings",
       screen: PersonalSettings,
-      header: ({ goBack }) => ({
-        left: (
-          <Icon
-            name={"chevron-left"}
-            onPress={() => {
-              goBack();
-            }}
-          />
-        ),
-      }),
     },
     RecommendStation: {
       title: "Recommend station",
       screen: RecommendStation,
+    },
+    Register: {
+      title: "Register",
+      screen: Register,
     },
     Tabs: {
       screen: TabNavigator,
@@ -123,7 +119,13 @@ const AllRoutes = createSwitchNavigator(
 const AppContainer = createAppContainer(AllRoutes);
 
 export default App = () => {
-  const [lightThemeNav, setLightThemeNav] = useState(true);
+  const [lightThemeNav, setLightThemeNav] = useState(false);
+
+  // console.disableYellowBox = true;
+
+  useEffect(() => {
+    Firebase.isInitialized();
+  });
 
   const saveThemeState = async () => {
     if (lightThemeNav) {

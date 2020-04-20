@@ -91,6 +91,20 @@ export default {
     },
     inputContainerStyle: { backgroundColor: "transparent" },
   },
+  Input: {
+    inputStyle: {
+      color: myLightThemeColors.onSurface,
+    },
+    containerStyle: {
+      paddingTop: 10,
+      paddingBottom: 10,
+    },
+    leftIconContainerStyle: {
+      marginEnd: 10,
+      marginStart: 0,
+      padding: 0,
+    },
+  },
   //THE ACTUAL THEME THAT IS CUSTOM AND DARK THEME
   colors: {
     background: myLightThemeColors.background,

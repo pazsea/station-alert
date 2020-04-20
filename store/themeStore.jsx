@@ -8,7 +8,7 @@ import darkTheme from "../themes/dark";
 export const ThemeModeContext = createContext();
 
 export const ThemeContextProvider = (props) => {
-  const [lightThemeState, setLightThemeState] = useState(true);
+  const [lightThemeState, setLightThemeState] = useState(false);
   const saveThemeState = async () => {
     if (lightThemeState) {
       await AsyncStorage.removeItem("lightThemeState");
