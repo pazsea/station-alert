@@ -38,7 +38,7 @@ export default {
     },
     buttonStyle: {
       backgroundColor: myDarkThemeColors.primary,
-      borderRadius: 5,
+      borderRadius: 20,
     },
   },
   Text: {
