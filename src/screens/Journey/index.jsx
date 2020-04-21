@@ -13,6 +13,7 @@ import { JourneyContext } from "../../../store/journeyStore";
 import UIDestinationsView from "../../components/UIDestinationsView";
 import MapView, { Marker } from "react-native-maps";
 import CustomButton from "../../components/CustomButton";
+import ImageContainer from "../../components/ImageContainer";
 
 const JourneyScreen = (props) => {
   const {
@@ -35,10 +36,11 @@ const JourneyScreen = (props) => {
   };
 
   return (
-    <LayoutView primaryColor={theme.colors.background}>
+    <LayoutView centered primaryColor={theme.colors.background}>
       {destinations && startedTrip ? (
         <>
           <ContainerView>
+            <ImageContainer />
             <ListItem
               onPress={() => setShowMap(!showMap)}
               badge={{
@@ -129,7 +131,7 @@ const JourneyScreen = (props) => {
               <UIDestinationsView
                 hasErrorButton={true}
                 buttonTitle={
-                  arrivedAllStations ? "You have arrived" : "Cencel journey"
+                  arrivedAllStations ? "You have arrived" : "Cancel journey"
                 }
                 buttonOnPress={cancelTrip}
                 hideTitle

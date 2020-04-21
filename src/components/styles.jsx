@@ -3,23 +3,24 @@ import styled from "styled-components";
 // IMAGES
 
 export const TrainImage = styled.Image`
-  width: 100%;
-  height: 130px;
+  flex: 1;
   margin: 0 0 10% 0;
-  transform: translate(-10px);
+
+  /* transform: translate(-10px); */
 `;
 
 // LAYOUT
 
 export const LayoutView = styled.SafeAreaView`
-  background-color: ${({ primaryColor }) => primaryColor};
-  height: 100%;
   display: flex;
   flex: 1;
-  justify-content: ${({ centered, evenly }) =>
-    centered ? "center" : evenly ? "space-evenly" : "space-between"};
+  height: 100%;
   align-items: center;
   padding: 10% 10% 0 10%;
+  background-color: ${({ primaryColor }) => primaryColor};
+  flex-direction: ${({ centered, evenly }) => (centered ? "row" : "column")};
+  justify-content: ${({ centered, evenly }) =>
+    centered ? "center" : evenly ? "space-evenly" : "space-between"};
 `;
 
 export const ContainerView = styled.ScrollView`

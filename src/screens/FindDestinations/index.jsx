@@ -2,16 +2,15 @@ import React, { useContext, useEffect, useState } from "react";
 import { JourneyContext } from "../../../store/journeyStore";
 import * as Permissions from "expo-permissions";
 
-import trainlogo from "../../../images/trainlogo.png";
-
-import { LayoutView, TrainImage, ContainerView } from "../../components/styles";
+import { LayoutView, ContainerView } from "../../components/styles";
 
 import UISearchDestination from "../../components/UISearchDestination";
 import UIDestinationsView from "../../components/UIDestinationsView";
-import { View } from "react-native";
+import { View, Image } from "react-native";
 import { Card, Text } from "react-native-elements";
 import CustomButton from "../../components/CustomButton";
 import { ThemeContext } from "react-native-elements";
+import ImageContainer from "../../components/ImageContainer";
 
 //TO DO Fixa så att allow acces to location funkar smidigare. Kanske tillsammans med ett loading status?
 
@@ -19,7 +18,7 @@ const FindDestinationScreen = (props) => {
   const {
     journeyStore: [journeyState, setJourneyState],
     permission: [locationAllowed, setLocationAllowed],
-    setInitialStore,
+    resetJourneyStore,
   } = useContext(JourneyContext);
 
   const { theme } = useContext(ThemeContext);
@@ -51,14 +50,14 @@ const FindDestinationScreen = (props) => {
   };
 
   const cancelTrip = () => {
-    setInitialStore();
+    resetJourneyStore();
     setStartedSearching(false);
   };
 
   const startedTripView = (
     <>
       <ContainerView>
-        <TrainImage source={trainlogo} />
+        <ImageContainer />
         <Card title="Cancel journey first">
           <Text>
             You have an ongoing journey. You need to cancel it before starting a
@@ -85,29 +84,27 @@ const FindDestinationScreen = (props) => {
   const noAccessView = (
     <>
       <ContainerView>
-        <TrainImage source={trainlogo} />
+        <ImageContainer />
         <Card title="Allow access to location">
           <Text>You have to allow this app to access your location.</Text>
+          <CustomButton
+            hasError={true}
+            title={"Allow location access"}
+            containerStyle={{
+              marginTop: 25,
+            }}
+            //TO DO: Här ska vi sätta på användarens user position
+            onPress={cancelTrip}
+          />
         </Card>
       </ContainerView>
-
-      <CustomButton
-        hasError={true}
-        title={"Allow location access"}
-        //TO DO: Här ska vi sätta på användarens user position
-        onPress={cancelTrip}
-      />
     </>
   );
 
   const searchDestinationView = (
     <>
       <ContainerView>
-        {startedSearching || hasDestinations ? null : (
-          <View style={{ marginBottom: "5%" }}>
-            <TrainImage source={trainlogo} />
-          </View>
-        )}
+        {startedSearching || hasDestinations ? null : <ImageContainer />}
         <UISearchDestination
           setStartedSearching={setStartedSearching}
           startedSearching={startedSearching}
@@ -123,7 +120,10 @@ const FindDestinationScreen = (props) => {
   );
 
   return (
-    <LayoutView primaryColor={theme.colors.background}>
+    <LayoutView
+      centered={!startedSearching}
+      primaryColor={theme.colors.background}
+    >
       {locationAllowed && !journeyState.startedTrip
         ? searchDestinationView
         : journeyState.startedTrip

@@ -119,7 +119,7 @@ const AllRoutes = createSwitchNavigator(
 const AppContainer = createAppContainer(AllRoutes);
 
 export default App = () => {
-  const [lightThemeNav, setLightThemeNav] = useState(false);
+  const [lightThemeNav, setLightThemeNav] = useState(true);
 
   // console.disableYellowBox = true;
 
@@ -127,32 +127,28 @@ export default App = () => {
     Firebase.isInitialized();
   });
 
-  const saveThemeState = async () => {
-    if (lightThemeNav) {
-      await AsyncStorage.removeItem("lightThemeNavState");
-    } else {
-      await AsyncStorage.setItem(
-        "lightThemeNavState",
-        JSON.stringify(lightThemeNav)
-      );
-    }
-  };
+  // const saveThemeState = async () => {
+  //   await AsyncStorage.setItem(
+  //     "lightThemeNavState",
+  //     JSON.stringify(lightThemeNav)
+  //   );
+  // };
 
-  const getThemeState = async () => {
-    currentMode = await AsyncStorage.getItem("lightThemeNavState");
+  // const getThemeState = async () => {
+  //   currentMode = await AsyncStorage.getItem("lightThemeNavState");
 
-    if (currentMode) {
-      setLightThemeNav(JSON.parse(currentMode));
-    }
-  };
+  //   if (currentMode) {
+  //     setLightThemeNav(JSON.parse(currentMode));
+  //   }
+  // };
 
-  useEffect(() => {
-    saveThemeState();
-  }, [lightThemeNav]);
+  // useEffect(() => {
+  //   saveThemeState();
+  // }, [lightThemeNav]);
 
-  useEffect(() => {
-    getThemeState();
-  }, []);
+  // useEffect(() => {
+  //   getThemeState();
+  // }, []);
 
   return (
     <CombinedStoreProvider>

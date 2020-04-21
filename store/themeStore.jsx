@@ -8,33 +8,34 @@ import darkTheme from "../themes/dark";
 export const ThemeModeContext = createContext();
 
 export const ThemeContextProvider = (props) => {
-  const [lightThemeState, setLightThemeState] = useState(false);
-  const saveThemeState = async () => {
-    if (lightThemeState) {
-      await AsyncStorage.removeItem("lightThemeState");
-    } else {
-      await AsyncStorage.setItem(
-        "lightThemeState",
-        JSON.stringify(lightThemeState)
-      );
-    }
-  };
+  const [lightThemeState, setLightThemeState] = useState(true);
+  
+  // const saveThemeState = async () => {
+  //   if (lightThemeState) {
+  //     await AsyncStorage.removeItem("lightThemeState");
+  //   } else {
+  //     await AsyncStorage.setItem(
+  //       "lightThemeState",
+  //       JSON.stringify(lightThemeState)
+  //     );
+  //   }
+  // };
 
-  const getThemeState = async () => {
-    currentMode = await AsyncStorage.getItem("lightThemeState");
+  // const getThemeState = async () => {
+  //   currentMode = await AsyncStorage.getItem("lightThemeState");
 
-    if (currentMode) {
-      setLightThemeState(JSON.parse(currentMode));
-    }
-  };
+  //   if (currentMode) {
+  //     setLightThemeState(JSON.parse(currentMode));
+  //   }
+  // };
 
-  useEffect(() => {
-    saveThemeState();
-  }, [lightThemeState]);
+  // useEffect(() => {
+  //   saveThemeState();
+  // }, [lightThemeState]);
 
-  useEffect(() => {
-    getThemeState();
-  }, []);
+  // useEffect(() => {
+  //   getThemeState();
+  // }, []);
 
   const currentTheme = lightThemeState ? lightTheme : darkTheme;
   // console.log("LIGHT THEME STATE I CONTEXT", lightThemeState);

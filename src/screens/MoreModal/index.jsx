@@ -11,6 +11,8 @@ import {
 } from "react-native-elements";
 import PersonalSettings from "../PersonalSettings";
 import CustomButton from "../../components/CustomButton";
+import dark from "../../../themes/dark";
+import light from "../../../themes/light";
 
 // TO DO: Detta borde vara en store som har användarens inloggningsuppgifter. Gör en sån senare.
 const INITIAL_PERSONAL_INFO_STATE = {
@@ -28,7 +30,7 @@ const MoreModal = (props) => {
     currentTheme,
   } = useContext(ThemeModeContext);
 
-  const { theme } = useContext(ThemeContext);
+  const { theme, updateTheme } = useContext(ThemeContext);
 
   const { navigate } = props.navigation;
 
@@ -44,70 +46,73 @@ const MoreModal = (props) => {
   const toggleTheme = (value) => {
     setLightThemeState(value);
     props.screenProps.setLightThemeNav(value);
+    updateTheme(value ? light : dark);
   };
 
   return (
     <LayoutView centered primaryColor={theme.colors.background}>
-      <View style={{ alignItems: "center", paddingBottom: 20 }}>
-        <Avatar
-          size={"large"}
-          source={
-            personalInfo.profileImage
-              ? {
-                  uri: personalInfo.profileImage,
-                }
-              : null
-          }
-          rounded
-          title={"HD"}
-          showEditButton
-          onEditPress={updateProfileImage}
-        />
-      </View>
-      <Card title={"Settings"} containerStyle={{ borderRadius: 5 }}>
-        <ListItem
-          title="Light mode"
-          switch={{
-            value: lightThemeState,
-            onValueChange: (value) => toggleTheme(value),
-            trackColor: { true: theme.colors.accent },
-            thumbColor: lightThemeState ? theme.colors.accent : "#212",
-          }}
-          bottomDivider
-        />
-        <ListItem
-          title="Personal settings"
-          onPress={() => navigate("PersonalSettings")}
-          chevron
-        />
-        <ListItem
-          title="Recommend station"
-          onPress={() => navigate("RecommendStation")}
-          chevron
-        />
-        <CustomButton
-          isSecondary
-          containerStyle={{
-            paddingBottom: 10,
-            paddingTop: 10,
-          }}
-          addIcon={{
-            name: "ios-person-add",
-            size: 20,
-          }}
-          onPress={() => navigate("Register")}
-          title={"Create an account"}
-        />
-        <CustomButton
-          addIcon={{
-            name: "sign-in",
-            type: "octicon",
-            size: 20,
-          }}
-          onPress={() => navigate("Register")}
-          title={"Sign in"}
-        />
-      </Card>
+      <ContainerView>
+        <View style={{ alignItems: "center", paddingBottom: 20 }}>
+          <Avatar
+            size={"large"}
+            source={
+              personalInfo.profileImage
+                ? {
+                    uri: personalInfo.profileImage,
+                  }
+                : null
+            }
+            rounded
+            title={"HD"}
+            showEditButton
+            onEditPress={updateProfileImage}
+          />
+        </View>
+        <Card title={"Settings"} containerStyle={{ borderRadius: 5 }}>
+          <ListItem
+            title="Light mode"
+            switch={{
+              value: lightThemeState,
+              onValueChange: (value) => toggleTheme(value),
+              trackColor: { true: theme.colors.accent },
+              thumbColor: lightThemeState ? theme.colors.accent : "#212",
+            }}
+            bottomDivider
+          />
+          <ListItem
+            title="Personal settings"
+            onPress={() => navigate("PersonalSettings")}
+            chevron
+          />
+          <ListItem
+            title="Recommend station"
+            onPress={() => navigate("RecommendStation")}
+            chevron
+          />
+          <CustomButton
+            isSecondary
+            containerStyle={{
+              paddingBottom: 10,
+              paddingTop: 10,
+            }}
+            addIcon={{
+              name: "ios-person-add",
+              size: 20,
+            }}
+            onPress={() => navigate("Register")}
+            title={"Create an account"}
+          />
+          <CustomButton
+            addIcon={{
+              name: "sign-in",
+              type: "octicon",
+              size: 20,
+            }}
+            onPress={() => navigate("Register")}
+            title={"Sign in"}
+          />
+        </Card>
+      </ContainerView>
     </LayoutView>
   );
 };

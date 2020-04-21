@@ -56,6 +56,7 @@ const CustomButton = ({
     },
     buttonStyle: {
       backgroundColor: isSelected ? colors.selected : colors.primaryVariant,
+      borderRadius: 5,
       borderWidth: 0,
       marginRight: 5,
       marginTop: 2,
