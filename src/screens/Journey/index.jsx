@@ -16,8 +16,11 @@ import CustomButton from "../../components/CustomButton";
 
 const JourneyScreen = (props) => {
   const {
-    journeyStore: [{ destinations, startedTrip }, setJourneyState],
-    setInitialStore,
+    journeyStore: [
+      { destinations, startedTrip, arrivedAllStations },
+      setJourneyState,
+    ],
+    resetJourneyStore,
   } = useContext(JourneyContext);
   const { theme } = useContext(ThemeContext);
   const colors = theme.colors;
@@ -28,7 +31,7 @@ const JourneyScreen = (props) => {
   const { navigate } = props.navigation;
 
   const cancelTrip = () => {
-    setInitialStore();
+    resetJourneyStore();
   };
 
   return (
@@ -125,7 +128,9 @@ const JourneyScreen = (props) => {
             {showDestinations ? (
               <UIDestinationsView
                 hasErrorButton={true}
-                buttonTitle={"Cencel journey"}
+                buttonTitle={
+                  arrivedAllStations ? "You have arrived" : "Cencel journey"
+                }
                 buttonOnPress={cancelTrip}
                 hideTitle
                 roundedBottomCorners

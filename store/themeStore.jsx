@@ -37,8 +37,8 @@ export const ThemeContextProvider = (props) => {
   }, []);
 
   const currentTheme = lightThemeState ? lightTheme : darkTheme;
-  console.log("LIGHT THEME STATE I CONTEXT", lightThemeState);
-  console.log("FÄRG I CONTEXT", currentTheme.colors.background);
+  // console.log("LIGHT THEME STATE I CONTEXT", lightThemeState);
+  // console.log("FÄRG I CONTEXT", currentTheme.colors.background);
 
   const themeStore = {
     themeState: [lightThemeState, setLightThemeState],

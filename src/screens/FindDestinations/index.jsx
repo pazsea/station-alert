@@ -34,7 +34,7 @@ const FindDestinationScreen = (props) => {
     if (status === "granted") {
       setLocationAllowed(true);
     } else {
-      console.log(status);
+      setLocationAllowed(false);
     }
   };
 

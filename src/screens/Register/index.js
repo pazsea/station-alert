@@ -93,6 +93,9 @@ const Register = (props) => {
       </Overlay>
       <Card title={"Register account"}>
         <Input
+          containerStyle={{
+            paddingBottom: 10,
+          }}
           placeholder="Name"
           onChangeText={(text) => {
             setValue("name", text);
@@ -101,6 +104,10 @@ const Register = (props) => {
           leftIcon={<Icon name="people" size={24} color="black" />}
         />
         <Input
+          containerStyle={{
+            paddingTop: 10,
+            paddingBottom: 10,
+          }}
           placeholder="Email"
           textContentType={"emailAddress"}
           errorMessage={errors.email && "You have to supply a valid email"}
@@ -110,6 +117,10 @@ const Register = (props) => {
           leftIcon={<Icon name="email" size={24} color="black" />}
         />
         <Input
+          containerStyle={{
+            paddingTop: 10,
+            paddingBottom: 15,
+          }}
           placeholder="Password"
           secureTextEntry={true}
           textContentType={"password"}

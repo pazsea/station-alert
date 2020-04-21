@@ -85,7 +85,7 @@ export default {
   SearchBar: {
     containerStyle: {
       borderRadius: 5,
-      padding: 2,
+      padding: 0,
       borderColor: 0,
       borderWidth: 0,
     },
@@ -94,10 +94,6 @@ export default {
   Input: {
     inputStyle: {
       color: myDarkThemeColors.onSurface,
-    },
-    containerStyle: {
-      paddingTop: 10,
-      paddingBottom: 10,
     },
     leftIconContainerStyle: {
       marginEnd: 10,

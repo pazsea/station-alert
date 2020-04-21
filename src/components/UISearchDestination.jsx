@@ -37,6 +37,7 @@ const UISearchDestination = ({ startedSearching, setStartedSearching }) => {
         destinations: removeStation,
       });
     } else {
+      pickedStation.arrived = false;
       setJourneyState({
         ...journeyState,
         destinations: [...journeyState.destinations, pickedStation],
@@ -110,6 +111,10 @@ const UISearchDestination = ({ startedSearching, setStartedSearching }) => {
     <>
       <SearchDestinationContainer>
         <SearchBar
+          containerStyle={{
+            paddingTop: 2,
+            paddingBottom: 2,
+          }}
           value={value}
           onChangeText={onChangeHandler}
           placeholder={"Find your destination.."}

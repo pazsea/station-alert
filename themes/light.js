@@ -95,10 +95,6 @@ export default {
     inputStyle: {
       color: myLightThemeColors.onSurface,
     },
-    containerStyle: {
-      paddingTop: 10,
-      paddingBottom: 10,
-    },
     leftIconContainerStyle: {
       marginEnd: 10,
       marginStart: 0,

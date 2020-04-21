@@ -15,56 +15,15 @@ const INITIAL_USERPOSITION_STATE = {
   long: null,
 };
 
-// Permission location ska finnas när appen startas och vara granted
-// När started trip är true så ska gps aktiveras och logga position till statet
-// Varje gång det state uppdateras ska man kolla om någon av destinationerna är iom diametern.
-// Om så är fallet ås är den destinationen framme.
-
 export const JourneyContextProvider = (props) => {
   const [journeyState, setJourneyState] = useState(INITIAL_JOURNEY_STATE);
   const [userPosition, setUserPosition] = useState(INITIAL_USERPOSITION_STATE);
 
-  const [locationAllowed, setLocationAllowed] = useState(false);
-
-  //___ HELPERS
-
-  // useEffect(() => {
-  //   journeyState.destinations.map((station) => {
-  //     console.log(station);
-  //   });
-  // }, [journeyState.destinations]);
-
-  // useEffect(() => {
-  //   if (userPosition) {
-  //     console.log(userPosition.lat);
-  //   }
-  // }, [userPosition]);
-
-  //___
-
-  // useEffect(() => {
-  //   if (journeyState.destinations.length > 0) {
-  //     const arrivedAtStations = () => journeyState.destinations.every((station) => {
-  //       console.log("JourneyContextProvider -> station MAP", station);
-  //       station.arrived === true;
-  //     });
-
-  //     console.log("ARRIVED IS ", arrivedAtStations());
-  //     if (!arrivedAtStations) {
-  //       console.log("NO MORE DESTINATIONS");
-  //       setJourneyState({
-  //         destinations: [],
-  //         startedTrip: false,
-  //         arrivedAllStations: true,
-  //       });
-  //     }
-  //   }
-  // }, [journeyState]);
+  const [locationAllowed, setLocationAllowed] = useState(true);
 
   useEffect(() => {
     if (userPosition.lat && userPosition.long) {
       // Kolla om någon station är inom min radie
-      console.log("Du kollar coords");
 
       journeyState.destinations?.map((station, stationIndex) => {
         const stationArrived = isPointWithinRadius(
@@ -77,7 +36,7 @@ export const JourneyContextProvider = (props) => {
         );
 
         if (stationArrived) {
-          let newDestinationStatus = [...journeyState.destinations];
+          let newDestinationStatus = journeyState.destinations;
           newDestinationStatus[stationIndex].arrived = true;
 
           setJourneyState((prevState) => ({
@@ -89,8 +48,18 @@ export const JourneyContextProvider = (props) => {
     }
   }, [userPosition.lat, userPosition.long]);
 
+  // useEffect(() => {
+  //   if (journeyState.destinations.every((station) => station.arrived == true)) {
+  //     setJourneyState(INITIAL_JOURNEY_STATE);
+  //   }
+  // }, [journeyState.destinations]);
+
   useEffect(() => {
-    if (locationAllowed && journeyState.startedTrip) {
+    if (
+      locationAllowed &&
+      journeyState.startedTrip &&
+      !journeyState.arrivedAllStations
+    ) {
       //Kör gps och sätt nytt state med ens position
       const watchID = navigator.geolocation.watchPosition(
         (position) => {
@@ -111,26 +80,63 @@ export const JourneyContextProvider = (props) => {
       );
       return () => {
         navigator.geolocation.clearWatch(watchID);
-        console.log("JourneyContextProvider -> navigator", "CLEARED");
       };
     }
   }, [locationAllowed, journeyState.startedTrip]);
 
-  const setInitialStore = () => {
+  const resetJourneyStore = () => {
+    // let resetDestinations = [...journeyState.destinations];
+    // console.log(resetDestinations);
+    // resetDestinations.forEach((dest) => (dest.arrived = false));
+
     setJourneyState(INITIAL_JOURNEY_STATE);
   };
 
-  const stores = {
+  useEffect(() => {}, [journeyState]);
+
+  const JourneyStore = {
     journeyStore: [journeyState, setJourneyState],
     permission: [locationAllowed, setLocationAllowed],
-    setInitialStore,
+    resetJourneyStore,
   };
 
   return (
-    <JourneyContext.Provider value={stores}>
+    <JourneyContext.Provider value={JourneyStore}>
       {props.children}
     </JourneyContext.Provider>
   );
 };
 
 export default JourneyContextProvider;
+
+//___ HELPERS
+
+// useEffect(() => {
+//   journeyState.destinations.map((station) => {
+//     console.log(station);
+//   });
+// }, [journeyState.destinations]);
+
+// useEffect(() => {
+//   if (userPosition) {
+//     console.log(userPosition.lat);
+//   }
+// }, [userPosition]);
+
+//___
+
+// useEffect(() => {
+//   if (journeyState.destinations.length > 0) {
+//     const arrivedAtStations = () => journeyState.destinations.every((station) => {
+//       station.arrived === true;
+//     });
+
+//     if (!arrivedAtStations) {
+//       setJourneyState({
+//         destinations: [],
+//         startedTrip: false,
+//         arrivedAllStations: true,
+//       });
+//     }
+//   }
+// }, [journeyState]);
