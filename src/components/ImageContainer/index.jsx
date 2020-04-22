@@ -1,16 +1,21 @@
 import React from "react";
 
 import trainlogo from "../../../images/trainlogo.png";
+import splashScreen from "../../../assets/splash.png";
 import { View, Image } from "react-native";
 
-const ImageContainer = () => {
+const ImageContainer = ({ showSplash }) => {
   return (
-    <View style={{ marginBottom: "5%", width: "100%" }}>
+    <View style={{ width: "100%" }}>
       <Image
         // resizeMethod={"scale"}
-        style={{ width: "100%", alignSelf: "center" }}
+        style={{
+          width: "100%",
+          height: showSplash ? "100%" : 110,
+          alignSelf: "center",
+        }}
         resizeMode={"contain"}
-        source={trainlogo}
+        source={showSplash ? splashScreen : trainlogo}
       />
     </View>
   );

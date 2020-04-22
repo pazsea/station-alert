@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { SafeAreaView, AsyncStorage } from "react-native";
+import { SafeAreaView, AsyncStorage, Text } from "react-native";
 
 import { createAppContainer, createSwitchNavigator } from "react-navigation";
 import { createMaterialBottomTabNavigator } from "react-navigation-material-bottom-tabs";
@@ -16,6 +16,7 @@ import MoreModal from "./src/screens/MoreModal";
 import PersonalSettings from "./src/screens/PersonalSettings";
 import RecommendStation from "./src/screens/RecommendStation";
 import Register from "./src/screens/Register";
+import Loading from "./src/components/Loading";
 
 import styled from "styled-components";
 import CombinedStoreProvider from "./store/combinedStore";
@@ -119,20 +120,22 @@ const AllRoutes = createSwitchNavigator(
 const AppContainer = createAppContainer(AllRoutes);
 
 export default App = () => {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    Firebase.isInitialized();
+    if (Firebase.isInitialized()) {
+      setLoading(false);
+    }
   });
 
   return (
     <CombinedStoreProvider>
       <ThemeConsumer>
         {({ theme }) =>
-          theme ? (
-            <AppContainer theme={theme.themeStatus} />
+          loading && !theme ? (
+            <Loading />
           ) : (
-            <Text>Loading</Text>
+            <AppContainer theme={theme.themeStatus} />
           )
         }
       </ThemeConsumer>
