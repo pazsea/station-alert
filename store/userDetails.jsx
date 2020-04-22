@@ -13,34 +13,6 @@ const INITIAL_USERDETAILS_STATE = {
 
 const UserDetailsProvider = (props) => {
   const [userDetails, setUserDetails] = useState(INITIAL_USERDETAILS_STATE);
-  // const [loading, setLoading] = useState(true);
-
-  // useEffect(() => {
-  //   console.log("USER DETAILS ÄNDRADES", userDetails);
-  // }, [userDetails]);
-
-  // const saveUserDetails = async () => {
-  //   await AsyncStorage.setItem(
-  //     "userDetailsStorage",
-  //     JSON.stringify(userDetails)
-  //   );
-  // };
-
-  // const getUserDetails = async () => {
-  //   const storage = await AsyncStorage.getItem("userDetailsStorage");
-
-  //   if (storage) {
-  //     setUserDetails(JSON.parse(storage));
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   getUserDetails;
-  // }, []);
-
-  // useEffect(() => {
-  //   saveUserDetails;
-  // }, [userDetails]);
 
   const clearUserDetails = () => {
     setUserDetails(INITIAL_USERDETAILS_STATE);
@@ -59,3 +31,32 @@ const UserDetailsProvider = (props) => {
 };
 
 export default UserDetailsProvider;
+
+// const [loading, setLoading] = useState(true);
+
+// useEffect(() => {
+//   console.log("USER DETAILS ÄNDRADES", userDetails);
+// }, [userDetails]);
+
+// const saveUserDetails = async () => {
+//   await AsyncStorage.setItem(
+//     "userDetailsStorage",
+//     JSON.stringify(userDetails)
+//   );
+// };
+
+// const getUserDetails = async () => {
+//   const storage = await AsyncStorage.getItem("userDetailsStorage");
+
+//   if (storage) {
+//     setUserDetails(JSON.parse(storage));
+//   }
+// };
+
+// useEffect(() => {
+//   getUserDetails;
+// }, []);
+
+// useEffect(() => {
+//   saveUserDetails;
+// }, [userDetails]);

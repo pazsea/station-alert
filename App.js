@@ -128,7 +128,7 @@ const AppContainer = createAppContainer(AllRoutes);
 export default App = () => {
   const [loading, setLoading] = useState(true);
 
-  console.ignoredYellowBox = true;
+  console.disableYellowBox = true;
   useEffect(() => {
     if (Firebase.isInitialized()) {
       setLoading(false);

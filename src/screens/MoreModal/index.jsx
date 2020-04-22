@@ -2,6 +2,8 @@ import React, { useContext, useEffect, useState } from "react";
 import { StyleSheet, View, Text } from "react-native";
 import { LayoutView, ContainerView } from "../../components/styles";
 import { ThemeModeContext } from "../../../store/themeStore";
+import defaultPic from "../../../images/avatar.png";
+
 import {
   Card,
   ListItem,
@@ -14,7 +16,7 @@ import CustomButton from "../../components/CustomButton";
 import dark from "../../../themes/dark";
 import light from "../../../themes/light";
 import { UserDetailsContext } from "../../../store/userDetails";
-import { getInitials } from "../../constant";
+import { getFirstName } from "../../constant";
 import firebase from "../../../store/Firebase";
 
 // TO DO: Detta borde vara en store som har användarens inloggningsuppgifter. Gör en sån senare.
@@ -29,26 +31,27 @@ const MoreModal = (props) => {
   // const [personalInfo, setPersonalInfo] = useState(INITIAL_PERSONAL_INFO_STATE);
 
   const {
-    themeState: [{ currentTheme, avatar }, setThemeState],
+    themeState: [{ currentTheme }, setThemeState],
   } = useContext(ThemeModeContext);
 
   const {
-    userInfo: [{ name, userSignedIn }, setUserDetails],
+    userInfo: [{ name, userSignedIn, avatar }, setUserDetails],
     clearUserDetails,
   } = useContext(UserDetailsContext);
+
+  const [welcomeMessage, setWelcomeMessage] = useState(false);
 
   const { theme, updateTheme } = useContext(ThemeContext);
 
   const { navigate } = props.navigation;
 
-  // const updateProfileImage = () => {
-  //   //TO DO: Write function to update profile image when you are connected to firebase.
-  //   setPersonalInfo((prevState) => ({
-  //     ...prevState,
-  //     profileImage:
-  //       "https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg",
-  //   }));
-  // };
+  useEffect(() => {
+    setWelcomeMessage(true);
+
+    setTimeout(() => {
+      setWelcomeMessage(false);
+    }, 5000);
+  }, []);
 
   const toggleTheme = (value) => {
     setThemeState({
@@ -65,16 +68,35 @@ const MoreModal = (props) => {
   return (
     <LayoutView centered primaryColor={theme.colors.background}>
       <ContainerView>
-        <View style={{ alignItems: "center", paddingBottom: 20 }}>
-          <Avatar
-            size={"large"}
-            rounded
-            title={name ? getInitials(name) : "G"}
-            showEditButton
-            // onEditPress={updateProfileImage}
-          />
-        </View>
-        <Card title={"Settings"} containerStyle={{ borderRadius: 5 }}>
+        <View style={{ alignItems: "center", paddingBottom: 20 }}></View>
+        <Card
+          title={name ? `${getFirstName(name)} settings` : "Guest settings"}
+          containerStyle={{ borderRadius: 5 }}
+          image={avatar || defaultPic}
+          // featuredTitle="Välkommen Patrick"
+          imageProps={{
+            resizeMode: "contain",
+            onMagicTap: () => console.log("tryck på bild"),
+            PlaceholderContent: (
+              <Text
+                style={{
+                  color: theme.colors.onSecondary,
+                }}
+              >
+                Loading...
+              </Text>
+            ),
+          }}
+          featuredTitle={
+            welcomeMessage && name
+              ? `Welcome ${getFirstName(name)}`
+              : welcomeMessage && "Welcome guest"
+          }
+          featuredTitleStyle={{
+            color: theme.colors.onSecondary,
+            fontWeight: "100",
+          }}
+        >
           <ListItem
             title="Light mode"
             switch={{
