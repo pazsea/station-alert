@@ -10,30 +10,29 @@ const INITIAL_USERDETAILS_STATE = {
   avatar: "",
 };
 
-export const ContextProvider = (props) => {
+const UserDetailsProvider = (props) => {
   const [userDetails, setUserDetails] = useState(INITIAL_USERDETAILS_STATE);
-  const [loading, setLoading] = useState(true);
+  // const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const localStorageUserDetails = localStorage.getItem("user");
+  // useEffect(() => {
+  //   const localStorageUserDetails = localStorage.getItem("user");
 
-    if (localStorageUserDetails) {
-      setUserDetails(JSON.parse(localStorageUserDetails));
-    }
-    setLoading(false);
-  }, []);
+  //   if (localStorageUserDetails) {
+  //     setUserDetails(JSON.parse(localStorageUserDetails));
+  //   }
+  //   setLoading(false);
+  // }, []);
 
-  useEffect(() => {
-    localStorage.setItem("user", JSON.stringify(userDetails));
-  });
+  // useEffect(() => {
+  //   localStorage.setItem("user", JSON.stringify(userDetails));
+  // });
 
   const clearUserDetails = () => {
     setUserDetails(INITIAL_USERDETAILS_STATE);
   };
 
   const userDetailsStore = {
-    userDetails: [userDetails, setUserDetails],
-    loading: [loading, setLoading],
+    userInfo: [userDetails, setUserDetails],
     clearUserDetails,
   };
 

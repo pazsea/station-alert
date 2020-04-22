@@ -100,6 +100,7 @@ const MoreModal = (props) => {
               name: "ios-person-add",
               size: 20,
             }}
+            iconRight
             onPress={() => navigate("Register")}
             title={"Create an account"}
           />
@@ -109,6 +110,7 @@ const MoreModal = (props) => {
               type: "octicon",
               size: 20,
             }}
+            iconRight
             onPress={() => navigate("Register")}
             title={"Sign in"}
           />

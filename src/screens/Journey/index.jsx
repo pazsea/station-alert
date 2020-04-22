@@ -159,6 +159,7 @@ const JourneyScreen = (props) => {
               addIcon={{
                 name: "ios-train",
               }}
+              iconRight
               title={"Find your destination"}
             ></CustomButton>
           </Card>

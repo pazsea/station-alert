@@ -73,6 +73,7 @@ const CustomButton = ({
       iconStyle={{ color: checkButtonIconColor }}
       containerStyle={{
         marginLeft: 15,
+        ...addIcon.style,
       }}
       {...addIcon}
     ></Icon>

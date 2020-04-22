@@ -75,6 +75,7 @@ const FindDestinationScreen = (props) => {
               type: "font-awesome",
               size: 20,
             }}
+            iconRight
           />
         </Card>
       </ContainerView>

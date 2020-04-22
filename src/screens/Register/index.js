@@ -8,6 +8,7 @@ import { ThemeContext } from "react-native-elements";
 import firebase from "../../../store/Firebase";
 import { useForm } from "react-hook-form";
 import { validateEmail } from "../../constant";
+import { UserDetailsContext } from "../../../store/userDetails";
 
 const INITIAL_ERROR_STATE = {
   status: false,
@@ -16,6 +17,12 @@ const INITIAL_ERROR_STATE = {
 
 const Register = (props) => {
   const [errorState, setErrorState] = useState(INITIAL_ERROR_STATE);
+
+  const {
+    userInfo: [{ userSignedIn }, setUserDetails],
+    clearUserDetails,
+  } = useContext(UserDetailsContext);
+
   const { theme } = useContext(ThemeContext);
 
   const { register, handleSubmit, setValue, errors } = useForm();
@@ -30,6 +37,14 @@ const Register = (props) => {
         favRoutes: [],
         avatar: null,
       });
+      await setUserDetails((prevState) => ({
+        ...prevState,
+        name: data.name,
+        email: data.email,
+        userUid: firebase.getCurrentUid(),
+        userSignedIn: true,
+      }));
+      await navigate("MoreScreen");
     } catch (error) {
       setErrorState({
         status: true,
@@ -49,8 +64,42 @@ const Register = (props) => {
 
   useGoBack(() => navigate("MoreScreen"));
 
-  return (
-    <LayoutView centered primaryColor={theme.colors.background}>
+  const content = userSignedIn ? (
+    <>
+      <Card title="You are already signed in..">
+        <Text>You have to log out to register for a new account</Text>
+        <CustomButton
+          hasError
+          onPress={clearUserDetails}
+          containerStyle={{
+            marginTop: 20,
+          }}
+          addIcon={{ name: "ios-person-add" }}
+          title={"Log out"}
+          iconRight
+        />
+        <CustomButton
+          isSecondary
+          containerStyle={{
+            paddingBottom: 10,
+            paddingTop: 10,
+          }}
+          addIcon={{
+            name: "ios-arrow-back",
+            size: 20,
+            style: {
+              marginRight: 10,
+              marginLeft: 0,
+            },
+          }}
+          onPress={() => navigate("MoreScreen")}
+          title={"Go back"}
+          iconRight={false}
+        />
+      </Card>
+    </>
+  ) : (
+    <>
       <Overlay
         isVisible={errorState.status}
         overlayBackgroundColor={theme.colors.surface}
@@ -87,6 +136,7 @@ const Register = (props) => {
           <CustomButton
             title={"Got it!"}
             addIcon={{ name: "ios-thumbs-up" }}
+            iconRight
             onPress={() => setErrorState(INITIAL_ERROR_STATE)}
           ></CustomButton>
         </View>
@@ -142,7 +192,31 @@ const Register = (props) => {
           addIcon={{ name: "ios-person-add" }}
           title={"Register account"}
         />
+        <CustomButton
+          isSecondary
+          containerStyle={{
+            paddingBottom: 10,
+            paddingTop: 10,
+          }}
+          addIcon={{
+            name: "ios-arrow-back",
+            size: 20,
+            style: {
+              marginRight: 10,
+              marginLeft: 0,
+            },
+          }}
+          onPress={() => navigate("MoreScreen")}
+          title={"Go back"}
+          iconRight={false}
+        />
       </Card>
+    </>
+  );
+
+  return (
+    <LayoutView centered primaryColor={theme.colors.background}>
+      {content}
     </LayoutView>
   );
 };
