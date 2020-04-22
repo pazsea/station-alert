@@ -128,7 +128,13 @@ export default App = () => {
   return (
     <CombinedStoreProvider>
       <ThemeConsumer>
-        {({ theme }) => <AppContainer theme={theme.themeStatus} />}
+        {({ theme }) =>
+          theme ? (
+            <AppContainer theme={theme.themeStatus} />
+          ) : (
+            <Text>Loading</Text>
+          )
+        }
       </ThemeConsumer>
     </CombinedStoreProvider>
   );

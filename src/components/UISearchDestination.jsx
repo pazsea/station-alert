@@ -12,7 +12,7 @@ const UISearchDestination = ({ startedSearching, setStartedSearching }) => {
   } = useContext(JourneyContext);
 
   const {
-    themeState: [lightThemeState, setLightThemeState],
+    themeState: [{ currentTheme }],
   } = useContext(ThemeModeContext);
 
   const [searchResult, setSearchResult] = useState([]);
@@ -118,7 +118,7 @@ const UISearchDestination = ({ startedSearching, setStartedSearching }) => {
           value={value}
           onChangeText={onChangeHandler}
           placeholder={"Find your destination.."}
-          lightTheme={lightThemeState}
+          lightTheme={currentTheme === "light"}
         />
       </SearchDestinationContainer>
       <StationButtonContainer>{buttons}</StationButtonContainer>

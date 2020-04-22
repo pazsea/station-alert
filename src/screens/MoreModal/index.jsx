@@ -26,7 +26,7 @@ const MoreModal = (props) => {
   const [personalInfo, setPersonalInfo] = useState(INITIAL_PERSONAL_INFO_STATE);
 
   const {
-    themeState: [lightThemeState, setLightThemeState],
+    themeState: [{ currentTheme }, setThemeState],
   } = useContext(ThemeModeContext);
 
   const { theme, updateTheme } = useContext(ThemeContext);
@@ -43,7 +43,9 @@ const MoreModal = (props) => {
   };
 
   const toggleTheme = (value) => {
-    setLightThemeState(value);
+    setThemeState({
+      currentTheme: value ? "light" : "dark",
+    });
     updateTheme(value ? light : dark);
   };
 
@@ -70,10 +72,11 @@ const MoreModal = (props) => {
           <ListItem
             title="Light mode"
             switch={{
-              value: lightThemeState,
+              value: currentTheme === "light",
               onValueChange: (value) => toggleTheme(value),
               trackColor: { true: theme.colors.accent },
-              thumbColor: lightThemeState ? theme.colors.accent : "#212",
+              thumbColor:
+                currentTheme === "light" ? theme.colors.accent : "#212",
             }}
             bottomDivider
           />

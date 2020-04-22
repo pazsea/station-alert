@@ -8,8 +8,8 @@ import darkTheme from "../themes/dark";
 export const ThemeModeContext = createContext();
 
 export const ThemeContextProvider = (props) => {
-  const [lightThemeState, setLightThemeState] = useState(true);
-  
+  const [themeState, setThemeState] = useState({ currentTheme: "light" });
+
   // const saveThemeState = async () => {
   //   if (lightThemeState) {
   //     await AsyncStorage.removeItem("lightThemeState");
@@ -37,18 +37,15 @@ export const ThemeContextProvider = (props) => {
   //   getThemeState();
   // }, []);
 
-  const currentTheme = lightThemeState ? lightTheme : darkTheme;
-  // console.log("LIGHT THEME STATE I CONTEXT", lightThemeState);
-  // console.log("FÄRG I CONTEXT", currentTheme.colors.background);
+  const theme = themeState.currentTheme === "light" ? lightTheme : darkTheme;
 
   const themeStore = {
-    themeState: [lightThemeState, setLightThemeState],
-    currentTheme: currentTheme,
+    themeState: [themeState, setThemeState],
   };
 
   return (
     <ThemeModeContext.Provider value={themeStore}>
-      <ThemeProvider theme={currentTheme}>{props.children}</ThemeProvider>
+      <ThemeProvider theme={theme}>{props.children}</ThemeProvider>
     </ThemeModeContext.Provider>
   );
 };
