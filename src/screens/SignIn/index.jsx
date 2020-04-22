@@ -19,7 +19,8 @@ const Register = (props) => {
   const [errorState, setErrorState] = useState(INITIAL_ERROR_STATE);
 
   const {
-    userInfo: [{ userSignedIn }, setUserDetails],
+    userInfo: [userDetails, setUserDetails],
+    authState: [{ signedIn, authLoading }, setAuthState],
     clearUserDetails,
   } = useContext(UserDetailsContext);
 
@@ -30,15 +31,22 @@ const Register = (props) => {
 
   async function onSubmit(data) {
     try {
+      await setAuthState((prevState) => ({
+        ...prevState,
+        authLoading: true,
+      }));
       await firebase.login(data.email, data.password);
-      await firebase
-        .user(firebase.getCurrentUid())
-        .get()
-        .then((snapshot) => {
-          let details = snapshot.data(); //data är ett objekt..
-          details.userSignedIn = true;
-          setUserDetails(details);
-        });
+      // await firebase
+      //   .user(firebase.getCurrentUid())
+      //   .get()
+      //   .then((snapshot) => {
+      //     let details = snapshot.data(); //data är ett objekt.. <g
+      //     setUserDetails(details);
+      //   });
+      await setAuthState({
+        authLoading: false,
+        signedIn: true,
+      });
       //   await firebase.user(firebase.getCurrentUid()).set({
       //     name: data.name,
       //     email: data.email,
@@ -58,6 +66,11 @@ const Register = (props) => {
         status: true,
         message: error.message,
       });
+
+      setAuthState((prevState) => ({
+        ...prevState,
+        authLoading: false,
+      }));
     }
   }
 
@@ -153,6 +166,7 @@ const Register = (props) => {
           onPress={handleSubmit(onSubmit)}
           addIcon={{ name: "ios-person-add" }}
           title={"Sign In"}
+          loading={authLoading}
         />
         <CustomButton
           isSecondary

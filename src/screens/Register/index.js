@@ -19,7 +19,8 @@ const Register = (props) => {
   const [errorState, setErrorState] = useState(INITIAL_ERROR_STATE);
 
   const {
-    userInfo: [{ userSignedIn }, setUserDetails],
+    userInfo: [userDetails, setUserDetails],
+    authState: [{ signedIn, authLoading }, setAuthState],
     clearUserDetails,
   } = useContext(UserDetailsContext);
 
@@ -30,26 +31,39 @@ const Register = (props) => {
 
   async function onSubmit(data) {
     try {
+      await setAuthState((prevState) => ({
+        ...prevState,
+        authLoading: true,
+      }));
       await firebase.register(data.name, data.email, data.password);
       await firebase.user(firebase.getCurrentUid()).set({
         name: data.name,
         email: data.email,
         favRoutes: [],
-        avatar: null,
+        img: "",
       });
-      console.log(data.name);
-      await setUserDetails({
-        name: data.name,
-        email: data.email,
-        userUid: firebase.getCurrentUid(),
-        userSignedIn: true,
-      });
+      // console.log(data.name);
+      await setAuthState((prevState) => ({
+        authLoading: false,
+        signedIn: true,
+      }));
+      // await setUserDetails({
+      //   name: data.name,
+      //   email: data.email,
+      //   userUid: firebase.getCurrentUid(),
+      //   userSignedIn: true,
+      // });
       await navigate("MoreScreen");
     } catch (error) {
       setErrorState({
         status: true,
         message: error.message,
       });
+
+      setAuthState((prevState) => ({
+        ...prevState,
+        authLoading: false,
+      }));
     }
   }
 
@@ -69,7 +83,7 @@ const Register = (props) => {
     clearUserDetails;
   };
 
-  const content = userSignedIn ? (
+  const content = signedIn ? (
     <>
       <Card title="You are already signed in..">
         <Text>You have to log out to register for a new account</Text>
@@ -196,6 +210,7 @@ const Register = (props) => {
           onPress={handleSubmit(onSubmit)}
           addIcon={{ name: "ios-person-add" }}
           title={"Register account"}
+          loading={authLoading}
         />
         <CustomButton
           isSecondary

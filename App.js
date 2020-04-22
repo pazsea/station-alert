@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { SafeAreaView, AsyncStorage, Text } from "react-native";
+import { SafeAreaView, AsyncStorage, Text, YellowBox } from "react-native";
 
 import { createAppContainer, createSwitchNavigator } from "react-navigation";
 import { createMaterialBottomTabNavigator } from "react-navigation-material-bottom-tabs";
@@ -128,7 +128,8 @@ const AppContainer = createAppContainer(AllRoutes);
 export default App = () => {
   const [loading, setLoading] = useState(true);
 
-  console.disableYellowBox = true;
+  YellowBox.ignoreWarnings(["Setting a timer"]);
+
   useEffect(() => {
     if (Firebase.isInitialized()) {
       setLoading(false);

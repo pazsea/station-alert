@@ -1,7 +1,7 @@
 import React, { useEffect, useContext, useState } from "react";
 import { StyleSheet, View, Text } from "react-native";
 import { LayoutView, ContainerView } from "../../components/styles";
-import { Button, Card, ListItem, Avatar, Icon } from "react-native-elements";
+import { Button, Card, ListItem, Icon } from "react-native-elements";
 import { useGoBack } from "../../constant";
 import CustomButton from "../../components/CustomButton";
 import { ThemeContext } from "react-native-elements";

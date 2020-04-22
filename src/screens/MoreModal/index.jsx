@@ -4,13 +4,7 @@ import { LayoutView, ContainerView } from "../../components/styles";
 import { ThemeModeContext } from "../../../store/themeStore";
 import defaultPic from "../../../images/avatar.png";
 
-import {
-  Card,
-  ListItem,
-  Avatar,
-  ThemeContext,
-  Icon,
-} from "react-native-elements";
+import { Card, ListItem, ThemeContext, Icon } from "react-native-elements";
 import PersonalSettings from "../PersonalSettings";
 import CustomButton from "../../components/CustomButton";
 import dark from "../../../themes/dark";
@@ -19,23 +13,16 @@ import { UserDetailsContext } from "../../../store/userDetails";
 import { getFirstName } from "../../constant";
 import firebase from "../../../store/Firebase";
 
-// TO DO: Detta borde vara en store som har användarens inloggningsuppgifter. Gör en sån senare.
-const INITIAL_PERSONAL_INFO_STATE = {
-  name: "",
-  username: "",
-  profileImage: "",
-  favoriteDestinations: [],
-};
-
 const MoreModal = (props) => {
-  // const [personalInfo, setPersonalInfo] = useState(INITIAL_PERSONAL_INFO_STATE);
-
+  //THEME CONTEXT
   const {
     themeState: [{ currentTheme }, setThemeState],
   } = useContext(ThemeModeContext);
 
+  //USERDETAILS CONTEXT
   const {
-    userInfo: [{ name, userSignedIn, avatar }, setUserDetails],
+    userInfo: [{ name, avatar }, setUserDetails],
+    authState: [{ signedIn, authLoading }, setAuthState],
     clearUserDetails,
   } = useContext(UserDetailsContext);
 
@@ -65,6 +52,13 @@ const MoreModal = (props) => {
     clearUserDetails();
   };
 
+  const picTitle =
+    welcomeMessage && name
+      ? `Welcome ${getFirstName(name)}`
+      : welcomeMessage
+      ? "Welcome guest"
+      : "";
+
   return (
     <LayoutView centered primaryColor={theme.colors.background}>
       <ContainerView>
@@ -87,11 +81,7 @@ const MoreModal = (props) => {
               </Text>
             ),
           }}
-          featuredTitle={
-            welcomeMessage && name
-              ? `Welcome ${getFirstName(name)}`
-              : welcomeMessage && "Welcome guest"
-          }
+          featuredTitle={picTitle}
           featuredTitleStyle={{
             color: theme.colors.onSecondary,
             fontWeight: "100",
@@ -132,7 +122,7 @@ const MoreModal = (props) => {
             onPress={() => navigate("Register")}
             title={"Create an account"}
           />
-          {userSignedIn ? (
+          {signedIn ? (
             <CustomButton
               hasError
               onPress={completeLogOut}
@@ -142,6 +132,7 @@ const MoreModal = (props) => {
                 size: 20,
               }}
               title={"Log out"}
+              authLoading={authLoading}
               iconRight
             />
           ) : (
@@ -152,6 +143,7 @@ const MoreModal = (props) => {
                 size: 20,
               }}
               iconRight
+              authLoading={authLoading}
               onPress={() => navigate("SignIn")}
               title={"Sign in"}
             />
