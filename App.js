@@ -16,6 +16,8 @@ import MoreModal from "./src/screens/MoreModal";
 import PersonalSettings from "./src/screens/PersonalSettings";
 import RecommendStation from "./src/screens/RecommendStation";
 import Register from "./src/screens/Register";
+import SignIn from "./src/screens/SignIn";
+
 import Loading from "./src/components/Loading";
 
 import styled from "styled-components";
@@ -108,6 +110,10 @@ const AllRoutes = createSwitchNavigator(
       title: "Register",
       screen: Register,
     },
+    SignIn: {
+      title: "SignIn",
+      screen: SignIn,
+    },
     Tabs: {
       screen: TabNavigator,
     },
@@ -122,6 +128,7 @@ const AppContainer = createAppContainer(AllRoutes);
 export default App = () => {
   const [loading, setLoading] = useState(true);
 
+  console.ignoredYellowBox = true;
   useEffect(() => {
     if (Firebase.isInitialized()) {
       setLoading(false);

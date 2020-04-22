@@ -30,20 +30,28 @@ const Register = (props) => {
 
   async function onSubmit(data) {
     try {
-      await firebase.register(data.name, data.email, data.password);
-      await firebase.user(firebase.getCurrentUid()).set({
-        name: data.name,
-        email: data.email,
-        favRoutes: [],
-        avatar: null,
-      });
-      console.log(data.name);
-      await setUserDetails({
-        name: data.name,
-        email: data.email,
-        userUid: firebase.getCurrentUid(),
-        userSignedIn: true,
-      });
+      await firebase.login(data.email, data.password);
+      await firebase
+        .user(firebase.getCurrentUid())
+        .get()
+        .then((snapshot) => {
+          let details = snapshot.data(); //data är ett objekt..
+          details.userSignedIn = true;
+          setUserDetails(details);
+        });
+      //   await firebase.user(firebase.getCurrentUid()).set({
+      //     name: data.name,
+      //     email: data.email,
+      //     favRoutes: [],
+      //     avatar: null,
+      //   });
+      //   await setUserDetails((prevState) => ({
+      //     ...prevState,
+      //     name: data.name,
+      //     email: data.email,
+      //     userUid: firebase.getCurrentUid(),
+      //     userSignedIn: true,
+      //   }));
       await navigate("MoreScreen");
     } catch (error) {
       setErrorState({
@@ -54,7 +62,6 @@ const Register = (props) => {
   }
 
   useEffect(() => {
-    register("name", { required: true });
     register("email", {
       required: true,
       validate: (value) => validateEmail(value),
@@ -64,46 +71,7 @@ const Register = (props) => {
 
   useGoBack(() => navigate("MoreScreen"));
 
-  const completeLogOut = () => {
-    firebase.logOut();
-    clearUserDetails;
-  };
-
-  const content = userSignedIn ? (
-    <>
-      <Card title="You are already signed in..">
-        <Text>You have to log out to register for a new account</Text>
-        <CustomButton
-          hasError
-          onPress={completeLogOut}
-          containerStyle={{
-            marginTop: 20,
-          }}
-          addIcon={{ name: "ios-person-add" }}
-          title={"Log out"}
-          iconRight
-        />
-        <CustomButton
-          isSecondary
-          containerStyle={{
-            paddingBottom: 10,
-            paddingTop: 10,
-          }}
-          addIcon={{
-            name: "ios-arrow-back",
-            size: 20,
-            style: {
-              marginRight: 10,
-              marginLeft: 0,
-            },
-          }}
-          onPress={() => navigate("MoreScreen")}
-          title={"Go back"}
-          iconRight={false}
-        />
-      </Card>
-    </>
-  ) : (
+  const content = (
     <>
       <Overlay
         isVisible={errorState.status}
@@ -146,18 +114,7 @@ const Register = (props) => {
           ></CustomButton>
         </View>
       </Overlay>
-      <Card title={"Register account"}>
-        <Input
-          containerStyle={{
-            paddingBottom: 10,
-          }}
-          placeholder="Name"
-          onChangeText={(text) => {
-            setValue("name", text);
-          }}
-          errorMessage={errors.name && "You have to supply a name"}
-          leftIcon={<Icon name="people" size={24} color="black" />}
-        />
+      <Card title={"Sign in"}>
         <Input
           containerStyle={{
             paddingTop: 10,
@@ -195,7 +152,7 @@ const Register = (props) => {
         <CustomButton
           onPress={handleSubmit(onSubmit)}
           addIcon={{ name: "ios-person-add" }}
-          title={"Register account"}
+          title={"Sign In"}
         />
         <CustomButton
           isSecondary

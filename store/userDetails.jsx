@@ -1,4 +1,5 @@
 import React, { useState, createContext, useEffect } from "react";
+import { AsyncStorage } from "react-native";
 
 export const UserDetailsContext = createContext();
 
@@ -15,17 +16,31 @@ const UserDetailsProvider = (props) => {
   // const [loading, setLoading] = useState(true);
 
   // useEffect(() => {
-  //   const localStorageUserDetails = localStorage.getItem("user");
+  //   console.log("USER DETAILS ÄNDRADES", userDetails);
+  // }, [userDetails]);
 
-  //   if (localStorageUserDetails) {
-  //     setUserDetails(JSON.parse(localStorageUserDetails));
+  // const saveUserDetails = async () => {
+  //   await AsyncStorage.setItem(
+  //     "userDetailsStorage",
+  //     JSON.stringify(userDetails)
+  //   );
+  // };
+
+  // const getUserDetails = async () => {
+  //   const storage = await AsyncStorage.getItem("userDetailsStorage");
+
+  //   if (storage) {
+  //     setUserDetails(JSON.parse(storage));
   //   }
-  //   setLoading(false);
+  // };
+
+  // useEffect(() => {
+  //   getUserDetails;
   // }, []);
 
   // useEffect(() => {
-  //   localStorage.setItem("user", JSON.stringify(userDetails));
-  // });
+  //   saveUserDetails;
+  // }, [userDetails]);
 
   const clearUserDetails = () => {
     setUserDetails(INITIAL_USERDETAILS_STATE);
