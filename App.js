@@ -4,7 +4,7 @@ import { SafeAreaView, AsyncStorage } from "react-native";
 import { createAppContainer, createSwitchNavigator } from "react-navigation";
 import { createMaterialBottomTabNavigator } from "react-navigation-material-bottom-tabs";
 
-import { ThemeProvider } from "react-native-elements";
+import { ThemeProvider, ThemeConsumer } from "react-native-elements";
 import lightTheme from "./themes/light";
 import darkTheme from "./themes/dark";
 import Icon from "react-native-vector-icons/Ionicons";
@@ -119,45 +119,17 @@ const AllRoutes = createSwitchNavigator(
 const AppContainer = createAppContainer(AllRoutes);
 
 export default App = () => {
-  const [lightThemeNav, setLightThemeNav] = useState(true);
-
-  // console.disableYellowBox = true;
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     Firebase.isInitialized();
   });
 
-  // const saveThemeState = async () => {
-  //   await AsyncStorage.setItem(
-  //     "lightThemeNavState",
-  //     JSON.stringify(lightThemeNav)
-  //   );
-  // };
-
-  // const getThemeState = async () => {
-  //   currentMode = await AsyncStorage.getItem("lightThemeNavState");
-
-  //   if (currentMode) {
-  //     setLightThemeNav(JSON.parse(currentMode));
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   saveThemeState();
-  // }, [lightThemeNav]);
-
-  // useEffect(() => {
-  //   getThemeState();
-  // }, []);
-
   return (
     <CombinedStoreProvider>
-      <AppContainer
-        theme={lightThemeNav ? "light" : "dark"}
-        screenProps={{
-          setLightThemeNav: setLightThemeNav,
-        }}
-      />
+      <ThemeConsumer>
+        {({ theme }) => <AppContainer theme={theme.themeStatus} />}
+      </ThemeConsumer>
     </CombinedStoreProvider>
   );
 };

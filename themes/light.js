@@ -30,6 +30,7 @@ const myLightThemeColors = {
 };
 
 export default {
+  themeStatus:"light",
   //GENERAL
   Button: {
     titleStyle: {

@@ -27,7 +27,6 @@ const MoreModal = (props) => {
 
   const {
     themeState: [lightThemeState, setLightThemeState],
-    currentTheme,
   } = useContext(ThemeModeContext);
 
   const { theme, updateTheme } = useContext(ThemeContext);
@@ -45,7 +44,6 @@ const MoreModal = (props) => {
 
   const toggleTheme = (value) => {
     setLightThemeState(value);
-    props.screenProps.setLightThemeNav(value);
     updateTheme(value ? light : dark);
   };
 

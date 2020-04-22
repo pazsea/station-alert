@@ -30,6 +30,7 @@ const myDarkThemeColors = {
 };
 
 export default {
+  themeStatus: "dark",
   //GENERAL
   Button: {
     titleStyle: {
