@@ -8,6 +8,12 @@ import { ThemeContext } from "react-native-elements";
 import { UserDetailsContext } from "../../../store/userDetails";
 import { useForm } from "react-hook-form";
 import firebase from "../../../store/Firebase";
+// GÖR EN PASSWORD UPDATE
+// UPLOAD AVATAR
+// GÖR RECOMMEND STATION SOM SKA SKICKAS TILL EN NY COLLECTION pending
+// GÖM SETTINGS, RECOMMEND OCH CREATE ACCOUNT NÄR MAN INTE ÄR INLOGGAD
+
+// SIDENOTE, NÄR JAG GODKÄNT DEN SÅ SLÅS DEN IHOP MED NUVARANDE STATIONS
 
 const PersonalSettings = (props) => {
   const { navigate } = props.navigation;
@@ -34,6 +40,7 @@ const PersonalSettings = (props) => {
         authLoading: true,
       }));
       await firebase.updateEmail(data.email || email);
+      await firebase.updatePassword(data.password);
       await firebase.user(firebase.getCurrentUid()).update({
         name: data.name || name,
         email: data.email || email,
@@ -49,6 +56,7 @@ const PersonalSettings = (props) => {
     register("email", {
       validate: (value) => validateEmail(value || email),
     });
+    register("password");
   }, [register]);
 
   useGoBack(() => navigate("MoreScreen"));
@@ -84,6 +92,27 @@ const PersonalSettings = (props) => {
             }}
             leftIcon={<Icon name="email" size={24} color="black" />}
             leftIconContainerStyle={{ marginEnd: 5, marginStart: 5 }}
+          />
+          <Input
+            containerStyle={{
+              paddingTop: 10,
+              paddingBottom: 15,
+            }}
+            placeholder="**Secret**"
+            secureTextEntry={true}
+            textContentType={"password"}
+            errorMessage={errors.password}
+            onChangeText={(text) => {
+              setValue("password", text);
+            }}
+            leftIcon={
+              <Icon
+                name="ios-finger-print"
+                size={24}
+                color="black"
+                type={"ionicon"}
+              />
+            }
           />
           <Text
             style={{

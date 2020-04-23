@@ -55,8 +55,19 @@ class Firebase {
     });
   }
 
+  // addAvatar(url) {
+
+  // }
+
   updateEmail(email) {
     this.auth.currentUser.updateEmail(email);
+  }
+
+  updatePassword(email, password) {
+    if (!password) return;
+    this.auth.currentUser.updatePassword(password).then(() => {
+      this.login(email, password);
+    });
   }
 
   isInitialized() {
