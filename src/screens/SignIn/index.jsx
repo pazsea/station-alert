@@ -11,18 +11,13 @@ import { validateEmail } from "../../constant";
 import { UserDetailsContext } from "../../../store/userDetails";
 import CustomOverlay from "../../components/CustomOverlay";
 
-const INITIAL_ERROR_STATE = {
-  status: false,
-  message: "",
-};
-
 const Register = (props) => {
-  const [errorState, setErrorState] = useState(INITIAL_ERROR_STATE);
-
   const {
     userInfo: [userDetails, setUserDetails],
-    authState: [{ signedIn, authLoading }, setAuthState],
-    clearUserDetails,
+    authState: [{ authLoading, errorStatus, errorMessage }, setAuthState],
+    logOut,
+    resetError,
+    hasError,
   } = useContext(UserDetailsContext);
 
   const { theme } = useContext(ThemeContext);
@@ -37,41 +32,15 @@ const Register = (props) => {
         authLoading: true,
       }));
       await firebase.login(data.email, data.password);
-      // await firebase
-      //   .user(firebase.getCurrentUid())
-      //   .get()
-      //   .then((snapshot) => {
-      //     let details = snapshot.data(); //data är ett objekt.. <g
-      //     setUserDetails(details);
-      //   });
-      await setAuthState({
-        authLoading: false,
-        signedIn: true,
-      });
-      //   await firebase.user(firebase.getCurrentUid()).set({
-      //     name: data.name,
-      //     email: data.email,
-      //     favRoutes: [],
-      //     avatar: null,
-      //   });
-      //   await setUserDetails((prevState) => ({
-      //     ...prevState,
-      //     name: data.name,
-      //     email: data.email,
-      //     userUid: firebase.getCurrentUid(),
-      //     userSignedIn: true,
-      //   }));
-      await navigate("MoreScreen");
-    } catch (error) {
-      setErrorState({
-        status: true,
-        message: error.message,
-      });
-
-      setAuthState((prevState) => ({
+      await setAuthState((prevState) => ({
         ...prevState,
         authLoading: false,
+        signedIn: true,
       }));
+
+      await navigate("MoreScreen");
+    } catch (error) {
+      hasError(error.message);
     }
   }
 
@@ -88,11 +57,11 @@ const Register = (props) => {
   const content = (
     <>
       <CustomOverlay
-        isVisible={errorState.status}
+        isVisible={errorStatus}
         animationsType={"slide"}
         overlayTitle={"Something went wrong..."}
-        overlayTextContent={errorState.message}
-        onBackdropPress={() => setErrorState(INITIAL_ERROR_STATE)}
+        overlayTextContent={errorMessage}
+        onBackdropPress={resetError}
         buttons={[
           {
             title: "Got it!",
@@ -100,7 +69,7 @@ const Register = (props) => {
               name: "ios-thumbs-up",
             },
             iconRight: true,
-            onPress: () => setErrorState(INITIAL_ERROR_STATE),
+            onPress: resetError,
           },
         ]}
       />

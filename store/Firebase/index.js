@@ -45,16 +45,14 @@ class Firebase {
     });
   }
 
-  addQuote(quote) {
+  addFavRoute(incFavRoute) {
     if (!this.auth.currentUser) {
-      return alert("Not authorized");
+      return console.log("Not signed in");
     }
 
-    return this.db
-      .doc(`users_codedamn_video/${this.auth.currentUser.uid}`)
-      .set({
-        quote,
-      });
+    return this.db.doc(`users/${this.auth.currentUser.uid}`).update({
+      favRoutes: app.firestore.FieldValue.arrayUnion(incFavRoute),
+    });
   }
 
   isInitialized() {

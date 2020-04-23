@@ -43,7 +43,7 @@ const CustomOverlay = ({
       }}
       animated={true}
       animationType={"fade"}
-      height={250}
+      height={200}
     >
       <KeyboardAvoidingView
         style={{
@@ -59,15 +59,16 @@ const CustomOverlay = ({
           }}
         >
           <Text h3>{overlayTitle}</Text>
-          <Text
-            style={{
-              textAlign: "center",
-              paddingTop: 10,
-            }}
-          >
-            {overlayTextContent}
-          </Text>
-          {customInput || null}
+          {customInput || (
+            <Text
+              style={{
+                textAlign: "center",
+                paddingTop: 10,
+              }}
+            >
+              {overlayTextContent}
+            </Text>
+          )}
         </View>
         <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
           {renderButtons}

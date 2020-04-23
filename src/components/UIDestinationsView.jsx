@@ -14,6 +14,8 @@ import { ScrollView } from "react-native";
 import CustomButton from "./CustomButton";
 import { UserDetailsContext } from "../../store/userDetails";
 import CustomOverlay from "./CustomOverlay";
+import { useForm } from "react-hook-form";
+import firebase from "../../store/Firebase";
 
 //Gör en overlay här som när man trycker på spara skickar in destinationerna till firebase
 // Rendera sedan ut dem i favorites
@@ -32,7 +34,30 @@ const UIDestinationsView = (props) => {
 
   const { theme } = useContext(ThemeContext);
 
+  const { register, handleSubmit, setValue, errors } = useForm();
+
   const colors = theme.colors;
+
+  useEffect(() => {
+    register("route");
+  }, [register]);
+
+  async function onSaveRoute(data) {
+    try {
+      await setAuthState((prevState) => ({
+        ...prevState,
+        authLoading: true,
+      }));
+      await firebase.addFavRoute({
+        routeName: data.route,
+        destinations: destinations,
+      });
+      await setAuthState((prevState) => ({
+        ...prevState,
+        authLoading: true,
+      }));
+    } catch (e) {}
+  }
 
   const removeStation = (pickedStation) => {
     const removeStation = destinations.filter(
@@ -49,10 +74,10 @@ const UIDestinationsView = (props) => {
     return (
       <StationView key={"stationVy" + index + station.name}>
         <Icon
-          name="ios-flag"
+          name="ios-train"
           size={24}
           color={lastStation ? colors.selected : theme.colors.greyOutline}
-          key={index + station.name + "flag"}
+          key={index + station.name + "train"}
         />
         <Text key={index + station.name + "headliner"}>{station.name}</Text>
         {station.arrived ? (
@@ -77,7 +102,7 @@ const UIDestinationsView = (props) => {
 
   const saveButton = signedIn ? (
     <CustomButton
-      hasError={props.hasErrorButton}
+      isSecondary
       addIcon={{
         name: "save",
         type: "font-awesome",
@@ -96,19 +121,33 @@ const UIDestinationsView = (props) => {
       <CustomOverlay
         isVisible={showSaveOverlay}
         overlayTitle={"Save this route?"}
-        overlayTextContent={"Please enter your route name"}
-        customInput={<Input />}
-        onBackdropPress={() => setErrorState(INITIAL_ERROR_STATE)}
+        customInput={
+          <>
+            <Input
+              containerStyle={{
+                paddingTop: 10,
+              }}
+              placeholder="Enter route name..."
+              errorMessage={
+                errors.route &&
+                "The route name must be at least 2 characters..."
+              }
+              onChangeText={(text) => {
+                setValue("route", text);
+              }}
+              leftIcon={
+                <Icon
+                  name="ios-train"
+                  size={24}
+                  color={theme.themeStatus === "light" ? "#000" : "green"}
+                />
+              }
+            />
+            <Text>asdasdasdds</Text>
+          </>
+        }
+        onBackdropPress={() => setShowSaveOverlay(false)}
         buttons={[
-          {
-            isSelected: true,
-            title: "Save",
-            addIcon: {
-              name: "ios-thumbs-up",
-            },
-            iconRight: true,
-            onPress: () => setErrorState(INITIAL_ERROR_STATE),
-          },
           {
             isSecondary: true,
             title: "Go back",
@@ -117,6 +156,15 @@ const UIDestinationsView = (props) => {
             },
             iconRight: true,
             onPress: () => setShowSaveOverlay(false),
+          },
+          {
+            isSelected: true,
+            title: "Save",
+            addIcon: {
+              name: "ios-thumbs-up",
+            },
+            iconRight: true,
+            onPress: handleSubmit(onSaveRoute),
           },
         ]}
       />
@@ -140,7 +188,7 @@ const UIDestinationsView = (props) => {
               size: 20,
             }}
             containerStyle={{
-              marginTop: 25,
+              marginTop: signedIn ? 10 : 25,
             }}
             title={props.buttonTitle}
             onPress={props.buttonOnPress}

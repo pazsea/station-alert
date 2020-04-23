@@ -11,18 +11,16 @@ import { validateEmail } from "../../constant";
 import { UserDetailsContext } from "../../../store/userDetails";
 import CustomOverlay from "../../components/CustomOverlay";
 
-const INITIAL_ERROR_STATE = {
-  status: false,
-  message: "",
-};
-
 const Register = (props) => {
-  const [errorState, setErrorState] = useState(INITIAL_ERROR_STATE);
-
   const {
     userInfo: [userDetails, setUserDetails],
-    authState: [{ signedIn, authLoading }, setAuthState],
+    authState: [
+      { signedIn, authLoading, errorStatus, errorMessage },
+      setAuthState,
+    ],
     logOut,
+    resetError,
+    hasError,
   } = useContext(UserDetailsContext);
 
   const { theme } = useContext(ThemeContext);
@@ -43,28 +41,14 @@ const Register = (props) => {
         favRoutes: [],
         img: "",
       });
-      // console.log(data.name);
       await setAuthState((prevState) => ({
+        prevState,
         authLoading: false,
         signedIn: true,
       }));
-      // await setUserDetails({
-      //   name: data.name,
-      //   email: data.email,
-      //   userUid: firebase.getCurrentUid(),
-      //   userSignedIn: true,
-      // });
       await navigate("MoreScreen");
     } catch (error) {
-      setErrorState({
-        status: true,
-        message: error.message,
-      });
-
-      setAuthState((prevState) => ({
-        ...prevState,
-        authLoading: false,
-      }));
+      hasError(error.message);
     }
   }
 
@@ -116,11 +100,11 @@ const Register = (props) => {
   ) : (
     <>
       <CustomOverlay
-        isVisible={errorState.status}
+        isVisible={errorStatus}
         animationsType={"slide"}
         overlayTitle={"Something went wrong..."}
-        overlayTextContent={errorState.message}
-        onBackdropPress={() => setErrorState(INITIAL_ERROR_STATE)}
+        overlayTextContent={errorMessage}
+        onBackdropPress={resetError}
         buttons={[
           {
             title: "Got it!",
@@ -128,7 +112,7 @@ const Register = (props) => {
               name: "ios-thumbs-up",
             },
             iconRight: true,
-            onPress: () => setErrorState(INITIAL_ERROR_STATE),
+            onPress: resetError,
           },
         ]}
       />

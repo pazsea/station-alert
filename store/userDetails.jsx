@@ -14,20 +14,14 @@ const INITIAL_USERDETAILS_STATE = {
 const INITIAL_AUTH_STATE = {
   signedIn: false,
   authLoading: false,
+  errorStatus: false,
+  errorMessage: "",
 };
 
 const UserDetailsProvider = (props) => {
   const [userDetails, setUserDetails] = useState(INITIAL_USERDETAILS_STATE);
 
-  const [authState, setAuthState] = useState({
-    signedIn: false,
-    authLoading: false,
-  });
-
-  // Gör en authState med logged in state bör ha en userDetailsLoading
-  // Om logged in är true så starta firebase
-  // Firebase är en listener som dehydrate userDetailsStatet
-  // unsub i cleanup
+  const [authState, setAuthState] = useState(INITIAL_AUTH_STATE);
 
   useEffect(() => {
     if (!authState.signedIn || !firebase.isInitialized()) return;
@@ -54,36 +48,18 @@ const UserDetailsProvider = (props) => {
     };
   }, [authState]);
 
-  // useEffect(() => {
-  //   console.log("firebase INNAN IF");
+  const resetError = () => {
+    setAuthState(INITIAL_AUTH_STATE);
+  };
 
-  //   if (authState.signedIn && firebase.isInitialized()) {
-  //     const userUid = firebase.getCurrentUid();
-  //     console.log("firebase startar");
-  //     console.log("UserDetailsProvider -> userUid", userUid);
-
-  //     const unsub = firebase.user(userUid).onSnapshot((snap) => {
-  //       // if (snap) {
-  //       //   console.log("UserDetailsProvider -> snap", snap);
-  //       //   const date = snap.data();
-  //       //   console.log("UserDetailsProvider -> date", date);
-  //       //   const docs = snap.docs;
-  //       //   console.log("UserDetailsProvider -> docs", docs);
-  //       // }
-  //       if (snap) {
-  //         console.log("UserDetailsProvider -> snap", snap.data);
-  //         const firebaseUserDetails = snap.data();
-  //         setUserDetails(firebaseUserDetails);
-  //       } else {
-  //         console.log("Firebase funkar inte");
-  //       }
-  //     });
-  //     return () => {
-  //       unsub;
-  //       console.log("UNSUB");
-  //     };
-  //   }
-  // }, [authState]);
+  const hasError = (message) => {
+    setAuthState((prevState) => ({
+      ...prevState,
+      authLoading: false,
+      errorStatus: true,
+      errorMessage: message,
+    }));
+  };
 
   const logOut = () => {
     setUserDetails(INITIAL_USERDETAILS_STATE);
@@ -95,6 +71,8 @@ const UserDetailsProvider = (props) => {
     userInfo: [userDetails, setUserDetails],
     authState: [authState, setAuthState],
     logOut,
+    resetError,
+    hasError,
   };
 
   return (
@@ -105,32 +83,3 @@ const UserDetailsProvider = (props) => {
 };
 
 export default UserDetailsProvider;
-
-// const [loading, setLoading] = useState(true);
-
-// useEffect(() => {
-//   console.log("USER DETAILS ÄNDRADES", userDetails);
-// }, [userDetails]);
-
-// const saveUserDetails = async () => {
-//   await AsyncStorage.setItem(
-//     "userDetailsStorage",
-//     JSON.stringify(userDetails)
-//   );
-// };
-
-// const getUserDetails = async () => {
-//   const storage = await AsyncStorage.getItem("userDetailsStorage");
-
-//   if (storage) {
-//     setUserDetails(JSON.parse(storage));
-//   }
-// };
-
-// useEffect(() => {
-//   getUserDetails;
-// }, []);
-
-// useEffect(() => {
-//   saveUserDetails;
-// }, [userDetails]);
