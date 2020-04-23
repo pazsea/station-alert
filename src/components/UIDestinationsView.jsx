@@ -21,7 +21,7 @@ import firebase from "../../store/Firebase";
 // Rendera sedan ut dem i favorites
 
 const UIDestinationsView = (props) => {
-  const [showSaveOverlay, setShowSaveOverlay] = useState(false);
+  const [overlayState, setOverlayState] = useState(false);
 
   const {
     journeyStore: [{ startedTrip, destinations }, setJourneyState],
@@ -46,8 +46,13 @@ const UIDestinationsView = (props) => {
   const colors = theme.colors;
 
   useEffect(() => {
-    register("route");
+    register("route", { required: true });
   }, [register]);
+
+  const closeOverlay = () => {
+    setOverlayState(false);
+    resetError;
+  };
 
   async function onSaveRoute(data) {
     try {
@@ -61,7 +66,7 @@ const UIDestinationsView = (props) => {
       });
       await hasStatus("Saved");
       await setTimeout(() => {
-        setShowSaveOverlay(false);
+        setOverlayState(false);
       }, 2000);
     } catch (e) {
       await hasError(e.message);
@@ -121,14 +126,14 @@ const UIDestinationsView = (props) => {
         marginTop: 25,
       }}
       title={"Save this route"}
-      onPress={() => setShowSaveOverlay(true)}
+      onPress={() => setOverlayState(true)}
     />
   ) : null;
 
   return (
     <>
       <CustomOverlay
-        isVisible={showSaveOverlay}
+        isVisible={overlayState}
         overlayTitle={"Save this route?"}
         customInput={
           <>
@@ -163,16 +168,17 @@ const UIDestinationsView = (props) => {
             </Text>
           </>
         }
-        onBackdropPress={() => setShowSaveOverlay(false)}
+        onBackdropPress={closeOverlay}
         buttons={[
           {
             isSecondary: true,
-            title: "Go back",
+            title: "Close",
             addIcon: {
-              name: "ios-thumbs-up",
+              name: "close",
+              type: "font-awesome",
             },
             iconRight: true,
-            onPress: () => setShowSaveOverlay(false),
+            onPress: closeOverlay,
           },
           {
             loading: authLoading,

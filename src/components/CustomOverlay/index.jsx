@@ -43,7 +43,7 @@ const CustomOverlay = ({
       }}
       animated={true}
       animationType={"fade"}
-      height={200}
+      height={250}
     >
       <KeyboardAvoidingView
         style={{

@@ -37,7 +37,7 @@ const MoreModal = (props) => {
 
     setTimeout(() => {
       setWelcomeMessage(false);
-    }, 5000);
+    }, 2000);
   }, []);
 
   const toggleTheme = (value) => {
@@ -51,7 +51,7 @@ const MoreModal = (props) => {
     welcomeMessage && name
       ? `Welcome ${getFirstName(name)}`
       : welcomeMessage
-      ? "Welcome guest"
+      ? "Welcome"
       : "";
 
   return (
