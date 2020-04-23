@@ -21,7 +21,7 @@ const Register = (props) => {
   const {
     userInfo: [userDetails, setUserDetails],
     authState: [{ signedIn, authLoading }, setAuthState],
-    clearUserDetails,
+    logOut,
   } = useContext(UserDetailsContext);
 
   const { theme } = useContext(ThemeContext);
@@ -78,18 +78,13 @@ const Register = (props) => {
 
   useGoBack(() => navigate("MoreScreen"));
 
-  const completeLogOut = () => {
-    firebase.logOut();
-    clearUserDetails;
-  };
-
   const content = signedIn ? (
     <>
       <Card title="You are already signed in..">
         <Text>You have to log out to register for a new account</Text>
         <CustomButton
           hasError
-          onPress={completeLogOut}
+          onPress={logOut}
           containerStyle={{
             marginTop: 20,
           }}

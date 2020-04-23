@@ -11,6 +11,11 @@ const INITIAL_USERDETAILS_STATE = {
   img: "",
 };
 
+const INITIAL_AUTH_STATE = {
+  signedIn: false,
+  authLoading: false,
+};
+
 const UserDetailsProvider = (props) => {
   const [userDetails, setUserDetails] = useState(INITIAL_USERDETAILS_STATE);
 
@@ -25,44 +30,71 @@ const UserDetailsProvider = (props) => {
   // unsub i cleanup
 
   useEffect(() => {
-    console.log("firebase INNAN IF");
-
-    if (authState.signedIn && firebase.isInitialized()) {
-      const userUid = firebase.getCurrentUid();
-      console.log("firebase startar");
-      console.log("UserDetailsProvider -> userUid", userUid);
-
-      const unsub = firebase.user(userUid).onSnapshot((snap) => {
-        // if (snap) {
-        //   console.log("UserDetailsProvider -> snap", snap);
-        //   const date = snap.data();
-        //   console.log("UserDetailsProvider -> date", date);
-        //   const docs = snap.docs;
-        //   console.log("UserDetailsProvider -> docs", docs);
-        // }
-        if (snap) {
-          console.log("UserDetailsProvider -> snap", snap.data);
-          const firebaseUserDetails = snap.data();
-          setUserDetails(firebaseUserDetails);
-        } else {
-          console.log("Firebase funkar inte");
-        }
-      });
-      return () => {
-        unsub;
-        console.log("UNSUB");
-      };
-    }
+    if (!authState.signedIn || !firebase.isInitialized()) return;
+    const userUid = firebase.getCurrentUid();
+    const unsub = firebase.user(userUid).onSnapshot((snap) => {
+      // if (snap) {
+      //   console.log("UserDetailsProvider -> snap", snap);
+      //   const date = snap.data();
+      //   console.log("UserDetailsProvider -> date", date);
+      //   const docs = snap.docs;
+      //   console.log("UserDetailsProvider -> docs", docs);
+      // }
+      if (snap) {
+        console.log("UserDetailsProvider -> snap", snap.data);
+        const firebaseUserDetails = snap.data();
+        setUserDetails(firebaseUserDetails);
+      } else {
+        console.log("Firebase funkar inte");
+      }
+    });
+    return () => {
+      unsub;
+      console.log("UNSUB");
+    };
   }, [authState]);
 
-  const clearUserDetails = () => {
+  // useEffect(() => {
+  //   console.log("firebase INNAN IF");
+
+  //   if (authState.signedIn && firebase.isInitialized()) {
+  //     const userUid = firebase.getCurrentUid();
+  //     console.log("firebase startar");
+  //     console.log("UserDetailsProvider -> userUid", userUid);
+
+  //     const unsub = firebase.user(userUid).onSnapshot((snap) => {
+  //       // if (snap) {
+  //       //   console.log("UserDetailsProvider -> snap", snap);
+  //       //   const date = snap.data();
+  //       //   console.log("UserDetailsProvider -> date", date);
+  //       //   const docs = snap.docs;
+  //       //   console.log("UserDetailsProvider -> docs", docs);
+  //       // }
+  //       if (snap) {
+  //         console.log("UserDetailsProvider -> snap", snap.data);
+  //         const firebaseUserDetails = snap.data();
+  //         setUserDetails(firebaseUserDetails);
+  //       } else {
+  //         console.log("Firebase funkar inte");
+  //       }
+  //     });
+  //     return () => {
+  //       unsub;
+  //       console.log("UNSUB");
+  //     };
+  //   }
+  // }, [authState]);
+
+  const logOut = () => {
     setUserDetails(INITIAL_USERDETAILS_STATE);
+    setAuthState(INITIAL_AUTH_STATE);
+    firebase.logout();
   };
 
   const userDetailsStore = {
     userInfo: [userDetails, setUserDetails],
     authState: [authState, setAuthState],
-    clearUserDetails,
+    logOut,
   };
 
   return (

@@ -23,7 +23,7 @@ const MoreModal = (props) => {
   const {
     userInfo: [{ name, avatar }, setUserDetails],
     authState: [{ signedIn, authLoading }, setAuthState],
-    clearUserDetails,
+    logOut,
   } = useContext(UserDetailsContext);
 
   const [welcomeMessage, setWelcomeMessage] = useState(false);
@@ -45,11 +45,6 @@ const MoreModal = (props) => {
       currentTheme: value ? "light" : "dark",
     });
     updateTheme(value ? light : dark);
-  };
-
-  const completeLogOut = () => {
-    firebase.logout();
-    clearUserDetails();
   };
 
   const picTitle =
@@ -125,7 +120,7 @@ const MoreModal = (props) => {
           {signedIn ? (
             <CustomButton
               hasError
-              onPress={completeLogOut}
+              onPress={logOut}
               addIcon={{
                 name: "sign-out",
                 type: "octicon",
