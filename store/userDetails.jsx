@@ -81,6 +81,15 @@ const UserDetailsProvider = (props) => {
       errorMessage: message,
       statusMessage: "",
     }));
+
+    setTimeout(() => {
+      setAuthState((prevState) => ({
+        ...prevState,
+        errorStatus: false,
+        errorMessage: "",
+        statusMessage: "",
+      }));
+    }, 2000);
   };
 
   const logOut = () => {

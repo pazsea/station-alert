@@ -2,55 +2,126 @@ import React, { useEffect, useContext, useState } from "react";
 import { StyleSheet, View, Text, BackHandler } from "react-native";
 import { LayoutView, ContainerView } from "../../components/styles";
 import { Card, Icon, Input } from "react-native-elements";
-import { useGoBack } from "../../constant";
+import { useGoBack, validateEmail } from "../../constant";
 import CustomButton from "../../components/CustomButton";
 import { ThemeContext } from "react-native-elements";
+import { UserDetailsContext } from "../../../store/userDetails";
+import { useForm } from "react-hook-form";
+import firebase from "../../../store/Firebase";
 
 const PersonalSettings = (props) => {
   const { navigate } = props.navigation;
   const { theme } = useContext(ThemeContext);
 
+  const {
+    userInfo: [{ name, email }, setUserDetails],
+    authState: [
+      { signedIn, authLoading, errorStatus, errorMessage, statusMessage },
+      setAuthState,
+    ],
+    logOut,
+    resetError,
+    hasError,
+    hasStatus,
+  } = useContext(UserDetailsContext);
+
+  const { register, handleSubmit, setValue, errors } = useForm();
+
+  async function onSave(data) {
+    try {
+      await setAuthState((prevState) => ({
+        ...prevState,
+        authLoading: true,
+      }));
+      await firebase.updateEmail(data.email || email);
+      await firebase.user(firebase.getCurrentUid()).update({
+        name: data.name || name,
+        email: data.email || email,
+      });
+      await hasStatus("Saved");
+    } catch (error) {
+      hasError(error.message);
+    }
+  }
+
+  useEffect(() => {
+    register("name");
+    register("email", {
+      validate: (value) => validateEmail(value || email),
+    });
+  }, [register]);
+
   useGoBack(() => navigate("MoreScreen"));
 
   return (
-    <LayoutView primaryColor={theme.colors.background}>
+    <LayoutView centered primaryColor={theme.colors.background}>
       <ContainerView>
         <Card
           title={"Personal settings"}
           containerStyle={{ margin: 0, borderRadius: 5 }}
         >
           <Input
-            placeholder="Name"
+            placeholder={name}
+            placeholderTextColor={"green"}
             containerStyle={{
               paddingBottom: 10,
             }}
-            containerStyle={{ padding: 5 }}
+            onChangeText={(text) => {
+              setValue("name", text);
+            }}
             leftIcon={<Icon name="people" size={24} color="black" />}
             leftIconContainerStyle={{ marginEnd: 5, marginStart: 5 }}
           />
           <Input
-            placeholder="Username"
-            containerStyle={{
-              paddingTop: 10,
-              paddingBottom: 10,
-            }}
-            containerStyle={{ padding: 5 }}
-            leftIcon={<Icon name="check" size={24} color="black" />}
-            leftIconContainerStyle={{ marginEnd: 5, marginStart: 5 }}
-          />
-          <Input
-            placeholder="Email"
+            placeholder={email}
+            placeholderTextColor={"green"}
             containerStyle={{
               paddingTop: 10,
               paddingBottom: 5,
             }}
-            containerStyle={{ padding: 5 }}
+            onChangeText={(text) => {
+              setValue("email", text);
+            }}
             leftIcon={<Icon name="email" size={24} color="black" />}
             leftIconContainerStyle={{ marginEnd: 5, marginStart: 5 }}
           />
+          <Text
+            style={{
+              color: errorMessage ? theme.colors.error : theme.colors.selected,
+            }}
+          >
+            {errorMessage || statusMessage}
+          </Text>
+          <CustomButton
+            isSelected
+            onPress={handleSubmit(onSave)}
+            containerStyle={{
+              marginTop: 15,
+            }}
+            addIcon={{ name: "save", type: "font-awesome" }}
+            title={"Save"}
+            loading={authLoading}
+          />
+          <CustomButton
+            isSecondary
+            containerStyle={{
+              // paddingBottom: 10,
+              marginTop: 10,
+            }}
+            addIcon={{
+              name: "ios-arrow-back",
+              size: 20,
+              style: {
+                marginRight: 10,
+                marginLeft: 0,
+              },
+            }}
+            onPress={() => navigate("MoreScreen")}
+            title={"Go back"}
+            iconRight={false}
+          />
         </Card>
       </ContainerView>
-      <CustomButton title={"login"} />
     </LayoutView>
   );
 };

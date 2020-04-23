@@ -55,6 +55,10 @@ class Firebase {
     });
   }
 
+  updateEmail(email) {
+    this.auth.currentUser.updateEmail(email);
+  }
+
   isInitialized() {
     return new Promise((resolve) => {
       this.auth.onAuthStateChanged(resolve);
