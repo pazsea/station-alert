@@ -9,6 +9,7 @@ import firebase from "../../../store/Firebase";
 import { useForm } from "react-hook-form";
 import { validateEmail } from "../../constant";
 import { UserDetailsContext } from "../../../store/userDetails";
+import CustomOverlay from "../../components/CustomOverlay";
 
 const INITIAL_ERROR_STATE = {
   status: false,
@@ -86,47 +87,23 @@ const Register = (props) => {
 
   const content = (
     <>
-      <Overlay
+      <CustomOverlay
         isVisible={errorState.status}
-        overlayBackgroundColor={theme.colors.surface}
+        animationsType={"slide"}
+        overlayTitle={"Something went wrong..."}
+        overlayTextContent={errorState.message}
         onBackdropPress={() => setErrorState(INITIAL_ERROR_STATE)}
-        overlayStyle={{
-          padding: 20,
-          height: "auto",
-          flex: 0.3,
-        }}
-      >
-        <View
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            height: "auto",
-            flex: 1,
-          }}
-        >
-          <View
-            style={{
-              alignItems: "center",
-            }}
-          >
-            <Text h3>Something went wrong...</Text>
-            <Text
-              style={{
-                textAlign: "center",
-                paddingTop: 10,
-              }}
-            >
-              {errorState.message}
-            </Text>
-          </View>
-          <CustomButton
-            title={"Got it!"}
-            addIcon={{ name: "ios-thumbs-up" }}
-            iconRight
-            onPress={() => setErrorState(INITIAL_ERROR_STATE)}
-          ></CustomButton>
-        </View>
-      </Overlay>
+        buttons={[
+          {
+            title: "Got it!",
+            addIcon: {
+              name: "ios-thumbs-up",
+            },
+            iconRight: true,
+            onPress: () => setErrorState(INITIAL_ERROR_STATE),
+          },
+        ]}
+      />
       <Card title={"Sign in"}>
         <Input
           containerStyle={{

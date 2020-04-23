@@ -17,10 +17,7 @@ import ImageContainer from "../../components/ImageContainer";
 
 const JourneyScreen = (props) => {
   const {
-    journeyStore: [
-      { destinations, startedTrip, arrivedAllStations },
-      setJourneyState,
-    ],
+    journeyStore: [{ destinations, startedTrip }, setJourneyState],
     resetJourneyStore,
   } = useContext(JourneyContext);
   const { theme } = useContext(ThemeContext);
@@ -130,9 +127,7 @@ const JourneyScreen = (props) => {
             {showDestinations ? (
               <UIDestinationsView
                 hasErrorButton={true}
-                buttonTitle={
-                  arrivedAllStations ? "You have arrived" : "Cancel journey"
-                }
+                buttonTitle={"Cancel journey"}
                 buttonOnPress={cancelTrip}
                 hideTitle
                 roundedBottomCorners
