@@ -1,6 +1,7 @@
 import * as app from "firebase";
 import "firebase/auth";
 import "firebase/firestore";
+import "firebase/storage";
 
 import * as SECRET from "./env.js";
 
@@ -19,16 +20,13 @@ class Firebase {
     app.initializeApp(config);
     this.auth = app.auth();
     this.db = app.firestore();
+    this.storage = app.storage();
   }
+
+  imageUser = (uid) => this.storage.ref(`images/${uid}`);
 
   user = (uid) => this.db.doc(`users/${uid}`);
   users = () => this.db.collection("users");
-
-  classDetails = (uid) => this.db.doc(`classDetails/${uid}`);
-  rootClassDetails = () => this.db.collection(`classDetails/`);
-
-  attendance = (uid) => this.db.doc(`attendance/${uid}`);
-  rootAttendance = () => this.db.collection(`attendance/`);
 
   login(email, password) {
     return this.auth.signInWithEmailAndPassword(email, password);

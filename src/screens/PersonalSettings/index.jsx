@@ -1,15 +1,21 @@
 import React, { useEffect, useContext, useState } from "react";
-import { StyleSheet, View, Text, BackHandler } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Text,
+  BackHandler,
+  SnapshotViewIOS,
+} from "react-native";
 import { LayoutView, ContainerView } from "../../components/styles";
 import { Card, Icon, Input } from "react-native-elements";
-import { useGoBack, validateEmail } from "../../constant";
+import { useGoBack, validateEmail, uriToBlob } from "../../constant";
 import CustomButton from "../../components/CustomButton";
 import { ThemeContext } from "react-native-elements";
 import { UserDetailsContext } from "../../../store/userDetails";
 import { useForm } from "react-hook-form";
 import firebase from "../../../store/Firebase";
-// GÖR EN PASSWORD UPDATE
-// UPLOAD AVATAR
+// import { ImagePicker } from "expo";
+import * as ImagePicker from "expo-image-picker";
 // GÖR RECOMMEND STATION SOM SKA SKICKAS TILL EN NY COLLECTION pending
 // GÖM SETTINGS, RECOMMEND OCH CREATE ACCOUNT NÄR MAN INTE ÄR INLOGGAD
 
@@ -50,6 +56,62 @@ const PersonalSettings = (props) => {
       hasError(error.message);
     }
   }
+
+  const uploadImage = (blob, uid) => {
+    setAuthState((prevState) => ({
+      ...prevState,
+      authLoading: true,
+    }));
+
+    return new Promise((resolve, reject) => {
+      var storageRef = firebase.imageUser(uid);
+
+      storageRef
+        .child("profie.jpg")
+        .put(blob, {
+          contentType: "image/jpeg",
+        })
+        .then((snapshot) => {
+          blob.close();
+
+          resolve(snapshot);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  };
+
+  const choosePhoto = async () => {
+    const uid = await firebase.getCurrentUid();
+
+    ImagePicker.launchImageLibraryAsync({
+      mediaTypes: "Images",
+    })
+      .then((result) => {
+        if (!result.cancelled) {
+          // User picked an image
+          const { height, width, type, uri } = result;
+          return uriToBlob(uri);
+        }
+      })
+      .then((blob) => {
+        return uploadImage(blob, uid);
+      })
+      .then(async (snapshot) => {
+        console.log(snapshot.ref.getDownloadURL());
+        await snapshot.ref.getDownloadURL().then((avaiUrl) => {
+          firebase.user(uid).update({
+            img: avaiUrl,
+          });
+        });
+        hasStatus("Saved");
+      })
+      .catch((error) => {
+        hasError(error.message);
+        // throw error;
+      });
+  };
 
   useEffect(() => {
     register("name");
@@ -124,11 +186,17 @@ const PersonalSettings = (props) => {
           <CustomButton
             isSelected
             onPress={handleSubmit(onSave)}
-            containerStyle={{
-              marginTop: 15,
-            }}
             addIcon={{ name: "save", type: "font-awesome" }}
             title={"Save"}
+            loading={authLoading}
+          />
+          <CustomButton
+            onPress={choosePhoto}
+            containerStyle={{
+              marginTop: 10,
+            }}
+            addIcon={{ name: "camera", type: "font-awesome" }}
+            title={"Choose avatar"}
             loading={authLoading}
           />
           <CustomButton
@@ -139,7 +207,7 @@ const PersonalSettings = (props) => {
             }}
             addIcon={{
               name: "ios-arrow-back",
-              size: 20,
+              size: 15,
               style: {
                 marginRight: 10,
                 marginLeft: 0,

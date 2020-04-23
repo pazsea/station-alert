@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { StyleSheet, View, Text } from "react-native";
 import { LayoutView, ContainerView } from "../../components/styles";
 import { ThemeModeContext } from "../../../store/themeStore";
-import defaultPic from "../../../images/avatar.png";
+import defaultPic from "../../../images/defaultAvatar.png";
 
 import { Card, ListItem, ThemeContext, Icon } from "react-native-elements";
 import PersonalSettings from "../PersonalSettings";
@@ -11,7 +11,6 @@ import dark from "../../../themes/dark";
 import light from "../../../themes/light";
 import { UserDetailsContext } from "../../../store/userDetails";
 import { getFirstName } from "../../constant";
-import firebase from "../../../store/Firebase";
 
 const MoreModal = (props) => {
   //THEME CONTEXT
@@ -21,7 +20,7 @@ const MoreModal = (props) => {
 
   //USERDETAILS CONTEXT
   const {
-    userInfo: [{ name, avatar }, setUserDetails],
+    userInfo: [{ name, img }, setUserDetails],
     authState: [{ signedIn, authLoading }, setAuthState],
     logOut,
   } = useContext(UserDetailsContext);
@@ -61,7 +60,13 @@ const MoreModal = (props) => {
         <Card
           title={name ? `${getFirstName(name)} settings` : "Guest settings"}
           containerStyle={{ borderRadius: 5 }}
-          image={avatar || defaultPic}
+          image={
+            img
+              ? {
+                  uri: `${img}`,
+                }
+              : defaultPic
+          }
           // featuredTitle="Välkommen Patrick"
           imageProps={{
             resizeMode: "contain",
@@ -93,55 +98,64 @@ const MoreModal = (props) => {
             }}
             bottomDivider
           />
-          <ListItem
-            title="Personal settings"
-            onPress={() => navigate("PersonalSettings")}
-            chevron
-          />
-          <ListItem
-            title="Recommend station"
-            onPress={() => navigate("RecommendStation")}
-            chevron
-          />
-          <CustomButton
-            isSecondary
-            containerStyle={{
-              paddingBottom: 10,
-              paddingTop: 10,
-            }}
-            addIcon={{
-              name: "ios-person-add",
-              size: 20,
-            }}
-            iconRight
-            onPress={() => navigate("Register")}
-            title={"Create an account"}
-          />
           {signedIn ? (
-            <CustomButton
-              hasError
-              onPress={logOut}
-              addIcon={{
-                name: "sign-out",
-                type: "octicon",
-                size: 20,
-              }}
-              title={"Log out"}
-              authLoading={authLoading}
-              iconRight
-            />
+            <>
+              <ListItem
+                title="Personal settings"
+                onPress={() => navigate("PersonalSettings")}
+                chevron
+              />
+              <ListItem
+                title="Recommend station"
+                onPress={() => navigate("RecommendStation")}
+                chevron
+              />
+              <CustomButton
+                isSecondary
+                containerStyle={{
+                  paddingBottom: 10,
+                  paddingTop: 10,
+                }}
+                addIcon={{
+                  name: "ios-person-add",
+                  size: 20,
+                }}
+                iconRight
+                onPress={() => navigate("Register")}
+                title={"Create an account"}
+              />
+              <CustomButton
+                hasError
+                onPress={logOut}
+                addIcon={{
+                  name: "sign-out",
+                  type: "octicon",
+                  size: 20,
+                }}
+                title={"Log out"}
+                authLoading={authLoading}
+                iconRight
+              />
+            </>
           ) : (
-            <CustomButton
-              addIcon={{
-                name: "sign-in",
-                type: "octicon",
-                size: 20,
-              }}
-              iconRight
-              authLoading={authLoading}
-              onPress={() => navigate("SignIn")}
-              title={"Sign in"}
-            />
+            <>
+              <ListItem
+                title="Recommend station"
+                onPress={() => navigate("RecommendStation")}
+                chevron
+              />
+              <CustomButton
+                addIcon={{
+                  name: "sign-in",
+                  type: "octicon",
+                  size: 20,
+                }}
+                iconRight
+                authLoading={authLoading}
+                onPress={() => navigate("SignIn")}
+                title={"Sign in"}
+              />
+            </>
           )}
         </Card>
       </ContainerView>

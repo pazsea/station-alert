@@ -72,9 +72,10 @@ const CustomButton = ({
       color={addIcon.color || colors.secondary}
       iconStyle={{ color: checkButtonIconColor }}
       containerStyle={{
-        marginLeft: 15,
+        marginLeft: 10,
         ...addIcon.style,
       }}
+      size={15}
       {...addIcon}
     ></Icon>
   ) : null;
