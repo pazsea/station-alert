@@ -29,7 +29,14 @@ const UIDestinationsView = (props) => {
 
   const {
     userInfo: [{ saveFav }, setUserDetails],
-    authState: [{ signedIn, authLoading }, setAuthState],
+    authState: [
+      { signedIn, authLoading, errorStatus, errorMessage, statusMessage },
+      setAuthState,
+    ],
+    logOut,
+    resetError,
+    hasError,
+    hasStatus,
   } = useContext(UserDetailsContext);
 
   const { theme } = useContext(ThemeContext);
@@ -52,11 +59,13 @@ const UIDestinationsView = (props) => {
         routeName: data.route,
         destinations: destinations,
       });
-      await setAuthState((prevState) => ({
-        ...prevState,
-        authLoading: true,
-      }));
-    } catch (e) {}
+      await hasStatus("Saved");
+      await setTimeout(() => {
+        setShowSaveOverlay(false);
+      }, 2000);
+    } catch (e) {
+      await hasError(e.message);
+    }
   }
 
   const removeStation = (pickedStation) => {
@@ -143,7 +152,15 @@ const UIDestinationsView = (props) => {
                 />
               }
             />
-            <Text>asdasdasdds</Text>
+            <Text
+              style={{
+                color: errorMessage
+                  ? theme.colors.error
+                  : theme.colors.selected,
+              }}
+            >
+              {errorMessage || statusMessage}
+            </Text>
           </>
         }
         onBackdropPress={() => setShowSaveOverlay(false)}
@@ -158,6 +175,7 @@ const UIDestinationsView = (props) => {
             onPress: () => setShowSaveOverlay(false),
           },
           {
+            loading: authLoading,
             isSelected: true,
             title: "Save",
             addIcon: {

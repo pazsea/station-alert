@@ -16,6 +16,7 @@ const INITIAL_AUTH_STATE = {
   authLoading: false,
   errorStatus: false,
   errorMessage: "",
+  statusMessage: "",
 };
 
 const UserDetailsProvider = (props) => {
@@ -52,12 +53,33 @@ const UserDetailsProvider = (props) => {
     setAuthState(INITIAL_AUTH_STATE);
   };
 
+  const hasStatus = (message) => {
+    setAuthState((prevState) => ({
+      ...prevState,
+      authLoading: false,
+      errorStatus: false,
+      errorMessage: "",
+      statusMessage: message,
+    }));
+
+    setTimeout(() => {
+      setAuthState((prevState) => ({
+        ...prevState,
+        authLoading: false,
+        errorStatus: false,
+        errorMessage: "",
+        statusMessage: "",
+      }));
+    }, 2000);
+  };
+
   const hasError = (message) => {
     setAuthState((prevState) => ({
       ...prevState,
       authLoading: false,
       errorStatus: true,
       errorMessage: message,
+      statusMessage: "",
     }));
   };
 
@@ -73,6 +95,7 @@ const UserDetailsProvider = (props) => {
     logOut,
     resetError,
     hasError,
+    hasStatus,
   };
 
   return (
