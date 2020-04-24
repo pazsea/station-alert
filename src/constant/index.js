@@ -47,3 +47,16 @@ export const uriToBlob = (uri) => {
     xhr.send(null);
   });
 };
+
+const latCheck = /^(-?[1-8]?\d(?:\.\d{1,18})?|90(?:\.0{1,18})?)$/;
+const longCheck = /^(-?(?:1[0-7]|[1-9])?\d(?:\.\d{1,18})?|180(?:\.0{1,18})?)$/;
+
+export const check_lat_lon = (coord) => {
+  var validLat = latCheck.test(coord);
+  var validLon = longCheck.test(coord);
+  if (validLat || validLon) {
+    return true;
+  } else {
+    return false;
+  }
+};

@@ -162,6 +162,8 @@ const UIDestinationsView = (props) => {
                 color: errorMessage
                   ? theme.colors.error
                   : theme.colors.selected,
+                textAlign: "center",
+                paddingBottom: 2,
               }}
             >
               {errorMessage || statusMessage}

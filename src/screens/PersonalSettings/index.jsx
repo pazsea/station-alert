@@ -163,7 +163,7 @@ const PersonalSettings = (props) => {
             placeholder="**Secret**"
             secureTextEntry={true}
             textContentType={"password"}
-            errorMessage={errors.password}
+            errorMessage={errors.password && "Need to be a valid password"}
             onChangeText={(text) => {
               setValue("password", text);
             }}
@@ -179,6 +179,8 @@ const PersonalSettings = (props) => {
           <Text
             style={{
               color: errorMessage ? theme.colors.error : theme.colors.selected,
+              textAlign: "center",
+              paddingBottom: 2,
             }}
           >
             {errorMessage || statusMessage}
