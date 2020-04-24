@@ -18,6 +18,7 @@ import ImageContainer from "../../components/ImageContainer";
 const JourneyScreen = (props) => {
   const {
     journeyStore: [{ destinations, startedTrip }, setJourneyState],
+    stationStatus: [arrivedAllStations, setArrivedAllStations],
     resetJourneyStore,
   } = useContext(JourneyContext);
   const { theme } = useContext(ThemeContext);
@@ -31,6 +32,10 @@ const JourneyScreen = (props) => {
   const cancelTrip = () => {
     resetJourneyStore();
   };
+
+  const statusMessage = arrivedAllStations
+    ? "Reset journey?"
+    : "Cancel journey";
 
   return (
     <LayoutView centered primaryColor={theme.colors.background}>
@@ -127,7 +132,7 @@ const JourneyScreen = (props) => {
             {showDestinations ? (
               <UIDestinationsView
                 hasErrorButton={true}
-                buttonTitle={"Cancel journey"}
+                buttonTitle={statusMessage}
                 buttonOnPress={cancelTrip}
                 hideTitle
                 roundedBottomCorners

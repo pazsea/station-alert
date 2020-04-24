@@ -7,7 +7,6 @@ export const JourneyContext = createContext();
 const INITIAL_JOURNEY_STATE = {
   destinations: [],
   startedTrip: false,
-  arrivedAllStations: false,
 };
 
 const INITIAL_USERPOSITION_STATE = {
@@ -18,6 +17,7 @@ const INITIAL_USERPOSITION_STATE = {
 export const JourneyContextProvider = (props) => {
   const [journeyState, setJourneyState] = useState(INITIAL_JOURNEY_STATE);
   const [userPosition, setUserPosition] = useState(INITIAL_USERPOSITION_STATE);
+  const [arrivedAllStations, setArrivedAllStations] = useState(false);
 
   const [locationAllowed, setLocationAllowed] = useState(true);
 
@@ -48,41 +48,46 @@ export const JourneyContextProvider = (props) => {
     }
   }, [userPosition.lat, userPosition.long]);
 
-  // useEffect(() => {
-  //   if (journeyState.destinations.every((station) => station.arrived == true)) {
-  //     setJourneyState(INITIAL_JOURNEY_STATE);
-  //   }
-  // }, [journeyState.destinations]);
+  useEffect(() => {
+    console.log("Kollar om du kommit fram till alla stationer");
+    if (journeyState.destinations.length === 0) {
+      console.log("Finns inga stationer än");
+      return;
+    } else if (
+      journeyState.destinations?.every((station) => station.arrived == true)
+    ) {
+      console.log("FRAMME");
+      setArrivedAllStations(true);
+    }
+  });
 
   useEffect(() => {
-    if (
-      locationAllowed &&
-      journeyState.startedTrip &&
-      !journeyState.arrivedAllStations
-    ) {
-      //Kör gps och sätt nytt state med ens position
-      const watchID = navigator.geolocation.watchPosition(
-        (position) => {
-          setUserPosition({
-            lat: position.coords.latitude,
-            long: position.coords.longitude,
-          });
-        },
-        (error) => {
-          console.log(error.code, error.message);
-        },
-        {
-          enableHighAccuracy: true,
-          // distanceFilter: 0.1,
-          timeout: 15000,
-          maximumAge: 10000,
-        }
-      );
-      return () => {
-        navigator.geolocation.clearWatch(watchID);
-      };
-    }
-  }, [locationAllowed, journeyState.startedTrip]);
+    if (!locationAllowed && !journeyState.startedTrip && arrivedAllStations)
+      return;
+    //Kör gps och sätt nytt state med ens position
+    const watchID = navigator.geolocation.watchPosition(
+      (position) => {
+        setUserPosition({
+          lat: position.coords.latitude,
+          long: position.coords.longitude,
+        });
+      },
+      (error) => {
+        console.log(error.code, error.message);
+      },
+      {
+        enableHighAccuracy: true,
+        // distanceFilter: 0.1,
+        timeout: 15000,
+        maximumAge: 10000,
+      }
+    );
+
+    return () => {
+      console.log("WATCH ENDED");
+      navigator.geolocation.clearWatch(watchID);
+    };
+  }, [locationAllowed, journeyState.startedTrip, arrivedAllStations]);
 
   const resetJourneyStore = () => {
     // let resetDestinations = [...journeyState.destinations];
@@ -90,6 +95,7 @@ export const JourneyContextProvider = (props) => {
     // resetDestinations.forEach((dest) => (dest.arrived = false));
 
     setJourneyState(INITIAL_JOURNEY_STATE);
+    setArrivedAllStations(false);
   };
 
   useEffect(() => {}, [journeyState]);
@@ -97,6 +103,7 @@ export const JourneyContextProvider = (props) => {
   const JourneyStore = {
     journeyStore: [journeyState, setJourneyState],
     permission: [locationAllowed, setLocationAllowed],
+    stationStatus: [arrivedAllStations, setArrivedAllStations],
     resetJourneyStore,
   };
 

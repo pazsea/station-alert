@@ -18,6 +18,7 @@ const FindDestinationScreen = (props) => {
   const {
     journeyStore: [journeyState, setJourneyState],
     permission: [locationAllowed, setLocationAllowed],
+    stationStatus: [arrivedAllStations, setArrivedAllStations],
     resetJourneyStore,
   } = useContext(JourneyContext);
 
@@ -54,18 +55,22 @@ const FindDestinationScreen = (props) => {
     setStartedSearching(false);
   };
 
+  const statusMessage = arrivedAllStations
+    ? "Reset journey?"
+    : "Cancel journey";
+
   const startedTripView = (
     <>
       <ContainerView>
         <ImageContainer />
-        <Card title="Cancel journey first">
+        <Card title={statusMessage}>
           <Text>
             You have an ongoing journey. You need to cancel it before starting a
             new one.
           </Text>
           <CustomButton
             hasError={true}
-            title={"Cancel journey"}
+            title={statusMessage}
             onPress={cancelTrip}
             containerStyle={{
               marginTop: 25,
