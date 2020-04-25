@@ -1,6 +1,8 @@
 import React, { useState, createContext, useEffect } from "react";
 
 import { isPointWithinRadius } from "geolib";
+import firebase from "./Firebase";
+import { sendPushNotification } from "../src/constant";
 
 export const JourneyContext = createContext();
 
@@ -18,8 +20,47 @@ export const JourneyContextProvider = (props) => {
   const [journeyState, setJourneyState] = useState(INITIAL_JOURNEY_STATE);
   const [userPosition, setUserPosition] = useState(INITIAL_USERPOSITION_STATE);
   const [arrivedAllStations, setArrivedAllStations] = useState(false);
+  const [expoTokenState, setExpoTokenState] = useState("");
 
-  const [locationAllowed, setLocationAllowed] = useState(true);
+  const setStationArrived = async (stationIndex) => {
+    console.log("Du är inne i funktione");
+    let newDestinationStatus = journeyState.destinations;
+    newDestinationStatus[stationIndex].arrived = true;
+    const stationName = newDestinationStatus[stationIndex].name;
+    const userUid = await firebase.getCurrentUid();
+    let token = expoTokenState;
+
+    if (userUid && !expoTokenState) {
+      console.log("Fått uid och inget token finns");
+      const getToken = await firebase
+        .user(userUid)
+        .get()
+        .then((snap) => {
+          let data = snap.data();
+          console.log(data);
+          if (data) {
+            data.expoToken;
+            return data.expoToken;
+          }
+        });
+      console.log(getToken);
+      if (getToken) {
+        token = getToken;
+        setExpoTokenState(token);
+      }
+    }
+
+    await sendPushNotification(
+      token,
+      stationName,
+      `Du kommer strax fram till ${stationName}`
+    );
+
+    setJourneyState((prevState) => ({
+      ...prevState,
+      destinations: newDestinationStatus,
+    }));
+  };
 
   useEffect(() => {
     if (userPosition.lat && userPosition.long) {
@@ -36,13 +77,7 @@ export const JourneyContextProvider = (props) => {
         );
 
         if (stationArrived) {
-          let newDestinationStatus = journeyState.destinations;
-          newDestinationStatus[stationIndex].arrived = true;
-
-          setJourneyState((prevState) => ({
-            ...prevState,
-            destinations: newDestinationStatus,
-          }));
+          setStationArrived(stationIndex);
         }
       });
     }
@@ -62,8 +97,7 @@ export const JourneyContextProvider = (props) => {
   });
 
   useEffect(() => {
-    if (!locationAllowed && !journeyState.startedTrip && arrivedAllStations)
-      return;
+    if (!journeyState.startedTrip && arrivedAllStations) return;
     //Kör gps och sätt nytt state med ens position
     const watchID = navigator.geolocation.watchPosition(
       (position) => {
@@ -87,7 +121,7 @@ export const JourneyContextProvider = (props) => {
       console.log("WATCH ENDED");
       navigator.geolocation.clearWatch(watchID);
     };
-  }, [locationAllowed, journeyState.startedTrip, arrivedAllStations]);
+  }, [journeyState.startedTrip, arrivedAllStations]);
 
   const resetJourneyStore = () => {
     // let resetDestinations = [...journeyState.destinations];
@@ -102,7 +136,6 @@ export const JourneyContextProvider = (props) => {
 
   const JourneyStore = {
     journeyStore: [journeyState, setJourneyState],
-    permission: [locationAllowed, setLocationAllowed],
     stationStatus: [arrivedAllStations, setArrivedAllStations],
     resetJourneyStore,
   };

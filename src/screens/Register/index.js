@@ -10,6 +10,7 @@ import { useForm } from "react-hook-form";
 import { validateEmail } from "../../constant";
 import { UserDetailsContext } from "../../../store/userDetails";
 import CustomOverlay from "../../components/CustomOverlay";
+import { PermissionsContext } from "../../../store/permissionsStore";
 
 const Register = (props) => {
   const {
@@ -23,6 +24,11 @@ const Register = (props) => {
     hasError,
   } = useContext(UserDetailsContext);
 
+  const {
+    permissionsInfo: [permissions, setPermissions],
+    registerForPushNotificationsAsync,
+  } = useContext(PermissionsContext);
+
   const { theme } = useContext(ThemeContext);
 
   const { register, handleSubmit, setValue, errors } = useForm();
@@ -35,6 +41,7 @@ const Register = (props) => {
         authLoading: true,
       }));
       await firebase.register(data.name, data.email, data.password);
+      await registerForPushNotificationsAsync();
       await firebase.user(firebase.getCurrentUid()).set({
         name: data.name,
         email: data.email,

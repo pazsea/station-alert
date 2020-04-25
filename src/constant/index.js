@@ -60,3 +60,22 @@ export const check_lat_lon = (coord) => {
     return false;
   }
 };
+
+export const sendPushNotification = async (expoToken, title, text) => {
+  const message = {
+    to: expoToken,
+    sound: "default",
+    title: title,
+    body: text,
+    _displayInForeground: true,
+  };
+  const response = await fetch("https://exp.host/--/api/v2/push/send", {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Accept-encoding": "gzip, deflate",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(message),
+  });
+};

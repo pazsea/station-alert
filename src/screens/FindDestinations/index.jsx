@@ -1,26 +1,30 @@
 import React, { useContext, useEffect, useState } from "react";
 import { JourneyContext } from "../../../store/journeyStore";
-import * as Permissions from "expo-permissions";
 
 import { LayoutView, ContainerView } from "../../components/styles";
 
 import UISearchDestination from "../../components/UISearchDestination";
 import UIDestinationsView from "../../components/UIDestinationsView";
-import { View, Image } from "react-native";
 import { Card, Text } from "react-native-elements";
 import CustomButton from "../../components/CustomButton";
 import { ThemeContext } from "react-native-elements";
 import ImageContainer from "../../components/ImageContainer";
+import firebase from "../../../store/Firebase";
+import { PermissionsContext } from "../../../store/permissionsStore";
 
 //TO DO Fixa så att allow acces to location funkar smidigare. Kanske tillsammans med ett loading status?
 
 const FindDestinationScreen = (props) => {
   const {
     journeyStore: [journeyState, setJourneyState],
-    permission: [locationAllowed, setLocationAllowed],
     stationStatus: [arrivedAllStations, setArrivedAllStations],
     resetJourneyStore,
   } = useContext(JourneyContext);
+
+  const {
+    permissionsInfo: [permissions, setPermissions],
+    registerLocationAccess,
+  } = useContext(PermissionsContext);
 
   const { theme } = useContext(ThemeContext);
   const { navigate } = props.navigation;
@@ -28,21 +32,6 @@ const FindDestinationScreen = (props) => {
   const [startedSearching, setStartedSearching] = useState(false);
 
   const hasDestinations = journeyState.destinations.length;
-
-  const askPermission = async () => {
-    const { status } = await Permissions.askAsync(Permissions.LOCATION);
-    if (status === "granted") {
-      setLocationAllowed(true);
-    } else {
-      setLocationAllowed(false);
-    }
-  };
-
-  useEffect(() => {
-    if (!locationAllowed) {
-      askPermission();
-    }
-  }, [locationAllowed]);
 
   const confirmDestinations = () => {
     setStartedSearching(false);
@@ -100,7 +89,7 @@ const FindDestinationScreen = (props) => {
               marginTop: 25,
             }}
             //TO DO: Här ska vi sätta på användarens user position
-            onPress={cancelTrip}
+            onPress={registerLocationAccess}
           />
         </Card>
       </ContainerView>
@@ -130,7 +119,7 @@ const FindDestinationScreen = (props) => {
       centered={!startedSearching}
       primaryColor={theme.colors.background}
     >
-      {locationAllowed && !journeyState.startedTrip
+      {permissions.location && !journeyState.startedTrip
         ? searchDestinationView
         : journeyState.startedTrip
         ? startedTripView
