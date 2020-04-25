@@ -4,11 +4,15 @@ import { isPointWithinRadius } from "geolib";
 import firebase from "./Firebase";
 import { sendPushNotification } from "../src/constant";
 
+// TO DO: Borde effektivisera allArrived state och journeystate.endtrip
+// Borde städa ordentlig här och titta på alla IF statements. Behövs alla? Går det att göra bättre?
+
 export const JourneyContext = createContext();
 
 const INITIAL_JOURNEY_STATE = {
   destinations: [],
   startedTrip: false,
+  endedTrip: false,
 };
 
 const INITIAL_USERPOSITION_STATE = {
@@ -23,15 +27,36 @@ export const JourneyContextProvider = (props) => {
   const [expoTokenState, setExpoTokenState] = useState("");
 
   const setStationArrived = async (stationIndex) => {
-    console.log("Du är inne i funktione");
-    let newDestinationStatus = journeyState.destinations;
+    if (journeyState.endedTrip) return;
+    let newDestinationStatus = [...journeyState.destinations];
     newDestinationStatus[stationIndex].arrived = true;
     const stationName = newDestinationStatus[stationIndex].name;
+
     const userUid = await firebase.getCurrentUid();
+    const allHasArrived = newDestinationStatus.every(
+      (station) => station.arrived
+    );
+
+    if (!userUid && allHasArrived) {
+      console.log("Inte inloggat men alla har kommit");
+
+      setJourneyState((prevState) => ({
+        ...prevState,
+        destinations: newDestinationStatus,
+        endedTrip: true,
+      }));
+    } else if (!userUid) {
+      console.log("Inte inloggat men en har kommit");
+
+      setJourneyState((prevState) => ({
+        ...prevState,
+        destinations: newDestinationStatus,
+      }));
+    }
+
     let token = expoTokenState;
 
     if (userUid && !expoTokenState) {
-      console.log("Fått uid och inget token finns");
       const getToken = await firebase
         .user(userUid)
         .get()
@@ -50,23 +75,32 @@ export const JourneyContextProvider = (props) => {
       }
     }
 
-    await sendPushNotification(
-      token,
-      stationName,
-      `Du kommer strax fram till ${stationName}`
-    );
-
-    setJourneyState((prevState) => ({
-      ...prevState,
-      destinations: newDestinationStatus,
-    }));
+    if (token && allHasArrived) {
+      await sendPushNotification(
+        token,
+        stationName,
+        `You have arrived at all of you destinations.`
+      );
+      setJourneyState((prevState) => ({
+        ...prevState,
+        destinations: newDestinationStatus,
+        endedTrip: true,
+      }));
+    } else if (token) {
+      await sendPushNotification(
+        token,
+        stationName,
+        `You have arrived ${stationName}`
+      );
+    }
   };
 
   useEffect(() => {
     if (userPosition.lat && userPosition.long) {
       // Kolla om någon station är inom min radie
+      console.log("Position ändrad");
 
-      journeyState.destinations?.map((station, stationIndex) => {
+      journeyState.destinations.map((station, stationIndex) => {
         const stationArrived = isPointWithinRadius(
           {
             latitude: userPosition.lat,
@@ -76,7 +110,8 @@ export const JourneyContextProvider = (props) => {
           500
         );
 
-        if (stationArrived) {
+        if (stationArrived && !station.arrived) {
+          console.log("Station har ankommit");
           setStationArrived(stationIndex);
         }
       });
@@ -84,12 +119,11 @@ export const JourneyContextProvider = (props) => {
   }, [userPosition.lat, userPosition.long]);
 
   useEffect(() => {
-    console.log("Kollar om du kommit fram till alla stationer");
     if (journeyState.destinations.length === 0) {
-      console.log("Finns inga stationer än");
       return;
     } else if (
-      journeyState.destinations?.every((station) => station.arrived == true)
+      journeyState.destinations?.every((station) => station.arrived == true) &&
+      !arrivedAllStations
     ) {
       console.log("FRAMME");
       setArrivedAllStations(true);
@@ -99,6 +133,7 @@ export const JourneyContextProvider = (props) => {
   useEffect(() => {
     if (!journeyState.startedTrip && arrivedAllStations) return;
     //Kör gps och sätt nytt state med ens position
+    console.log("Kollar position");
     const watchID = navigator.geolocation.watchPosition(
       (position) => {
         setUserPosition({
@@ -118,7 +153,6 @@ export const JourneyContextProvider = (props) => {
     );
 
     return () => {
-      console.log("WATCH ENDED");
       navigator.geolocation.clearWatch(watchID);
     };
   }, [journeyState.startedTrip, arrivedAllStations]);
@@ -148,35 +182,3 @@ export const JourneyContextProvider = (props) => {
 };
 
 export default JourneyContextProvider;
-
-//___ HELPERS
-
-// useEffect(() => {
-//   journeyState.destinations.map((station) => {
-//     console.log(station);
-//   });
-// }, [journeyState.destinations]);
-
-// useEffect(() => {
-//   if (userPosition) {
-//     console.log(userPosition.lat);
-//   }
-// }, [userPosition]);
-
-//___
-
-// useEffect(() => {
-//   if (journeyState.destinations.length > 0) {
-//     const arrivedAtStations = () => journeyState.destinations.every((station) => {
-//       station.arrived === true;
-//     });
-
-//     if (!arrivedAtStations) {
-//       setJourneyState({
-//         destinations: [],
-//         startedTrip: false,
-//         arrivedAllStations: true,
-//       });
-//     }
-//   }
-// }, [journeyState]);
