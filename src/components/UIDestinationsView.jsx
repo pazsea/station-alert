@@ -22,38 +22,58 @@ import { useForm } from "react-hook-form";
 import firebase from "../../store/Firebase";
 
 const UIDestinationsView = (props) => {
+  // ** ---------States --------- **
   const [overlayState, setOverlayState] = useState(false);
 
+  // ** ---------Contexts --------- **
   const {
-    journeyStore: [{ startedTrip, destinations }, setJourneyState],
+    journeyStore: [{ destinations }, setJourneyState],
   } = useContext(JourneyContext);
 
   const {
-    userInfo: [{ saveFav }, setUserDetails],
     authState: [
-      { signedIn, authLoading, errorStatus, errorMessage, statusMessage },
+      { signedIn, authLoading, errorMessage, statusMessage },
       setAuthState,
     ],
-    logOut,
     resetError,
     hasError,
     hasStatus,
   } = useContext(UserDetailsContext);
 
+  // ** ---------Themes --------- **
   const { theme } = useContext(ThemeContext);
 
+  // ** ---------Variables --------- **
   const { register, handleSubmit, setValue, errors } = useForm();
-
   const colors = theme.colors;
 
+  // ** ---------Use Effect (lifecycles) --------- **
   useEffect(() => {
     register("route", { required: true });
   }, [register]);
+
+  // ** ---------Functions --------- **
 
   const closeOverlay = () => {
     setOverlayState(false);
     resetError;
   };
+
+  const saveButton = signedIn ? (
+    <CustomButton
+      isSecondary
+      addIcon={{
+        name: "save",
+        type: "font-awesome",
+        size: 20,
+      }}
+      containerStyle={{
+        marginTop: 25,
+      }}
+      title={"Save this route"}
+      onPress={() => setOverlayState(true)}
+    />
+  ) : null;
 
   async function onSaveRoute(data) {
     try {
@@ -114,22 +134,6 @@ const UIDestinationsView = (props) => {
       </StationView>
     );
   });
-
-  const saveButton = signedIn ? (
-    <CustomButton
-      isSecondary
-      addIcon={{
-        name: "save",
-        type: "font-awesome",
-        size: 20,
-      }}
-      containerStyle={{
-        marginTop: 25,
-      }}
-      title={"Save this route"}
-      onPress={() => setOverlayState(true)}
-    />
-  ) : null;
 
   return (
     <>
