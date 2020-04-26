@@ -1,7 +1,8 @@
-import React, { createContext, useState, useEffect } from "react";
-import { AsyncStorage } from "react-native";
-
+// General
+import React, { createContext, useState } from "react";
 import { ThemeProvider } from "react-native-elements";
+
+// Constants and lib functions
 import lightTheme from "../themes/light";
 import darkTheme from "../themes/dark";
 
@@ -9,34 +10,6 @@ export const ThemeModeContext = createContext();
 
 export const ThemeContextProvider = (props) => {
   const [themeState, setThemeState] = useState({ currentTheme: "light" });
-
-  // const saveThemeState = async () => {
-  //   if (lightThemeState) {
-  //     await AsyncStorage.removeItem("lightThemeState");
-  //   } else {
-  //     await AsyncStorage.setItem(
-  //       "lightThemeState",
-  //       JSON.stringify(lightThemeState)
-  //     );
-  //   }
-  // };
-
-  // const getThemeState = async () => {
-  //   currentMode = await AsyncStorage.getItem("lightThemeState");
-
-  //   if (currentMode) {
-  //     setLightThemeState(JSON.parse(currentMode));
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   saveThemeState();
-  // }, [lightThemeState]);
-
-  // useEffect(() => {
-  //   getThemeState();
-  // }, []);
-
   const theme = themeState.currentTheme === "light" ? lightTheme : darkTheme;
 
   const themeStore = {

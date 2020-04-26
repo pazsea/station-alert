@@ -1,6 +1,10 @@
+// General
 import React, { useState, createContext, useEffect } from "react";
-import { AsyncStorage } from "react-native";
+
+// Constants and lib functions
 import firebase from "./Firebase";
+
+// Backend
 
 export const UserDetailsContext = createContext();
 

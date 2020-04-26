@@ -1,8 +1,12 @@
+// General
 import React, { useState, createContext, useEffect } from "react";
 
+// Constants and lib functions
 import { isPointWithinRadius } from "geolib";
-import firebase from "./Firebase";
 import { sendPushNotification } from "../src/constant";
+
+// Backend
+import firebase from "./Firebase";
 
 // TO DO: Borde effektivisera allArrived state och journeystate.endtrip
 // Borde städa ordentlig här och titta på alla IF statements. Behövs alla? Går det att göra bättre?

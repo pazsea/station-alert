@@ -1,12 +1,13 @@
+// General
 import React, { useState, createContext, useEffect } from "react";
-import Constants from "expo-constants";
-import { Notifications } from "expo";
-
 import * as Permissions from "expo-permissions";
 
+// Constants and lib functions
+import Constants from "expo-constants";
+import { Notifications } from "expo";
 import { Platform, Vibration } from "react-native";
 
-import { AsyncStorage } from "react-native";
+// Backend
 import firebase from "./Firebase";
 
 export const PermissionsContext = createContext();
