@@ -86,10 +86,15 @@ const Recommend = (props) => {
         ...prevState,
         authLoading: true,
       }));
-      await firebase.recommendStation(data.stationName).set({
-        lat: data.lat,
-        long: data.long,
-      });
+      await firebase.recommendStation().set(
+        {
+          [data.stationName]: {
+            lat: data.lat,
+            long: data.long,
+          },
+        },
+        { merge: true }
+      );
       await reset(defaultValues);
       await hasStatus(
         "Thanks for you contribution. Our team will look up this station shortly..."

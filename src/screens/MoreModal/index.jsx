@@ -116,20 +116,6 @@ const MoreModal = (props) => {
                 chevron
               />
               <CustomButton
-                isSecondary
-                containerStyle={{
-                  paddingBottom: 10,
-                  paddingTop: 10,
-                }}
-                addIcon={{
-                  name: "ios-person-add",
-                  size: 20,
-                }}
-                iconRight
-                onPress={() => navigate("Register")}
-                title={"Create an account"}
-              />
-              <CustomButton
                 hasError
                 onPress={logOut}
                 addIcon={{
@@ -148,6 +134,20 @@ const MoreModal = (props) => {
                 title="Recommend station"
                 onPress={() => navigate("RecommendStation")}
                 chevron
+              />
+              <CustomButton
+                isSecondary
+                containerStyle={{
+                  paddingBottom: 10,
+                  paddingTop: 10,
+                }}
+                addIcon={{
+                  name: "ios-person-add",
+                  size: 20,
+                }}
+                iconRight
+                onPress={() => navigate("Register")}
+                title={"Create an account"}
               />
               <CustomButton
                 addIcon={{
