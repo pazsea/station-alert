@@ -22,8 +22,9 @@ import { useForm } from "react-hook-form";
 import firebase from "../../../store/Firebase";
 
 const Register = (props) => {
+  // ** ---------States --------- **
+  // ** ---------Contexts --------- **
   const {
-    userInfo: [userDetails, setUserDetails],
     authState: [
       { signedIn, authLoading, errorStatus, errorMessage },
       setAuthState,
@@ -33,15 +34,27 @@ const Register = (props) => {
     hasError,
   } = useContext(UserDetailsContext);
 
-  const {
-    permissionsInfo: [permissions, setPermissions],
-    registerForPushNotificationsAsync,
-  } = useContext(PermissionsContext);
+  const { registerForPushNotificationsAsync } = useContext(PermissionsContext);
 
+  // ** ---------Themes --------- **
   const { theme } = useContext(ThemeContext);
 
-  const { register, handleSubmit, setValue, errors } = useForm();
+  // ** ---------Variables --------- **
   const { navigate } = props.navigation;
+  const { register, handleSubmit, setValue, errors } = useForm();
+  useGoBack(() => navigate("MoreScreen"));
+
+  // ** ---------Use Effect (lifecycles) --------- **
+  useEffect(() => {
+    register("name", { required: true });
+    register("email", {
+      required: true,
+      validate: (value) => validateEmail(value),
+    });
+    register("password", { required: true, minLength: 6 });
+  }, [register]);
+
+  // ** ---------Functions --------- **
 
   async function onSubmit(data) {
     try {
@@ -67,17 +80,6 @@ const Register = (props) => {
       hasError(error.message);
     }
   }
-
-  useEffect(() => {
-    register("name", { required: true });
-    register("email", {
-      required: true,
-      validate: (value) => validateEmail(value),
-    });
-    register("password", { required: true, minLength: 6 });
-  }, [register]);
-
-  useGoBack(() => navigate("MoreScreen"));
 
   const content = signedIn ? (
     <>
