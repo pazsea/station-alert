@@ -22,24 +22,27 @@ import { getFirstName } from "../../constant";
 // Backend
 
 const MoreModal = (props) => {
-  //THEME CONTEXT
+  // ** ---------States --------- **
+  const [welcomeMessage, setWelcomeMessage] = useState(false);
+
+  // ** ---------Contexts --------- **
   const {
     themeState: [{ currentTheme }, setThemeState],
   } = useContext(ThemeModeContext);
 
-  //USERDETAILS CONTEXT
   const {
-    userInfo: [{ name, img }, setUserDetails],
-    authState: [{ signedIn, authLoading }, setAuthState],
+    userInfo: [{ name, img }],
+    authState: [{ signedIn, authLoading }],
     logOut,
   } = useContext(UserDetailsContext);
 
-  const [welcomeMessage, setWelcomeMessage] = useState(false);
-
+  // ** ---------Themes --------- **
   const { theme, updateTheme } = useContext(ThemeContext);
 
+  // ** ---------Variables --------- **
   const { navigate } = props.navigation;
 
+  // ** ---------Use Effect (lifecycles) --------- **
   useEffect(() => {
     setWelcomeMessage(true);
 
@@ -47,6 +50,8 @@ const MoreModal = (props) => {
       setWelcomeMessage(false);
     }, 2000);
   }, []);
+
+  // ** ---------Functions --------- **
 
   const toggleTheme = (value) => {
     setThemeState({
