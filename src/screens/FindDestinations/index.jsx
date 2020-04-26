@@ -21,26 +21,31 @@ import UIDestinationsView from "../../components/UIDestinationsView";
 
 // Backend
 
-//TO DO Fixa så att allow acces to location funkar smidigare. Kanske tillsammans med ett loading status?
-
 const FindDestinationScreen = (props) => {
+  // ** ---------States --------- **
+  const [startedSearching, setStartedSearching] = useState(false);
+
+  // ** ---------Contexts --------- **
   const {
     journeyStore: [journeyState, setJourneyState],
-    stationStatus: [arrivedAllStations, setArrivedAllStations],
+    stationStatus: [arrivedAllStations],
     resetJourneyStore,
   } = useContext(JourneyContext);
 
   const {
-    permissionsInfo: [permissions, setPermissions],
+    permissionsInfo: [permissions],
     registerLocationAccess,
   } = useContext(PermissionsContext);
 
+  // ** ---------Themes --------- **
   const { theme } = useContext(ThemeContext);
+
+  // ** ---------Variables --------- **
   const { navigate } = props.navigation;
-
-  const [startedSearching, setStartedSearching] = useState(false);
-
   const hasDestinations = journeyState.destinations.length;
+
+  // ** ---------Use Effect (lifecycles) --------- **
+  // ** ---------Functions --------- **
 
   const confirmDestinations = () => {
     setStartedSearching(false);
