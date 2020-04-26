@@ -5,14 +5,14 @@ import React, { useState, useContext } from "react";
 import { JourneyContext } from "../../store/journeyStore";
 import { ThemeModeContext } from "../../store/themeStore";
 
-// Styles, themes
+// Styles
 import { StationButtonContainer, SearchDestinationContainer } from "./styles";
 
 // Components
 import CustomButton from "./CustomButton";
 import { SearchBar, Icon, ThemeContext } from "react-native-elements";
 
-// Contants and lib functions
+// Constants and lib functions
 import dest from "../data/destinations";
 
 const UISearchDestination = ({ startedSearching, setStartedSearching }) => {

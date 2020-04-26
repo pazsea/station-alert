@@ -5,7 +5,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { UserDetailsContext } from "../../store/userDetails";
 import { JourneyContext } from "../../store/journeyStore";
 
-// Styles, themes
+// Styles
 import { StationView } from "./styles";
 
 // Components
@@ -15,7 +15,7 @@ import { ScrollView } from "react-native";
 import CustomButton from "./CustomButton";
 import CustomOverlay from "./CustomOverlay";
 
-// Contants and lib functions
+// Constants and lib functions
 import { useForm } from "react-hook-form";
 
 // Backend

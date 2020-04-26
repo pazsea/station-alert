@@ -1,5 +1,14 @@
+// General
 import React, { useContext, useState } from "react";
-import { StyleSheet, View, Text as NormalText } from "react-native";
+
+// Context & Stores
+import { JourneyContext } from "../../../store/journeyStore";
+
+// Styles
+import { LayoutView, ContainerView } from "../../components/styles";
+
+// Components
+import { View } from "react-native";
 import {
   Card,
   ListItem,
@@ -7,13 +16,15 @@ import {
   Text,
   Icon,
 } from "react-native-elements";
-import { LayoutView, ContainerView } from "../../components/styles";
-import { JourneyContext } from "../../../store/journeyStore";
+import CustomButton from "../../components/CustomButton";
+import ImageContainer from "../../components/ImageContainer";
 
 import UIDestinationsView from "../../components/UIDestinationsView";
 import MapView, { Marker } from "react-native-maps";
-import CustomButton from "../../components/CustomButton";
-import ImageContainer from "../../components/ImageContainer";
+
+// Constants and lib functions
+
+// Backend
 
 const JourneyScreen = (props) => {
   const {

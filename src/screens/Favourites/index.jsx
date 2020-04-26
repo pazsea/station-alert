@@ -1,28 +1,22 @@
-import React, { useContext, useEffect, useState } from "react";
-import { StyleSheet, View, ScrollView } from "react-native";
-import {
-  LayoutView,
-  ContainerView,
-  StationView,
-} from "../../components/styles";
-import { ThemeModeContext } from "../../../store/themeStore";
-import defaultPic from "../../../images/defaultAvatar.png";
+// General
+import React, { useContext, useState } from "react";
 
-import {
-  Card,
-  ListItem,
-  ThemeContext,
-  Icon,
-  Text,
-} from "react-native-elements";
-import PersonalSettings from "../PersonalSettings";
-import CustomButton from "../../components/CustomButton";
-import dark from "../../../themes/dark";
-import light from "../../../themes/light";
+// Context & Stores
 import { UserDetailsContext } from "../../../store/userDetails";
-import { getFirstName } from "../../constant";
 import { JourneyContext } from "../../../store/journeyStore";
+
+// Styles
+import { LayoutView, StationView } from "../../components/styles";
+
+// Components
+import { Card, ThemeContext, Icon, Text } from "react-native-elements";
+import { View, ScrollView } from "react-native";
+import CustomButton from "../../components/CustomButton";
 import CustomOverlay from "../../components/CustomOverlay";
+
+// Constants and lib functions
+
+// Backend
 import firebase from "../../../store/Firebase";
 
 const INITIAL_OVERLAY_STATE = {

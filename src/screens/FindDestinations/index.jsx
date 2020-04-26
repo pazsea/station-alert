@@ -1,16 +1,25 @@
-import React, { useContext, useEffect, useState } from "react";
-import { JourneyContext } from "../../../store/journeyStore";
+// General
+import React, { useContext, useState } from "react";
 
+// Context & Stores
+import { ThemeContext } from "react-native-elements";
+import { JourneyContext } from "../../../store/journeyStore";
+import { PermissionsContext } from "../../../store/permissionsStore";
+
+// Styles
 import { LayoutView, ContainerView } from "../../components/styles";
+
+// Components
+import { Card, Text } from "react-native-elements";
+import CustomButton from "../../components/CustomButton";
+import ImageContainer from "../../components/ImageContainer";
 
 import UISearchDestination from "../../components/UISearchDestination";
 import UIDestinationsView from "../../components/UIDestinationsView";
-import { Card, Text } from "react-native-elements";
-import CustomButton from "../../components/CustomButton";
-import { ThemeContext } from "react-native-elements";
-import ImageContainer from "../../components/ImageContainer";
-import firebase from "../../../store/Firebase";
-import { PermissionsContext } from "../../../store/permissionsStore";
+
+// Constants and lib functions
+
+// Backend
 
 //TO DO Fixa så att allow acces to location funkar smidigare. Kanske tillsammans med ett loading status?
 

@@ -1,16 +1,25 @@
+// General
 import React, { useContext, useEffect, useState } from "react";
-import { StyleSheet, View, Text } from "react-native";
-import { LayoutView, ContainerView } from "../../components/styles";
-import { ThemeModeContext } from "../../../store/themeStore";
-import defaultPic from "../../../images/defaultAvatar.png";
 
-import { Card, ListItem, ThemeContext, Icon } from "react-native-elements";
-import PersonalSettings from "../PersonalSettings";
+// Context & Stores
+import { ThemeModeContext } from "../../../store/themeStore";
+import { UserDetailsContext } from "../../../store/userDetails";
+
+// Styles
+import { LayoutView, ContainerView } from "../../components/styles";
+
+// Components
+import { View, Text } from "react-native";
+import { Card, ListItem, ThemeContext } from "react-native-elements";
+import defaultPic from "../../../images/defaultAvatar.png";
 import CustomButton from "../../components/CustomButton";
+
+// Constants and lib functions
 import dark from "../../../themes/dark";
 import light from "../../../themes/light";
-import { UserDetailsContext } from "../../../store/userDetails";
 import { getFirstName } from "../../constant";
+
+// Backend
 
 const MoreModal = (props) => {
   //THEME CONTEXT

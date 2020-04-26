@@ -1,8 +1,11 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { BackHandler } from "react-native";
 
+const latCheck = /^(-?[1-8]?\d(?:\.\d{1,18})?|90(?:\.0{1,18})?)$/;
+const longCheck = /^(-?(?:1[0-7]|[1-9])?\d(?:\.\d{1,18})?|180(?:\.0{1,18})?)$/;
+
 export const useGoBack = (handler) => {
-  useEffect(() => {
+  React.useEffect(() => {
     BackHandler.addEventListener("hardwareBackPress", handler);
     return () => {
       BackHandler.removeEventListener("hardwareBackPress", handler);
@@ -47,9 +50,6 @@ export const uriToBlob = (uri) => {
     xhr.send(null);
   });
 };
-
-const latCheck = /^(-?[1-8]?\d(?:\.\d{1,18})?|90(?:\.0{1,18})?)$/;
-const longCheck = /^(-?(?:1[0-7]|[1-9])?\d(?:\.\d{1,18})?|180(?:\.0{1,18})?)$/;
 
 export const check_lat_lon = (coord) => {
   var validLat = latCheck.test(coord);

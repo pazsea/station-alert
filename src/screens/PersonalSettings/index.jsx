@@ -1,25 +1,25 @@
-import React, { useEffect, useContext, useState } from "react";
-import {
-  StyleSheet,
-  View,
-  Text,
-  BackHandler,
-  SnapshotViewIOS,
-} from "react-native";
-import { LayoutView, ContainerView } from "../../components/styles";
-import { Card, Icon, Input } from "react-native-elements";
-import { useGoBack, validateEmail, uriToBlob } from "../../constant";
-import CustomButton from "../../components/CustomButton";
+// General
+import React, { useEffect, useContext } from "react";
+import * as ImagePicker from "expo-image-picker";
+
+// Context & Stores
 import { ThemeContext } from "react-native-elements";
 import { UserDetailsContext } from "../../../store/userDetails";
-import { useForm } from "react-hook-form";
-import firebase from "../../../store/Firebase";
-// import { ImagePicker } from "expo";
-import * as ImagePicker from "expo-image-picker";
-// GÖR RECOMMEND STATION SOM SKA SKICKAS TILL EN NY COLLECTION pending
-// GÖM SETTINGS, RECOMMEND OCH CREATE ACCOUNT NÄR MAN INTE ÄR INLOGGAD
 
-// SIDENOTE, NÄR JAG GODKÄNT DEN SÅ SLÅS DEN IHOP MED NUVARANDE STATIONS
+// Styles
+import { LayoutView, ContainerView } from "../../components/styles";
+
+// Components
+import { Text } from "react-native";
+import { Card, Icon, Input } from "react-native-elements";
+import CustomButton from "../../components/CustomButton";
+
+// Constants and lib functions
+import { useForm } from "react-hook-form";
+import { useGoBack, validateEmail, uriToBlob } from "../../constant";
+
+// Backend
+import firebase from "../../../store/Firebase";
 
 const PersonalSettings = (props) => {
   const { navigate } = props.navigation;

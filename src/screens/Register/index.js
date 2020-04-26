@@ -1,16 +1,25 @@
-import React, { useEffect, useContext, useState } from "react";
-import { StyleSheet, View, BackHandler } from "react-native";
-import { LayoutView, ContainerView } from "../../components/styles";
-import { Card, Icon, Input, Overlay, Text } from "react-native-elements";
-import { useGoBack } from "../../constant";
-import CustomButton from "../../components/CustomButton";
+// General
+import React, { useEffect, useContext } from "react";
+
+// Context & Stores
 import { ThemeContext } from "react-native-elements";
-import firebase from "../../../store/Firebase";
-import { useForm } from "react-hook-form";
-import { validateEmail } from "../../constant";
 import { UserDetailsContext } from "../../../store/userDetails";
-import CustomOverlay from "../../components/CustomOverlay";
 import { PermissionsContext } from "../../../store/permissionsStore";
+
+// Styles
+import { LayoutView } from "../../components/styles";
+
+// Components
+import { Card, Icon, Input, Text } from "react-native-elements";
+import CustomOverlay from "../../components/CustomOverlay";
+import CustomButton from "../../components/CustomButton";
+
+// Constants and lib functions
+import { useGoBack, validateEmail } from "../../constant";
+import { useForm } from "react-hook-form";
+
+// Backend
+import firebase from "../../../store/Firebase";
 
 const Register = (props) => {
   const {
