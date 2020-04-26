@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
-import { StyleSheet, View, Text } from "react-native";
-import { LayoutView } from "../../components/styles";
+import { View } from "react-native";
 import { ThemeContext } from "react-native-elements";
 import ImageContainer from "../ImageContainer";
 

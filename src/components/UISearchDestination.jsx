@@ -1,10 +1,19 @@
-import React, { useState, useEffect, useContext } from "react";
-import { StationButtonContainer, SearchDestinationContainer } from "./styles";
-import dest from "../data/destinations";
+// General
+import React, { useState, useContext } from "react";
+
+// Context & Stores
 import { JourneyContext } from "../../store/journeyStore";
-import { SearchBar, Icon, ThemeContext } from "react-native-elements";
-import CustomButton from "./CustomButton";
 import { ThemeModeContext } from "../../store/themeStore";
+
+// Styles, themes
+import { StationButtonContainer, SearchDestinationContainer } from "./styles";
+
+// Components
+import CustomButton from "./CustomButton";
+import { SearchBar, Icon, ThemeContext } from "react-native-elements";
+
+// Contants and lib functions
+import dest from "../data/destinations";
 
 const UISearchDestination = ({ startedSearching, setStartedSearching }) => {
   const {

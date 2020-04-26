@@ -1,12 +1,6 @@
 import React, { useContext } from "react";
-import {
-  StyleSheet,
-  View,
-  SafeAreaView,
-  KeyboardAvoidingView,
-} from "react-native";
-import { LayoutView } from "../../components/styles";
-import { ThemeContext, Overlay, Text, Input } from "react-native-elements";
+import { View, KeyboardAvoidingView } from "react-native";
+import { ThemeContext, Overlay, Text } from "react-native-elements";
 import CustomButton from "../CustomButton";
 
 const CustomOverlay = ({
@@ -38,8 +32,6 @@ const CustomOverlay = ({
       overlayBackgroundColor={theme.colors.surface}
       overlayStyle={{
         padding: 20,
-        // height: "auto",
-        // flex: 0.4,
       }}
       animated={true}
       animationType={"fade"}

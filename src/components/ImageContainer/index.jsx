@@ -8,7 +8,6 @@ const ImageContainer = ({ showSplash }) => {
   return (
     <View style={{ width: "100%" }}>
       <Image
-        // resizeMethod={"scale"}
         style={{
           width: "100%",
           height: showSplash ? "100%" : 110,

@@ -1,24 +1,25 @@
+// General
 import React, { useState, useEffect, useContext } from "react";
-import {
-  DestinationsView,
-  SecondaryHeadlineText,
-  StationView,
-  StationMore,
-} from "./styles";
 
-import Icon from "react-native-vector-icons/Ionicons";
-// import { dest } from "../data/destinations";
+// Context & Stores
+import { UserDetailsContext } from "../../store/userDetails";
 import { JourneyContext } from "../../store/journeyStore";
+
+// Styles, themes
+import { StationView } from "./styles";
+
+// Components
+import Icon from "react-native-vector-icons/Ionicons";
 import { Card, Text, ThemeContext, Input } from "react-native-elements";
 import { ScrollView } from "react-native";
 import CustomButton from "./CustomButton";
-import { UserDetailsContext } from "../../store/userDetails";
 import CustomOverlay from "./CustomOverlay";
-import { useForm } from "react-hook-form";
-import firebase from "../../store/Firebase";
 
-//Gör en overlay här som när man trycker på spara skickar in destinationerna till firebase
-// Rendera sedan ut dem i favorites
+// Contants and lib functions
+import { useForm } from "react-hook-form";
+
+// Backend
+import firebase from "../../store/Firebase";
 
 const UIDestinationsView = (props) => {
   const [overlayState, setOverlayState] = useState(false);
