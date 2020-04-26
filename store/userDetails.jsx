@@ -8,6 +8,7 @@ const INITIAL_USERDETAILS_STATE = {
   name: "",
   email: "",
   userUid: "",
+  favRoutes: [],
   img: "",
 };
 

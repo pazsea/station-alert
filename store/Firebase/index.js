@@ -56,6 +56,17 @@ class Firebase {
     });
   }
 
+  deleteFavRoute(incFavRoute) {
+    if (!this.auth.currentUser) {
+      return console.log("Not signed in");
+    }
+    console.log("INNE I DELETE");
+
+    return this.db.doc(`users/${this.auth.currentUser.uid}`).update({
+      favRoutes: app.firestore.FieldValue.arrayRemove(incFavRoute),
+    });
+  }
+
   // addAvatar(url) {
 
   // }

@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Station Alert",
-    "slug": "Station Alert",
+    "name": "Station-alert",
+    "slug": "Station-alert",
     "privacy": "public",
     "sdkVersion": "36.0.0",
     "platforms": ["ios", "android", "web"],
