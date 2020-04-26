@@ -13,7 +13,7 @@ import { Card, Icon, Input, Text } from "react-native-elements";
 import CustomButton from "../../components/CustomButton";
 import CustomOverlay from "../../components/CustomOverlay";
 
-// Constants and lib functions
+// Contants and lib functions
 import { useGoBack, check_lat_lon } from "../../constant";
 import { useForm } from "react-hook-form";
 
@@ -27,8 +27,9 @@ const defaultValues = {
 };
 
 const Recommend = (props) => {
+  // ** ---------States --------- **
+  // ** ---------Contexts --------- **
   const {
-    userInfo: [userDetails, setUserDetails],
     authState: [
       { authLoading, errorStatus, errorMessage, statusMessage },
       setAuthState,
@@ -39,8 +40,11 @@ const Recommend = (props) => {
     hasStatus,
   } = useContext(UserDetailsContext);
 
+  // ** ---------Themes --------- **
   const { theme } = useContext(ThemeContext);
 
+  // ** ---------Variables --------- **
+  const { navigate } = props.navigation;
   const {
     register,
     handleSubmit,
@@ -50,9 +54,31 @@ const Recommend = (props) => {
     reset,
     watch,
   } = useForm({ defaultValues });
-  const { navigate } = props.navigation;
-
   const values = watch();
+  useGoBack(() => navigate("MoreScreen"));
+
+  // ** ---------Use Effect (lifecycles) --------- **
+  useEffect(() => {
+    register("stationName", { required: true, minLength: 2 });
+    register("lat", {
+      required: true,
+      minLength: 4,
+      validate: (lat) => check_lat_lon(lat),
+    });
+    register("long", {
+      required: true,
+      minLength: 4,
+      validate: (long) => check_lat_lon(long),
+    });
+
+    return () => {
+      unregister("stationName");
+      unregister("lat");
+      unregister("long");
+    };
+  }, [register]);
+
+  // ** ---------Functions --------- **
 
   async function onSubmit(data) {
     try {
@@ -74,28 +100,6 @@ const Recommend = (props) => {
       hasError(error.message);
     }
   }
-
-  useEffect(() => {
-    register("stationName", { required: true, minLength: 2 });
-    register("lat", {
-      required: true,
-      minLength: 4,
-      validate: (lat) => check_lat_lon(lat),
-    });
-    register("long", {
-      required: true,
-      minLength: 4,
-      validate: (long) => check_lat_lon(long),
-    });
-
-    return () => {
-      unregister("stationName");
-      unregister("lat");
-      unregister("long");
-    };
-  }, [register]);
-
-  useGoBack(() => navigate("MoreScreen"));
 
   const content = (
     <>
