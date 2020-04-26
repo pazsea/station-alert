@@ -27,18 +27,26 @@ import MapView, { Marker } from "react-native-maps";
 // Backend
 
 const JourneyScreen = (props) => {
-  const {
-    journeyStore: [{ destinations, startedTrip }, setJourneyState],
-    stationStatus: [arrivedAllStations, setArrivedAllStations],
-    resetJourneyStore,
-  } = useContext(JourneyContext);
-  const { theme } = useContext(ThemeContext);
-  const colors = theme.colors;
-
+  // ** ---------States --------- **
   const [showMap, setShowMap] = useState(false);
   const [showDestinations, setShowDestinations] = useState(true);
 
+  // ** ---------Contexts --------- **
+  const {
+    journeyStore: [{ destinations, startedTrip }],
+    stationStatus: [arrivedAllStations],
+    resetJourneyStore,
+  } = useContext(JourneyContext);
+
+  // ** ---------Themes --------- **
+  const { theme } = useContext(ThemeContext);
+
+  // ** ---------Variables --------- **
   const { navigate } = props.navigation;
+  const colors = theme.colors;
+
+  // ** ---------Use Effect (lifecycles) --------- **
+  // ** ---------Functions --------- **
 
   const cancelTrip = () => {
     resetJourneyStore();
