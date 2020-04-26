@@ -11,6 +11,6 @@ npm-debug.*
 web-build/
 web-report/
 store/Firebase/env.js
-
+src/data/*
 # macOS
 .DS_Store
