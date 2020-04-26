@@ -165,15 +165,19 @@ const JourneyScreen = (props) => {
         >
           <Card
             title="You have no ongoing yourney."
-            containerStyle={{ borderRadius: 5, width: "100%" }}
+            containerStyle={{
+              borderRadius: 5,
+              width: "100%",
+            }}
           >
-            <Text style={{ marginBottom: 10 }}>
+            <Text style={{ marginBottom: 15, textAlign: "center" }}>
               Please press the button to enter your destination or route.
             </Text>
             <CustomButton
               onPress={() => navigate("FindDestinationScreen")}
               addIcon={{
                 name: "ios-train",
+                size: 20,
               }}
               iconRight
               title={"Find your destination"}

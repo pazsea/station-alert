@@ -98,17 +98,18 @@ const FavouritesScreen = (props) => {
         containerStyle={{ borderRadius: 5, width: "100%" }}
       >
         <>
-          <Text style={{ marginBottom: 10 }}>
+          <Text style={{ marginBottom: 15, textAlign: "center" }}>
             If you have a registered account you can save your routes and start
             them from this tab anytime you want.
           </Text>
           <CustomButton
-            onPress={() => navigate("FindDestinationScreen")}
+            onPress={() => navigate("MoreScreen")}
             addIcon={{
-              name: "ios-train",
+              name: "ios-person-add",
+              size: 20,
             }}
             iconRight
-            title={"Find your destination"}
+            title={"Create a account"}
           ></CustomButton>
         </>
       </Card>

@@ -61,6 +61,7 @@ export default {
     containerStyle: {
       width: "100%",
       borderRadius: 5,
+      borderColor: "#d8d8d8",
       margin: 0,
       borderColor: "transparent",
       backgroundColor: myDarkThemeColors.surface,
