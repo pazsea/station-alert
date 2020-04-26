@@ -1,13 +1,11 @@
+// General
 import React, { useState, useEffect } from "react";
-import { SafeAreaView, AsyncStorage, Text, YellowBox } from "react-native";
 
-import { createAppContainer, createSwitchNavigator } from "react-navigation";
-import { createMaterialBottomTabNavigator } from "react-navigation-material-bottom-tabs";
+// Context & Stores
+import { ThemeConsumer } from "react-native-elements";
 
-import { ThemeProvider, ThemeConsumer } from "react-native-elements";
-import lightTheme from "./themes/light";
-import darkTheme from "./themes/dark";
-import Icon from "react-native-vector-icons/Ionicons";
+// Components
+import CombinedStoreProvider from "./store/combinedStore";
 
 import FindDestinationScreen from "./src/screens/FindDestinations";
 import JourneyScreen from "./src/screens/Journey";
@@ -17,12 +15,17 @@ import PersonalSettings from "./src/screens/PersonalSettings";
 import RecommendStation from "./src/screens/RecommendStation";
 import Register from "./src/screens/Register";
 import SignIn from "./src/screens/SignIn";
-
 import Loading from "./src/components/Loading";
 
-import styled from "styled-components";
-import CombinedStoreProvider from "./store/combinedStore";
-import Firebase from "./store/Firebase";
+import Icon from "react-native-vector-icons/Ionicons";
+
+import { createAppContainer, createSwitchNavigator } from "react-navigation";
+import { createMaterialBottomTabNavigator } from "react-navigation-material-bottom-tabs";
+
+import { SafeAreaView, YellowBox } from "react-native";
+
+// Backend
+import firebase from "./store/Firebase";
 
 const TabNavigator = createMaterialBottomTabNavigator(
   {
@@ -131,7 +134,7 @@ export default App = () => {
   YellowBox.ignoreWarnings(["Setting a timer"]);
 
   useEffect(() => {
-    if (Firebase.isInitialized()) {
+    if (firebase.isInitialized()) {
       setLoading(false);
     }
   });
