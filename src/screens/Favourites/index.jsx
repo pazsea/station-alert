@@ -25,36 +25,33 @@ const INITIAL_OVERLAY_STATE = {
 };
 
 const FavouritesScreen = (props) => {
-  //THEME CONTEXT
-  const {
-    journeyStore: [journeyState, setJourneyState],
-    stationStatus: [arrivedAllStations, setArrivedAllStations],
-    resetJourneyStore,
-  } = useContext(JourneyContext);
-
-  //USERDETAILS CONTEXT
-  const {
-    userInfo: [{ name, img, favRoutes }, setUserDetails],
-    authState: [
-      { signedIn, authLoading, errorMessage, statusMessage },
-      setAuthState,
-    ],
-    hasError,
-    resetError,
-    hasStatus,
-  } = useContext(UserDetailsContext);
-
-  const emptyFav = favRoutes.length <= 0;
-
+  // ** ---------States --------- **
   const [overlayState, setOverlayState] = useState(INITIAL_OVERLAY_STATE);
 
+  // ** ---------Contexts --------- **
+  const {
+    journeyStore: [, setJourneyState],
+  } = useContext(JourneyContext);
+
+  const {
+    userInfo: [{ favRoutes }],
+    authState: [{ signedIn, authLoading, errorMessage }, setAuthState],
+    hasError,
+    resetError,
+  } = useContext(UserDetailsContext);
+
+  // ** ---------Themes --------- **
   const { theme } = useContext(ThemeContext);
 
+  // ** ---------Variables --------- **
   const { navigate } = props.navigation;
+  const emptyFav = favRoutes.length <= 0;
+
+  // ** ---------Use Effect (lifecycles) --------- **
+  // ** ---------Functions --------- **
 
   const startFavRoutesJourney = async (stationIndex) => {
     const pickedRoute = favRoutes[stationIndex].destinations;
-    console.log("My picked route", pickedRoute);
     setJourneyState({
       startedTrip: true,
       endedTrip: false,
