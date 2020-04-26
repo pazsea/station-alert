@@ -8,7 +8,7 @@ import { sendPushNotification } from "../src/constant";
 // Backend
 import firebase from "./Firebase";
 
-// TO DO: Borde effektivisera allArrived state och journeystate.endtrip
+// TO DO: Borde effektivisera allArrived state och journeystate.endedTrip
 // Borde städa ordentlig här och titta på alla IF statements. Behövs alla? Går det att göra bättre?
 
 export const JourneyContext = createContext();
@@ -32,19 +32,23 @@ export const JourneyContextProvider = (props) => {
 
   const setStationArrived = async (stationIndex) => {
     if (journeyState.endedTrip) return;
+
+    // Uppdaterar aktuell stations arrival status till true.
     let newDestinationStatus = [...journeyState.destinations];
     newDestinationStatus[stationIndex].arrived = true;
     const stationName = newDestinationStatus[stationIndex].name;
 
+    // Hämtar användarens UID. OM man är inloggad.
     const userUid = await firebase.getCurrentUid();
-    const allHasArrived = newDestinationStatus.every(
+    const arrivedAtAllStations = newDestinationStatus.every(
       (station) => station.arrived
     );
 
-    if (!userUid && allHasArrived) {
+    // Sätter destinationer som ankommna om man kommit fram utan att vara inloggad.
+    if (!userUid && arrivedAtAllStations) {
       console.log("Inte inloggat men alla har kommit");
 
-      setJourneyState((prevState) => ({
+      return setJourneyState((prevState) => ({
         ...prevState,
         destinations: newDestinationStatus,
         endedTrip: true,
@@ -52,11 +56,13 @@ export const JourneyContextProvider = (props) => {
     } else if (!userUid) {
       console.log("Inte inloggat men en har kommit");
 
-      setJourneyState((prevState) => ({
+      return setJourneyState((prevState) => ({
         ...prevState,
         destinations: newDestinationStatus,
       }));
     }
+
+    // Sätter destinationer om man är inloggad.
 
     let token = expoTokenState;
 
@@ -79,7 +85,7 @@ export const JourneyContextProvider = (props) => {
       }
     }
 
-    if (token && allHasArrived) {
+    if (token && arrivedAtAllStations) {
       await sendPushNotification(
         token,
         stationName,
@@ -123,19 +129,7 @@ export const JourneyContextProvider = (props) => {
   }, [userPosition.lat, userPosition.long]);
 
   useEffect(() => {
-    if (journeyState.destinations.length === 0) {
-      return;
-    } else if (
-      journeyState.destinations?.every((station) => station.arrived == true) &&
-      !arrivedAllStations
-    ) {
-      console.log("FRAMME");
-      setArrivedAllStations(true);
-    }
-  });
-
-  useEffect(() => {
-    if (!journeyState.startedTrip && arrivedAllStations) return;
+    if (!journeyState.startedTrip && journeyState.endedTrip) return;
     //Kör gps och sätt nytt state med ens position
     console.log("Kollar position");
     const watchID = navigator.geolocation.watchPosition(
@@ -159,15 +153,10 @@ export const JourneyContextProvider = (props) => {
     return () => {
       navigator.geolocation.clearWatch(watchID);
     };
-  }, [journeyState.startedTrip, arrivedAllStations]);
+  }, [journeyState.startedTrip, journeyState.endedTrip]);
 
   const resetJourneyStore = () => {
-    // let resetDestinations = [...journeyState.destinations];
-    // console.log(resetDestinations);
-    // resetDestinations.forEach((dest) => (dest.arrived = false));
-
     setJourneyState(INITIAL_JOURNEY_STATE);
-    setArrivedAllStations(false);
   };
 
   useEffect(() => {}, [journeyState]);

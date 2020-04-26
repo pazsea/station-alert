@@ -28,7 +28,6 @@ const FindDestinationScreen = (props) => {
   // ** ---------Contexts --------- **
   const {
     journeyStore: [journeyState, setJourneyState],
-    stationStatus: [arrivedAllStations],
     resetJourneyStore,
   } = useContext(JourneyContext);
 
@@ -58,7 +57,7 @@ const FindDestinationScreen = (props) => {
     setStartedSearching(false);
   };
 
-  const statusMessage = arrivedAllStations
+  const statusMessage = journeyState.endedTrip
     ? "Reset journey?"
     : "Cancel journey";
 

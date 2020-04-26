@@ -33,8 +33,7 @@ const JourneyScreen = (props) => {
 
   // ** ---------Contexts --------- **
   const {
-    journeyStore: [{ destinations, startedTrip }],
-    stationStatus: [arrivedAllStations],
+    journeyStore: [{ destinations, startedTrip, endedTrip }],
     resetJourneyStore,
   } = useContext(JourneyContext);
 
@@ -52,9 +51,7 @@ const JourneyScreen = (props) => {
     resetJourneyStore();
   };
 
-  const statusMessage = arrivedAllStations
-    ? "Reset journey?"
-    : "Cancel journey";
+  const statusMessage = endedTrip ? "Reset journey?" : "Cancel journey";
 
   return (
     <LayoutView centered primaryColor={theme.colors.background}>
