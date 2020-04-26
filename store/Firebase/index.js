@@ -93,7 +93,7 @@ class Firebase {
   }
 
   getCurrentUid() {
-    return this.auth.currentUser.uid;
+    return this.auth.currentUser && this.auth.currentUser.uid;
   }
 
   async getCurrentUserQuote() {

@@ -97,18 +97,20 @@ const FavouritesScreen = (props) => {
         title="You have no favourite routes saved yet..."
         containerStyle={{ borderRadius: 5, width: "100%" }}
       >
-        <Text style={{ marginBottom: 10 }}>
-          If you have a registered account you can save your routes and start
-          them from this tab anytime you want.
-        </Text>
-        <CustomButton
-          onPress={() => navigate("FindDestinationScreen")}
-          addIcon={{
-            name: "ios-train",
-          }}
-          iconRight
-          title={"Find your destination"}
-        ></CustomButton>
+        <>
+          <Text style={{ marginBottom: 10 }}>
+            If you have a registered account you can save your routes and start
+            them from this tab anytime you want.
+          </Text>
+          <CustomButton
+            onPress={() => navigate("FindDestinationScreen")}
+            addIcon={{
+              name: "ios-train",
+            }}
+            iconRight
+            title={"Find your destination"}
+          ></CustomButton>
+        </>
       </Card>
     </View>
   );
@@ -123,61 +125,63 @@ const FavouritesScreen = (props) => {
               marginBottom: 10,
             }}
           >
-            {station.destinations
-              ? station.destinations.map((destination, destIndex) => {
-                  const lastStation =
-                    favRoutes[stationIndex]?.destinations?.length - 1 ===
-                    destIndex;
-                  return (
-                    <StationView
-                      key={"stationVy" + destIndex + destination.name}
-                    >
-                      <Icon
-                        name="train"
-                        size={24}
-                        iconStyle={{
-                          color: lastStation
-                            ? theme.colors.selected
-                            : theme.colors.greyOutline,
-                        }}
-                      />
-                      <Text>{destination.name}</Text>
-                      <Icon
-                        name="flag"
-                        size={24}
-                        color={theme.colors.selected}
-                        key={destIndex + destination.name + "checkDone"}
-                      />
-                    </StationView>
-                  );
-                })
-              : null}
+            <>
+              {station.destinations
+                ? station.destinations.map((destination, destIndex) => {
+                    const lastStation =
+                      favRoutes[stationIndex]?.destinations?.length - 1 ===
+                      destIndex;
+                    return (
+                      <StationView
+                        key={"stationVy" + destIndex + destination.name}
+                      >
+                        <Icon
+                          name="train"
+                          size={24}
+                          iconStyle={{
+                            color: lastStation
+                              ? theme.colors.selected
+                              : theme.colors.greyOutline,
+                          }}
+                        />
+                        <Text>{destination.name}</Text>
+                        <Icon
+                          name="flag"
+                          size={24}
+                          color={theme.colors.selected}
+                          key={destIndex + destination.name + "checkDone"}
+                        />
+                      </StationView>
+                    );
+                  })
+                : null}
 
-            <CustomButton
-              hasError
-              addIcon={{
-                name: "trash",
-                type: "font-awesome",
-                size: 20,
-              }}
-              containerStyle={{
-                marginTop: 25,
-              }}
-              title={"Delete this route"}
-              onPress={() => deleteFavRoute(stationIndex)}
-            />
-            <CustomButton
-              addIcon={{
-                name: "train",
-                type: "font-awesome",
-                size: 20,
-              }}
-              containerStyle={{
-                marginTop: 5,
-              }}
-              title={"Start this journey"}
-              onPress={() => startFavRoutesJourney(stationIndex)}
-            />
+              <CustomButton
+                hasError
+                addIcon={{
+                  name: "trash",
+                  type: "font-awesome",
+                  size: 20,
+                }}
+                containerStyle={{
+                  marginTop: 25,
+                }}
+                title={"Delete this route"}
+                onPress={() => deleteFavRoute(stationIndex)}
+              />
+              <CustomButton
+                addIcon={{
+                  name: "train",
+                  type: "font-awesome",
+                  size: 20,
+                }}
+                containerStyle={{
+                  marginTop: 5,
+                }}
+                title={"Start this journey"}
+                onPress={() => startFavRoutesJourney(stationIndex)}
+              />
+            </>
           </Card>
         );
       })

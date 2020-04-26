@@ -30,22 +30,20 @@ const UserDetailsProvider = (props) => {
   const [authState, setAuthState] = useState(INITIAL_AUTH_STATE);
 
   useEffect(() => {
-    if (!authState.signedIn || !firebase.isInitialized()) return;
+    if (!firebase.getCurrentUid()) return;
     const userUid = firebase.getCurrentUid();
     const unsub = firebase.user(userUid).onSnapshot((snap) => {
-      // if (snap) {
-      //   console.log("UserDetailsProvider -> snap", snap);
-      //   const date = snap.data();
-      //   console.log("UserDetailsProvider -> date", date);
-      //   const docs = snap.docs;
-      //   console.log("UserDetailsProvider -> docs", docs);
-      // }
-      if (snap) {
-        console.log("UserDetailsProvider -> snap", snap.data);
-        const firebaseUserDetails = snap.data();
+      const firebaseUserDetails = snap.data();
+      if (firebaseUserDetails) {
         setUserDetails(firebaseUserDetails);
+
+        if (authState.signedIn) return;
+        setAuthState((prevState) => ({
+          ...prevState,
+          signedIn: true,
+        }));
       } else {
-        console.log("Firebase funkar inte");
+        console.log("Har");
       }
     });
     return () => {

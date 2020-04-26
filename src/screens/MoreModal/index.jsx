@@ -23,7 +23,6 @@ import { getFirstName } from "../../constant";
 
 const MoreModal = (props) => {
   // ** ---------States --------- **
-  const [welcomeMessage, setWelcomeMessage] = useState(false);
 
   // ** ---------Contexts --------- **
   const {
@@ -43,13 +42,6 @@ const MoreModal = (props) => {
   const { navigate } = props.navigation;
 
   // ** ---------Use Effect (lifecycles) --------- **
-  useEffect(() => {
-    setWelcomeMessage(true);
-
-    setTimeout(() => {
-      setWelcomeMessage(false);
-    }, 2000);
-  }, []);
 
   // ** ---------Functions --------- **
 
@@ -60,12 +52,12 @@ const MoreModal = (props) => {
     updateTheme(value ? light : dark);
   };
 
-  const picTitle =
-    welcomeMessage && name
-      ? `Welcome ${getFirstName(name)}`
-      : welcomeMessage
-      ? "Welcome"
-      : "";
+  // const picTitle =
+  //   welcomeMessage && name
+  //     ? `Welcome ${getFirstName(name)}`
+  //     : welcomeMessage
+  //     ? "Welcome"
+  //     : "";
 
   return (
     <LayoutView centered primaryColor={theme.colors.background}>
@@ -95,7 +87,6 @@ const MoreModal = (props) => {
               </Text>
             ),
           }}
-          featuredTitle={picTitle}
           featuredTitleStyle={{
             color: theme.colors.onSecondary,
             fontWeight: "100",
