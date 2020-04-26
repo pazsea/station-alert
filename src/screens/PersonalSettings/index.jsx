@@ -22,22 +22,33 @@ import { useGoBack, validateEmail, uriToBlob } from "../../constant";
 import firebase from "../../../store/Firebase";
 
 const PersonalSettings = (props) => {
-  const { navigate } = props.navigation;
-  const { theme } = useContext(ThemeContext);
-
+  // ** ---------States --------- **
+  // ** ---------Contexts --------- **
   const {
-    userInfo: [{ name, email }, setUserDetails],
-    authState: [
-      { signedIn, authLoading, errorStatus, errorMessage, statusMessage },
-      setAuthState,
-    ],
-    logOut,
-    resetError,
+    userInfo: [{ name, email }],
+    authState: [{ authLoading, errorMessage, statusMessage }, setAuthState],
     hasError,
     hasStatus,
   } = useContext(UserDetailsContext);
 
+  // ** ---------Themes --------- **
+  const { theme } = useContext(ThemeContext);
+
+  // ** ---------Variables --------- **
+  const { navigate } = props.navigation;
   const { register, handleSubmit, setValue, errors } = useForm();
+
+  // ** ---------Use Effect (lifecycles) --------- **
+  useEffect(() => {
+    register("name");
+    register("email", {
+      validate: (value) => validateEmail(value || email),
+    });
+    register("password");
+  }, [register]);
+
+  // ** ---------Functions --------- **
+  useGoBack(() => navigate("MoreScreen"));
 
   async function onSave(data) {
     try {
@@ -112,16 +123,6 @@ const PersonalSettings = (props) => {
         // throw error;
       });
   };
-
-  useEffect(() => {
-    register("name");
-    register("email", {
-      validate: (value) => validateEmail(value || email),
-    });
-    register("password");
-  }, [register]);
-
-  useGoBack(() => navigate("MoreScreen"));
 
   return (
     <LayoutView centered primaryColor={theme.colors.background}>
