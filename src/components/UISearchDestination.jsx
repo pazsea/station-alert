@@ -16,6 +16,11 @@ import { SearchBar, Icon, ThemeContext } from "react-native-elements";
 import dest from "../data/destinations";
 
 const UISearchDestination = ({ startedSearching, setStartedSearching }) => {
+  // ** ---------States --------- **
+  const [searchResult, setSearchResult] = useState([]);
+  const [value, setValue] = useState("");
+
+  // ** ---------Contexts --------- **
   const {
     journeyStore: [journeyState, setJourneyState],
   } = useContext(JourneyContext);
@@ -24,12 +29,14 @@ const UISearchDestination = ({ startedSearching, setStartedSearching }) => {
     themeState: [{ currentTheme }],
   } = useContext(ThemeModeContext);
 
-  const [searchResult, setSearchResult] = useState([]);
-  const [value, setValue] = useState("");
-
+  // ** ---------Themes --------- **
   const { theme } = useContext(ThemeContext);
 
+  // ** ---------Variables --------- **
   const colors = theme.colors;
+
+  // ** ---------Use Effect (lifecycles) --------- **
+  // ** ---------Functions --------- **
 
   const handlePressedStation = (pickedStation) => {
     const currentDestinations = journeyState.destinations;
@@ -46,7 +53,7 @@ const UISearchDestination = ({ startedSearching, setStartedSearching }) => {
         destinations: removeStation,
       });
     } else {
-      pickedStation.arrived = false;
+      pickedStation.arrived = false; // Needs to add arrived false to prevent react native bug (WTF!?)
       setJourneyState({
         ...journeyState,
         destinations: [...journeyState.destinations, pickedStation],
@@ -73,7 +80,6 @@ const UISearchDestination = ({ startedSearching, setStartedSearching }) => {
     );
   };
 
-  //EVALUATE RETURN:
   const buttons =
     startedSearching && searchResult
       ? searchResult.slice(0, 3).map((station, index) => {
