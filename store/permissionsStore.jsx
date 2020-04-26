@@ -21,20 +21,24 @@ const PermissionsProvider = (props) => {
   const [permissions, setPermissions] = useState(INITIAL_PERMISSIONS_STATE);
 
   registerLocationAccess = async () => {
-    const { status } = await Permissions.getAsync(Permissions.LOCATION);
+    try {
+      const { status } = await Permissions.getAsync(Permissions.LOCATION);
 
-    let finalStatus = status;
+      let finalStatus = status;
 
-    if (finalStatus !== "granted") {
-      const { status } = await Permissions.askAsync(Permissions.LOCATION);
-      finalStatus = status;
-    }
+      if (finalStatus !== "granted") {
+        const { status } = await Permissions.askAsync(Permissions.LOCATION);
+        finalStatus = status;
+      }
 
-    if (finalStatus !== "granted") {
-      setPermissions((prevState) => ({
-        ...prevState,
-        location: false,
-      }));
+      if (finalStatus !== "granted") {
+        setPermissions((prevState) => ({
+          ...prevState,
+          location: false,
+        }));
+      }
+    } catch (e) {
+      console.log(e.message);
     }
   };
 
