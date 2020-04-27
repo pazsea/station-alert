@@ -110,7 +110,6 @@ const PersonalSettings = (props) => {
         return uploadImage(blob, uid);
       })
       .then(async (snapshot) => {
-        console.log(snapshot.ref.getDownloadURL());
         await snapshot.ref.getDownloadURL().then((avaiUrl) => {
           firebase.user(uid).update({
             img: avaiUrl,

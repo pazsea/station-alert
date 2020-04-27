@@ -70,7 +70,6 @@ const PermissionsProvider = (props) => {
 
       if (userUid) {
         const token = await Notifications.getExpoPushTokenAsync();
-        console.log(token);
         await firebase.user(userUid).update({
           expoToken: token,
         });

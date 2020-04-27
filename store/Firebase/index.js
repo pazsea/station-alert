@@ -48,7 +48,6 @@ class Firebase {
 
   addFavRoute(incFavRoute) {
     if (!this.auth.currentUser) {
-      return console.log("Not signed in");
     }
 
     return this.db.doc(`users/${this.auth.currentUser.uid}`).update({
@@ -58,9 +57,7 @@ class Firebase {
 
   deleteFavRoute(incFavRoute) {
     if (!this.auth.currentUser) {
-      return console.log("Not signed in");
     }
-    console.log("INNE I DELETE");
 
     return this.db.doc(`users/${this.auth.currentUser.uid}`).update({
       favRoutes: app.firestore.FieldValue.arrayRemove(incFavRoute),

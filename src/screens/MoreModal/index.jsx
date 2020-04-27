@@ -76,7 +76,6 @@ const MoreModal = (props) => {
           // featuredTitle="Välkommen Patrick"
           imageProps={{
             resizeMode: "contain",
-            onMagicTap: () => console.log("tryck på bild"),
             PlaceholderContent: (
               <Text
                 style={{

@@ -1,5 +1,11 @@
 export default [
   {
+    name: "Gym",
+    lat: 59.867017,
+    long: 17.648258,
+  },
+  { name: "Löparspår", lat: 59.739609, long: 17.791133 },
+  {
     name: "Akalla",
     lat: 59.414814,
     long: 17.912796,

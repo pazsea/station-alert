@@ -67,7 +67,6 @@ const Register = (props) => {
 
       await navigate("MoreScreen");
     } catch (error) {
-      console.log(error.message);
       hasError(error.message);
     }
   }

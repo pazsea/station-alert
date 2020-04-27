@@ -43,12 +43,11 @@ const UserDetailsProvider = (props) => {
           signedIn: true,
         }));
       } else {
-        console.log("Har");
       }
     });
     return () => {
       unsub;
-      console.log("UNSUB");
+      console.log("Unsub firebase");
     };
   }, [authState]);
 
