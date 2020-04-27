@@ -139,7 +139,9 @@ const Recommend = (props) => {
           onChangeText={(text) => {
             setValue("stationName", text);
           }}
-          leftIcon={<Icon name="train" size={24} color="black" />}
+          leftIcon={
+            <Icon name="ios-train" size={24} color="black" type={"ionicon"} />
+          }
         />
         <Input
           containerStyle={{
@@ -156,10 +158,10 @@ const Recommend = (props) => {
           }}
           leftIcon={
             <Icon
-              name="ios-finger-print"
+              name="map-marker"
               size={24}
               color="black"
-              type={"ionicon"}
+              type={"font-awesome"}
             />
           }
         />
@@ -178,10 +180,10 @@ const Recommend = (props) => {
           }}
           leftIcon={
             <Icon
-              name="ios-finger-print"
+              name="map-marker"
               size={24}
               color="black"
-              type={"ionicon"}
+              type={"font-awesome"}
             />
           }
         />
