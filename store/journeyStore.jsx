@@ -46,16 +46,12 @@ export const JourneyContextProvider = (props) => {
 
     // Sätter destinationer som ankommna om man kommit fram utan att vara inloggad.
     if (!userUid && arrivedAtAllStations) {
-      console.log("Inte inloggat men alla har kommit");
-
       return setJourneyState((prevState) => ({
         ...prevState,
         destinations: newDestinationStatus,
         endedTrip: true,
       }));
     } else if (!userUid) {
-      console.log("Inte inloggat men en har kommit");
-
       return setJourneyState((prevState) => ({
         ...prevState,
         destinations: newDestinationStatus,
@@ -108,7 +104,6 @@ export const JourneyContextProvider = (props) => {
   useEffect(() => {
     if (userPosition.lat && userPosition.long) {
       // Kolla om någon station är inom min radie
-      console.log("Position ändrad");
 
       journeyState.destinations.map((station, stationIndex) => {
         const stationArrived = isPointWithinRadius(
@@ -121,7 +116,6 @@ export const JourneyContextProvider = (props) => {
         );
 
         if (stationArrived && !station.arrived) {
-          console.log("Station har ankommit");
           setStationArrived(stationIndex);
         }
       });
@@ -131,7 +125,6 @@ export const JourneyContextProvider = (props) => {
   useEffect(() => {
     if (!journeyState.startedTrip && journeyState.endedTrip) return;
     //Kör gps och sätt nytt state med ens position
-    console.log("Kollar position");
     const watchID = navigator.geolocation.watchPosition(
       (position) => {
         setUserPosition({
