@@ -51,11 +51,16 @@ const FavouritesScreen = (props) => {
   // ** ---------Functions --------- **
 
   const startFavRoutesJourney = async (stationIndex) => {
-    const pickedRoute = favRoutes[stationIndex].destinations;
+    let pickedRoutes = await favRoutes[stationIndex].destinations;
+
+    pickedRoutes.forEach((destination) => {
+      return (destination.arrived = false);
+    });
+
     setJourneyState({
       startedTrip: true,
       endedTrip: false,
-      destinations: pickedRoute,
+      destinations: pickedRoutes,
     });
     navigate("JourneyScreen");
   };

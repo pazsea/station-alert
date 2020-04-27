@@ -41,7 +41,7 @@ const FindDestinationScreen = (props) => {
 
   // ** ---------Variables --------- **
   const { navigate } = props.navigation;
-  const hasDestinations = journeyState.destinations.length;
+  const hasDestinations = journeyState?.destinations.length;
 
   // ** ---------Use Effect (lifecycles) --------- **
   // ** ---------Functions --------- **
