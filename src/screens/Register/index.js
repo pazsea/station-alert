@@ -144,7 +144,9 @@ const Register = (props) => {
             setValue("name", text);
           }}
           errorMessage={errors.name && "You have to supply a name"}
-          leftIcon={<Icon name="people" size={24} color="black" />}
+          leftIcon={
+            <Icon name="ios-person" size={24} color="black" type={"ionicon"} />
+          }
         />
         <Input
           containerStyle={{
@@ -157,7 +159,9 @@ const Register = (props) => {
           onChangeText={(text) => {
             setValue("email", text);
           }}
-          leftIcon={<Icon name="email" size={24} color="black" />}
+          leftIcon={
+            <Icon name="ios-mail" size={24} color="black" type={"ionicon"} />
+          }
         />
         <Input
           containerStyle={{

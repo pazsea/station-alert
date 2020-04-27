@@ -25,11 +25,7 @@ export default [
     lat: 59.270403,
     long: 18.049486,
   },
-  {
-    name: "Bergshamra",
-    lat: 59.381509,
-    long: 18.036514,
-  },
+
   {
     name: "  Björkhagen ",
     lat: 59.291114,
@@ -201,11 +197,7 @@ export default [
     lat: 59.367944,
     long: 17.857467,
   },
-  {
-    name: " Karlaplan  ",
-    lat: 59.33881,
-    long: 18.090863,
-  },
+
   {
     name: "  Kista ",
     lat: 59.402868,
@@ -488,7 +480,6 @@ export default [
     lat: 59.334972,
     long: 18.07408,
   },
-
   {
     name: "Abrahamsberg",
     lat: 59.336516,
@@ -523,15 +514,5 @@ export default [
     name: "Karlaplan",
     lat: 59.340292,
     long: 18.09386,
-  },
-  {
-    name: "Kärrtorp",
-    lat: 59.284031,
-    long: 18.11472,
-  },
-  {
-    name: "Kungsträdgården",
-    lat: 59.330672,
-    long: 18.07384,
   },
 ];

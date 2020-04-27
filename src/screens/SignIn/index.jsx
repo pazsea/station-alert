@@ -103,7 +103,9 @@ const Register = (props) => {
           onChangeText={(text) => {
             setValue("email", text);
           }}
-          leftIcon={<Icon name="email" size={24} color="black" />}
+          leftIcon={
+            <Icon name="ios-mail" size={24} color="black" type={"ionicon"} />
+          }
         />
         <Input
           containerStyle={{

@@ -89,7 +89,7 @@ export const JourneyContextProvider = (props) => {
       await sendPushNotification(
         token,
         stationName,
-        `You have arrived at all of you destinations.`
+        `Soon you will have arrived at you final destination.`
       );
       setJourneyState((prevState) => ({
         ...prevState,
@@ -100,7 +100,7 @@ export const JourneyContextProvider = (props) => {
       await sendPushNotification(
         token,
         stationName,
-        `You have arrived ${stationName}`
+        `You will soon be arriving to ${stationName} station.`
       );
     }
   };

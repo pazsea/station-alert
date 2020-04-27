@@ -1,10 +1,14 @@
 {
   "expo": {
-    "name": "Station-alert",
+    "name": "Station alert",
     "slug": "Station-alert",
     "privacy": "public",
     "sdkVersion": "36.0.0",
-    "platforms": ["ios", "android", "web"],
+    "platforms": [
+      "ios",
+      "android",
+      "web"
+    ],
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -16,9 +20,12 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true
-    }
+    },
+    "description": "Need a reminder to step off at your station when you commute in Stockholm. Try Station Alert! \nWhether you are listening to your favourite music, podcast och just plain sleeping. Station alert will wake you up so you don't miss you station! Try it out!"
   }
 }
