@@ -4,6 +4,9 @@ When riding in Stockholm subways. It is easy to remember when it's time to exit 
 Does you route have multiple destinations? No problem. Set up a route in the app and save it. For example "To work", "School", "To my best friend" etc. Station Alert will remind you at each station.
 
 <br/>
+This is a React Native app with Expo plattform.
+
+<br/>
 Download the app with Expo at: exp://exp.host/@paz1987/Station-alert 
 
 
