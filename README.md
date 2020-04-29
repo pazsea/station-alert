@@ -7,7 +7,7 @@ Does you route have multiple destinations? No problem. Set up a route in the app
 This is a React Native app with Expo plattform.
 
 <br/>
-Download the app on your mobile with the Expo app and paste in this link: exp://exp.host/@paz1987/Station-alert 
+Download the app on your mobile with the Expo app and paste in this link: <strong> exp://exp.host/@paz1987/Station-alert <strong/>
 
 
 ## What’s In This Document
