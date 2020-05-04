@@ -3,6 +3,20 @@
 When riding in Stockholm subways. It is easy to remember when it's time to exit at your stop. With this app you will be reminded when you are within 500 m of your destination.
 Does you route have multiple destinations? No problem. Set up a route in the app and save it. For example "To work", "School", "To my best friend" etc. Station Alert will remind you at each station.
 
+<p align="center">
+   <strong> Youtube tutorial</strong>
+ </p>
+ <p align="center">
+   <em> (click on the image)</em>
+</p>
+
+<p align="center">
+   <a href="https://youtu.be/psBKy4z6ADY" >
+      <img src="/images/youtubeimage.png" alt="Youtube Template" width="600"/>
+   </a>
+</p>
+
+
 <br/>
 This is a React Native app with Expo plattform.
 
