@@ -1,7 +1,7 @@
 ## 🚩 Project Goal
 
-When riding in Stockholm subways. It is easy to remember when it's time to exit at your stop. With this app you will be reminded when you are within 500 m of your destination.
-Does you route have multiple destinations? No problem. Set up a route in the app and save it. For example "To work", "School", "To my best friend" etc. Station Alert will remind you at each station.
+In these times where you can listen to music, podcasts or see the latest video of your favourite youtuber on the train. It is easy to forget when it's time for you to step off at you destination. With this app active during your journey you will be reminded when you are within 500 m of your destination.
+Does you route have multiple destinations? No problem. Set up several destinations in your route and save it. For example "To work", "School", "To my best friend" etc. Station Alert will remind you at each station. Still unsure about what the app is all about? Check out my youtube tutorial. :)
 
 <p align="center">
    <strong> Youtube tutorial</strong>
